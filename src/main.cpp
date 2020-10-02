@@ -5,8 +5,7 @@
 
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
-	Backend b;
-	Editor w(&b);
-	w.show();
+	Editor e;
+	e.show();
 	return a.exec();
 }
