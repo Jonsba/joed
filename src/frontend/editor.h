@@ -1,21 +1,26 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "src/backend.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Editor; }
+namespace Ui {
+class Editor;
+}
 QT_END_NAMESPACE
 
-class Editor : public QMainWindow
-{
-	Q_OBJECT
+class Editor : public QMainWindow {
 
-public:
-	Editor(QWidget *parent = nullptr);
+ public:
+	Editor(Backend *backend = nullptr, QWidget *parent = nullptr);
 	~Editor();
 
-private:
+ private:
 	Ui::Editor *ui;
+	Backend *backend;
+	void Compile();
 };
+
 #endif // EDITOR_H

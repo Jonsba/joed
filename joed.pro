@@ -1,4 +1,5 @@
-QT       += core gui
+QT += core gui
+# QT += pdf
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,14 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/backend.cpp \
     src/main.cpp \
     src/frontend/editor.cpp
 
 HEADERS += \
+    src/backend.h \
     src/frontend/editor.h
 
 FORMS += \
     src/frontend/ui/editor.ui
+
+INCLUDEPATH += \
+    /usr/include/poppler/qt5
+LIBS += \
+    -L/usr/lib -lpoppler-qt5
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
