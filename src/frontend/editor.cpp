@@ -38,6 +38,9 @@ Editor::Editor(QWidget *parent)
 
 void Editor::Text_Changed() {
 	this->text_changed = true;
+	// Resize the block to fit its text
+	QSize size = ui->Backend_Code_Block->document()->size().toSize();
+	ui->Backend_Code_Block->setFixedHeight(size.height() + 3);
 }
 
 void Editor::Bookmark_Selected(const QModelIndex &index) {
