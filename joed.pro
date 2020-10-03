@@ -1,7 +1,4 @@
-QT += core gui
-# QT += pdf
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui widgets pdfwidgets
 
 CONFIG += c++14
 
@@ -18,22 +15,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/backend.cpp \
-    src/frontend/pdf_viewer.cpp \
     src/main.cpp \
     src/frontend/editor.cpp
 
 HEADERS += \
     src/backend.h \
     src/frontend/editor.h \
-    src/frontend/pdf_viewer.h
 
 FORMS += \
     src/frontend/ui/editor.ui
-
-INCLUDEPATH += \
-    /usr/include/poppler/qt5
-LIBS += \
-    -L/usr/lib -lpoppler-qt5
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

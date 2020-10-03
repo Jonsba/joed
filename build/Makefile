@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = clang
 CXX           = clang++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_PDFWIDGETS_LIB -DQT_WIDGETS_LIB -DQT_PDF_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../joed -I. -isystem /usr/include/poppler/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang
+CXXFLAGS      = -pipe -O2 -std=gnu++1y -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+INCPATH       = -I../../joed -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtPdfWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtPdf -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = joed1.0.0
 DISTDIR = /home/jonas-travail/Documents/github/joed/build/.tmp/joed1.0.0
 LINK          = clang++
-LFLAGS        = -ccc-gcc-name g++
-LIBS          = $(SUBLIBS) -L/usr/lib -lpoppler-qt5 /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
+LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath-link,/usr/lib/x86_64-linux-gnu
+LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5PdfWidgets.so /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Pdf.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,11 +53,9 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../src/backend.cpp \
-		../src/frontend/pdf_viewer.cpp \
 		../src/main.cpp \
 		../src/frontend/editor.cpp 
 OBJECTS       = backend.o \
-		pdf_viewer.o \
 		main.o \
 		editor.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -112,6 +110,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KrossCore.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KrossUi.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KTextEditor.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KTextWidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KUnitConversion.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWallet.pri \
@@ -146,6 +145,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdf.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdf_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdfwidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdfwidgets_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_positioning.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_positioningquick.pri \
@@ -176,6 +179,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_x11extras.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri \
@@ -207,9 +211,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../../joed.pro ../src/backend.h \
-		../src/frontend/editor.h \
-		../src/frontend/pdf_viewer.h ../src/backend.cpp \
-		../src/frontend/pdf_viewer.cpp \
+		../src/frontend/editor.h ../src/backend.cpp \
 		../src/main.cpp \
 		../src/frontend/editor.cpp
 QMAKE_TARGET  = joed
@@ -275,6 +277,7 @@ Makefile: ../joed.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake.co
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KrossCore.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KrossUi.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KTextEditor.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KTextWidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KUnitConversion.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWallet.pri \
@@ -309,6 +312,10 @@ Makefile: ../joed.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake.co
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdf.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdf_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdfwidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdfwidgets_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_positioning.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_positioningquick.pri \
@@ -339,6 +346,7 @@ Makefile: ../joed.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake.co
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_x11extras.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri \
@@ -423,6 +431,7 @@ Makefile: ../joed.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake.co
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KrossCore.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KrossUi.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KTextEditor.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KTextWidgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KUnitConversion.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWallet.pri:
@@ -457,6 +466,10 @@ Makefile: ../joed.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake.co
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdf.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdf_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdfwidgets.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_pdfwidgets_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_positioning.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_positioningquick.pri:
@@ -487,6 +500,7 @@ Makefile: ../joed.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-clang/qmake.co
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_x11extras.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri:
@@ -533,8 +547,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/backend.h ../src/frontend/editor.h ../src/frontend/pdf_viewer.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/backend.cpp ../src/frontend/pdf_viewer.cpp ../src/main.cpp ../src/frontend/editor.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/backend.h ../src/frontend/editor.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/backend.cpp ../src/main.cpp ../src/frontend/editor.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../src/frontend/ui/editor.ui $(DISTDIR)/
 
 
@@ -565,7 +579,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
-	clang++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
+	clang++ -pipe -O2 -std=gnu++1y -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all:
 compiler_moc_header_clean:
@@ -593,17 +607,11 @@ compiler_clean: compiler_moc_predefs_clean compiler_uic_clean
 backend.o: ../src/backend.cpp ../src/backend.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o backend.o ../src/backend.cpp
 
-pdf_viewer.o: ../src/frontend/pdf_viewer.cpp ../src/frontend/pdf_viewer.h \
-		../src/backend.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pdf_viewer.o ../src/frontend/pdf_viewer.cpp
-
 main.o: ../src/main.cpp ../src/backend.h \
-		../src/frontend/editor.h \
-		../src/frontend/pdf_viewer.h
+		../src/frontend/editor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
 editor.o: ../src/frontend/editor.cpp ../src/frontend/editor.h \
-		../src/frontend/pdf_viewer.h \
 		../src/backend.h \
 		ui_editor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o editor.o ../src/frontend/editor.cpp

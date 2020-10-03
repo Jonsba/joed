@@ -1,9 +1,13 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "pdf_viewer.h"
-
 #include <QMainWindow>
+
+class Backend;
+
+class QProcess;
+class QPdfDocument;
+class QPdfView;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,7 +30,9 @@ class Editor : public QMainWindow {
 	Backend *backend;
 	QProcess *compilation_process;
 	bool text_changed;
-	PDF_Viewer *pdf_viewer;
+	// PDF_Viewer *pdf_viewer;
+	QPdfView *pdfView;
+	QPdfDocument *pdf_document;
 };
 
 #endif // EDITOR_H
