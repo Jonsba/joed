@@ -3,6 +3,7 @@
 #include "ui_editor.h"
 
 #include <QLabel>
+#include <QPdfBookmarkModel>
 #include <QPdfDocument>
 #include <QPdfPageNavigation>
 #include <QProcess>
@@ -14,23 +15,34 @@ Editor::Editor(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::Editor), pdf_document(new QPdfDocument(this)) {
 	ui->setupUi(this);
 	ui->Backend_Code_Block->setFocus();
+
+	this->pdf_view = new QPdfView(ui->View_Mode_Tab);
+	this->pdf_view->setDocument(this->pdf_document);
+	this->pdf_view->setPageMode(QPdfView::MultiPage);
+	ui->View_Mode_Layout->addWidget(this->pdf_view);
+
+	QPdfBookmarkModel *bookmarkModel = new QPdfBookmarkModel(this);
+	bookmarkModel->setDocument(this->pdf_document);
+	ui->Bookmark_View->setModel(bookmarkModel);
+
+	this->text_changed = true;
 	this->compilation_process = new QProcess();
 	this->backend = new Backend(this->compilation_process);
-	this->pdfView = new QPdfView(ui->View_Mode_Tab);
-	this->pdfView->setDocument(this->pdf_document);
-	this->pdfView->setPageMode(QPdfView::MultiPage);
-	ui->View_Mode_Layout->addWidget(this->pdfView);
 
 	QObject::connect(ui->Backend_Code_Block, &QTextEdit::textChanged, this, &Editor::Text_Changed);
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile_When_Needed);
 	QObject::connect(this->compilation_process, qOverload<int>(&QProcess::finished), this,
 	                 &Editor::Compilation_Completed);
-
-	this->text_changed = true;
+	QObject::connect(ui->Bookmark_View, &QTreeView::activated, this, &Editor::Bookmark_Selected);
 }
 
 void Editor::Text_Changed() {
 	this->text_changed = true;
+}
+
+void Editor::Bookmark_Selected(const QModelIndex &index) {
+	const int page = index.data(QPdfBookmarkModel::PageNumberRole).toInt();
+	this->pdf_view->pageNavigation()->setCurrentPage(page);
 }
 
 void Editor::Compile_When_Needed(int tab_index) {
@@ -45,7 +57,7 @@ void Editor::Compile_When_Needed(int tab_index) {
 }
 
 void Editor::Compilation_Completed() {
-	pdf_document->load("tex/document.pdf");
+	this->pdf_document->load("tex/document.pdf");
 }
 
 Editor::~Editor() {

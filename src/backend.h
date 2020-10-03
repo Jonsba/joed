@@ -1,8 +1,8 @@
 #ifndef BACKEND_H
 #define BACKEND_H
 
-#include <QProcess>
-#include <QString>
+class QProcess;
+class QString;
 
 class Backend {
 
@@ -13,7 +13,5 @@ class Backend {
  private:
 	QProcess *process;
 };
-
-void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 #endif // BACKEND_H

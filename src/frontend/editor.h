@@ -22,16 +22,16 @@ class Editor : public QMainWindow {
 	~Editor();
 
  private:
+	void Text_Changed();
+	void Bookmark_Selected(const QModelIndex &index);
 	void Compile_When_Needed(int tab_index);
 	void Compilation_Completed();
-	void Text_Changed();
 
 	Ui::Editor *ui;
 	Backend *backend;
 	QProcess *compilation_process;
 	bool text_changed;
-	// PDF_Viewer *pdf_viewer;
-	QPdfView *pdfView;
+	QPdfView *pdf_view;
 	QPdfDocument *pdf_document;
 };
 
