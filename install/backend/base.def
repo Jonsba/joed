@@ -1,0 +1,32 @@
+version: 1.0.0
+
+backend: /usr/bin/context
+
+styles:
+	document:
+		layout:
+			child_block
+		output:
+			"\\setupinteraction[state=start]"
+			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
+			"\\starttext"
+			child_block
+			"\\stoptext"
+
+	new-style:
+		name: section
+		child-of: document
+		layout:
+			caption_block
+			child_block
+		output:
+			"\\startsection[title={" .. caption_block .. "}]"
+			child_block
+			"\\stopsection"
+
+	new-style:
+		name: paragraph
+		layout:
+			text_block
+		output:
+			"{\\par" .. text_block .. "}"

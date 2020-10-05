@@ -6,20 +6,17 @@
 #include <QProcess>
 #include <QTextStream>
 
-#define TEX_DOCUMENT "./tex/document.tex"
-
 Backend::Backend(QProcess *process) {
 	this->process = process;
 }
 
 void Backend::Compile(QString code) {
-	QFile file(TEX_DOCUMENT);
-	if (file.open(QIODevice::WriteOnly)) {
+	QFile file(TEX_DOCUMENT_PATH);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		QTextStream stream(&file);
 		stream << code.toUtf8() << endl;
 	}
 	file.close();
-	//
-	process->setWorkingDirectory("tex");
-	process->start("/opt/context/tex/texmf-linux-64/bin/context", QStringList() << "document.tex");
+	process->setWorkingDirectory(TEX_WORKING_DIRECTORY);
+	process->start("/opt/context/tex/texmf-linux-64/bin/context", QStringList() << TEX_DOCUMENT);
 }

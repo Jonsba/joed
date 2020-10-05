@@ -15,12 +15,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/backend.cpp \
+    src/backend_translater.cpp \
+    src/definitions_parser.cpp \
+    src/document.cpp \
+    src/joed.cpp \
     src/main.cpp \
-    src/frontend/editor.cpp
+    src/frontend/editor.cpp \
+    src/style_list.cpp
 
 HEADERS += \
     src/backend.h \
-    src/frontend/editor.h \
+	src/backend_translater.h \
+	src/definitions_parser.h \
+	src/document.h \
+    src/frontend/editor.h \ \
+	src/joed.h \
+	src/style_list.h
 
 FORMS += \
     src/frontend/ui/editor.ui

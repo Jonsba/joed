@@ -1,5 +1,6 @@
 #include "editor.h"
 #include "src/backend.h"
+#include "src/document.h"
 #include "ui_editor.h"
 
 #include <QLabel>
@@ -34,6 +35,8 @@ Editor::Editor(QWidget *parent)
 	QObject::connect(this->compilation_process, qOverload<int>(&QProcess::finished), this,
 	                 &Editor::Compilation_Completed);
 	QObject::connect(ui->Bookmark_View, &QTreeView::activated, this, &Editor::Bookmark_Selected);
+
+	this->document = new Document();
 }
 
 void Editor::Text_Changed() {
@@ -52,7 +55,7 @@ void Editor::Compile_When_Needed(int tab_index) {
 	if (tab_index != 1) {
 		return;
 	}
-	if (!this->text_changed) {
+	if (! this->text_changed) {
 		return;
 	}
 	this->text_changed = false;
@@ -60,7 +63,7 @@ void Editor::Compile_When_Needed(int tab_index) {
 }
 
 void Editor::Compilation_Completed() {
-	this->pdf_document->load("tex/document.pdf");
+	this->pdf_document->load(PDF_DOCUMENT_PATH);
 }
 
 Editor::~Editor() {

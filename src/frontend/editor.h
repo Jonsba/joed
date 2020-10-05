@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class Backend;
+class Document;
 
 class QProcess;
 class QPdfDocument;
@@ -33,6 +34,7 @@ class Editor : public QMainWindow {
 	bool text_changed;
 	QPdfView *pdf_view;
 	QPdfDocument *pdf_document;
+	Document *document;
 };
 
 #endif // EDITOR_H
