@@ -13,20 +13,20 @@ class Definitions_Parser {
 
  private:
 	void Parse(QString definition_file);
-	QString To_String(QString string_vector[]);
 	QString Parse_Key(QString line, QString &trimmed_line);
 	void Check_Version_Validity(QString version_string);
 	void Add_Value_Line(QString value_line);
 	bool Is_Comment(QString line);
 	int Count_Levels(QString line);
-	// Debug
-	void Print_Indent(QString text);
 	//
 	QString keys_hierarchy[Max_Ident_Level];
 	Style_List *styles;
 	Backend_Translater *translater;
 	QString current_key;
 	int level;
+	// DEBUG ///////////////////////////////////////////////////////////////////////////////////////
+	void Print_Indent(QString text);
+	QString To_String(QString string_vector[]);
 };
 
 #endif // DEFINITIONS_PARSER_H

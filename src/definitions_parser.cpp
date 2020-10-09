@@ -112,23 +112,6 @@ int Definitions_Parser::Count_Levels(QString line) {
 	return i;
 }
 
-void Definitions_Parser::Print_Indent(QString text) {
-	QString indentation = "";
-	for (int i = 0; i < this->level; i++) {
-		indentation += '\t';
-	}
-	print(indentation + text);
-}
-
-QString Definitions_Parser::To_String(QString string_vector[]) {
-	QString result = string_vector[0];
-	for (int i = 1; i < Max_Ident_Level; i++) {
-		if (string_vector[i] == "") break;
-		result += "." + string_vector[i];
-	}
-	return result;
-}
-
 void Definitions_Parser::Add_Value_Line(QString value_line) {
 	if (this->current_key == Joed::Version_Key) {
 		Check_Version_Validity(value_line);
@@ -144,4 +127,23 @@ void Definitions_Parser::Check_Version_Validity(QString version_string) {
 		print("Invalid version: " + version_string);
 		throw;
 	}
+}
+
+// DEBUG //////////////////////////////////////////////////////////////////////////////////////////
+
+void Definitions_Parser::Print_Indent(QString text) {
+	QString indentation = "";
+	for (int i = 0; i < this->level; i++) {
+		indentation += '\t';
+	}
+	print(indentation + text);
+}
+
+QString Definitions_Parser::To_String(QString string_vector[]) {
+	QString result = string_vector[0];
+	for (int i = 1; i < Max_Ident_Level; i++) {
+		if (string_vector[i] == "") break;
+		result += "." + string_vector[i];
+	}
+	return result;
 }
