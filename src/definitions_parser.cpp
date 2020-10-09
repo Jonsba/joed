@@ -123,8 +123,14 @@ void Definitions_Parser::Add_Value_Line(QString value_line) {
 }
 
 void Definitions_Parser::Check_Version_Validity(QString version_string) {
-	if (false) {
-		print("Invalid version: " + version_string);
+	QStringList version_list = version_string.split(".");
+	int major_version = version_list.at(0).toInt();
+	int minor_version = version_list.at(1).toInt();
+	if (major_version != Major_Version || minor_version > Minor_Version) {
+		print("Unsupporter version: " + version_string);
+		print("Any version between " + QString::number(Major_Version) + ".0.0 and " +
+		      QString::number(Major_Version) + "." + QString::number(Minor_Version) +
+		      ".x are supported");
 		throw;
 	}
 }

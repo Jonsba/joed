@@ -12,6 +12,10 @@ class Definitions_Parser {
 	Definitions_Parser(Style_List *styles, Backend_Translater *translater);
 
  private:
+	static const int Major_Version = 1;
+	static const int Minor_Version = 0;
+	static const int Revision_Version = 0;
+	//
 	void Parse(QString definition_file);
 	QString Parse_Key(QString line, QString &trimmed_line);
 	void Check_Version_Validity(QString version_string);
