@@ -6,7 +6,7 @@
 #include <QProcess>
 #include <QTextStream>
 
-Backend::Backend(QProcess *process) {
+Backend::Backend(QProcess* process) {
 	this->process = process;
 }
 

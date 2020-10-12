@@ -13,11 +13,11 @@ class QString;
 class Backend {
 
  public:
-	Backend(QProcess *process);
+	Backend(QProcess* process);
 	void Compile(QString code);
 
  private:
-	QProcess *process;
+	QProcess* process;
 };
 
 #endif // BACKEND_H

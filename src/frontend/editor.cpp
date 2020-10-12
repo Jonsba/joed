@@ -12,7 +12,7 @@
 #include <QTextEdit>
 #include <qpdfview.h>
 
-Editor::Editor(QWidget *parent)
+Editor::Editor(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::Editor), pdf_document(new QPdfDocument(this)) {
 	ui->setupUi(this);
 	ui->Backend_Code_Block->setFocus();
@@ -22,7 +22,7 @@ Editor::Editor(QWidget *parent)
 	this->pdf_view->setPageMode(QPdfView::MultiPage);
 	ui->View_Mode_Layout->addWidget(this->pdf_view);
 
-	QPdfBookmarkModel *bookmarkModel = new QPdfBookmarkModel(this);
+	QPdfBookmarkModel* bookmarkModel = new QPdfBookmarkModel(this);
 	bookmarkModel->setDocument(this->pdf_document);
 	ui->Bookmark_View->setModel(bookmarkModel);
 
@@ -46,7 +46,7 @@ void Editor::Text_Changed() {
 	ui->Backend_Code_Block->setFixedHeight(size.height() + 3);
 }
 
-void Editor::Bookmark_Selected(const QModelIndex &index) {
+void Editor::Bookmark_Selected(const QModelIndex& index) {
 	const int page = index.data(QPdfBookmarkModel::PageNumberRole).toInt();
 	this->pdf_view->pageNavigation()->setCurrentPage(page);
 }

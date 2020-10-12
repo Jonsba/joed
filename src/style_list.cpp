@@ -28,6 +28,6 @@ void Style_List::Add_Value(QString key, QString value) {
 	}
 }
 
-Style_Node *Style_List::Style(QString key) {
+Style_Node* Style_List::Style(QString key) {
 	return this->list[key];
 }

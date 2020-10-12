@@ -7,7 +7,7 @@
 #include "joed.h"
 #include "style_list.h"
 
-Definitions_Parser::Definitions_Parser(Style_List *styles, Backend_Translater *compiler) {
+Definitions_Parser::Definitions_Parser(Style_List* styles, Backend_Translater* compiler) {
 	this->styles = styles;
 	this->translater = compiler;
 	this->Parse(Joed::Base_Definitions_File);
@@ -72,7 +72,7 @@ bool Definitions_Parser::Is_Comment(QString line) {
 	return false;
 }
 
-QString Definitions_Parser::Parse_Key(QString line, QString &trimmed_line) {
+QString Definitions_Parser::Parse_Key(QString line, QString& trimmed_line) {
 	int delimiter = trimmed_line.indexOf(':');
 	if (delimiter < 0) {
 		return "";

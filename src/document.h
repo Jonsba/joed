@@ -10,9 +10,9 @@ class Document {
 	Document();
 
  private:
-	Definitions_Parser *definitions_parser;
-	Style_List *styles;
-	Backend_Translater *translater;
+	Definitions_Parser* definitions_parser;
+	Style_List* styles;
+	Backend_Translater* translater;
 };
 
 #endif // DOCUMENT_H

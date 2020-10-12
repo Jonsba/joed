@@ -19,22 +19,22 @@ QT_END_NAMESPACE
 class Editor : public QMainWindow {
 
  public:
-	Editor(QWidget *parent = nullptr);
+	Editor(QWidget* parent = nullptr);
 	~Editor();
 
  private:
 	void Text_Changed();
-	void Bookmark_Selected(const QModelIndex &index);
+	void Bookmark_Selected(const QModelIndex& index);
 	void Compile_When_Needed(int tab_index);
 	void Compilation_Completed();
 
-	Ui::Editor *ui;
-	Backend *backend;
-	QProcess *compilation_process;
+	Ui::Editor* ui;
+	Backend* backend;
+	QProcess* compilation_process;
 	bool text_changed;
-	QPdfView *pdf_view;
-	QPdfDocument *pdf_document;
-	Document *document;
+	QPdfView* pdf_view;
+	QPdfDocument* pdf_document;
+	Document* document;
 };
 
 #endif // EDITOR_H

@@ -7,7 +7,7 @@
 struct Style_Node {
 	QString layout;
 	QString output;
-	Style_Node *parent = nullptr;
+	Style_Node* parent = nullptr;
 };
 
 class Style_List {
@@ -15,11 +15,11 @@ class Style_List {
 	Style_List();
 	void Add_Style(QString style_name);
 	void Add_Value(QString key, QString value);
-	Style_Node *Style(QString key);
+	Style_Node* Style(QString key);
 
  private:
-	QHash<QString, Style_Node *> list;
-	Style_Node *new_node;
+	QHash<QString, Style_Node*> list;
+	Style_Node* new_node;
 };
 
 #endif // STYLE_LIST_H
