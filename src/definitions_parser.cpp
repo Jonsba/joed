@@ -5,9 +5,9 @@
 #include "backend_translater.h"
 #include "definitions_parser.h"
 #include "joed.h"
-#include "style_list.h"
+#include "styles.h"
 
-Definitions_Parser::Definitions_Parser(Style_List* styles, Backend_Translater* compiler) {
+Definitions_Parser::Definitions_Parser(Styles* styles, Backend_Translater* compiler) {
 	this->styles = styles;
 	this->translater = compiler;
 	this->Parse(Joed::Base_Definitions_File);
@@ -24,7 +24,6 @@ void Definitions_Parser::Parse(QString definition_file) {
 	State state = Starting;
 	this->level = 0;
 	while (true) {
-		print("State: " + QString::number(state));
 		switch (state) {
 		case Parsing_Key: {
 			QString key = Parse_Key(line, trimmed_line);
@@ -46,7 +45,6 @@ void Definitions_Parser::Parse(QString definition_file) {
 			state = Parsing_Key;
 			break;
 		case Parsing_Value:
-			Print_Indent("READ VALUE: " + trimmed_line);
 			this->Add_Value_Line(trimmed_line);
 			state = Parsing_Key;
 			break;
@@ -57,12 +55,12 @@ void Definitions_Parser::Parse(QString definition_file) {
 		do {
 			line = stream.readLine();
 			if (line.isNull()) {
+				file.close();
 				return;
 			}
 			trimmed_line = line.trimmed();
 		} while (trimmed_line == "" || Is_Comment(trimmed_line));
 	}
-	file.close();
 }
 
 bool Definitions_Parser::Is_Comment(QString line) {
@@ -93,9 +91,8 @@ QString Definitions_Parser::Parse_Key(QString line, QString& trimmed_line) {
 					print("Unexpected structure for the definitions file");
 					throw;
 				}
-				this->styles->Add_Style(current_key);
+				this->styles->Parse_Style_Identifier(current_key);
 			}
-			Print_Indent("READ KEY: " + To_String(this->keys_hierarchy));
 			trimmed_line = trimmed_line.mid(delimiter + 1).trimmed();
 			this->current_key = current_key;
 			return current_key;

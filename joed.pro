@@ -14,23 +14,37 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/abstract_block.cpp \
     src/backend.cpp \
     src/backend_translater.cpp \
     src/definitions_parser.cpp \
-    src/document.cpp \
+    src/document_root.cpp \
+    src/frontend/multi_block_widget.cpp \
+    src/frontend/text_block_widget.cpp \
     src/joed.cpp \
+    src/layout_entry.cpp \
     src/main.cpp \
     src/frontend/editor.cpp \
-    src/style_list.cpp
+    src/multi_block.cpp \
+    src/style.cpp \
+    src/styles.cpp \
+    src/text_block.cpp
 
 HEADERS += \
+	src/abstract_block.h \
     src/backend.h \
 	src/backend_translater.h \
 	src/definitions_parser.h \
-	src/document.h \
+	src/document_root.h \
     src/frontend/editor.h \ \
+	src/frontend/multi_block_widget.h \
+	src/frontend/text_block_widget.h \
 	src/joed.h \
-	src/style_list.h
+	src/layout_entry.h \
+	src/multi_block.h \
+	src/style.h \
+	src/styles.h \
+	src/text_block.h
 
 FORMS += \
     src/frontend/ui/editor.ui

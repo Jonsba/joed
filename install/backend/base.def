@@ -2,31 +2,25 @@ version: 1.0.0
 
 backend: /usr/bin/context
 
+-- TODO:
+--   properties (space-before/after, formatting)
+--   _text_ vs _formatted_text_ in text blocks
+
 styles:
+
 	document:
 		layout:
-			_children_blocks_
+			_children_block_
 		output:
 			"\\setupinteraction[state=start]"
 			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
 			"\\starttext"
-			_children_blocks_
+			_children_block_
 			"\\stoptext"
-
-	new-style:
-		name: section
-		child-of: document
-		layout:
-			_caption_block_
-			_children_blocks_
-		output:
-			"\\startsection[title={" .. _caption_block_ .. "}]"
-			_children_blocks_
-			"\\stopsection"
+		default-child-style: paragraph
 
 	new-style:
 		name: paragraph
-		layout:
-			_text_block_
+		type: multiline_text_block
 		output:
-			"{\\par" .. _text_block_ .. "}"
+			"{\\par" .. _text_ .. "}"

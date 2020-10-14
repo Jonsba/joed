@@ -3,13 +3,13 @@
 
 #include <QString>
 
-class Style_List;
+class Styles;
 class Backend_Translater;
 
 class Definitions_Parser {
  public:
 	static const int Max_Ident_Level = 3;
-	Definitions_Parser(Style_List* styles, Backend_Translater* translater);
+	Definitions_Parser(Styles* styles, Backend_Translater* translater);
 
  private:
 	static const int Major_Version = 1;
@@ -24,7 +24,7 @@ class Definitions_Parser {
 	int Count_Levels(QString line);
 	//
 	QString keys_hierarchy[Max_Ident_Level];
-	Style_List* styles;
+	Styles* styles;
 	Backend_Translater* translater;
 	QString current_key;
 	int level;
