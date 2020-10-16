@@ -7,9 +7,8 @@ class Text_Block : public Abstract_Block {
  public:
 	Text_Block(Style* style);
 	void Set_Text_Contents(QString content);
-	QString Text_Contents();
 	bool Is_Multiline();
-	QString Backend_Contents();
+	QString Compile();
 
  private:
 	QString text_content;

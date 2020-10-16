@@ -1,8 +1,11 @@
 #include "styles.h"
 #include "joed.h"
 #include "layout_entry.h"
+#include "lua_vm.h"
 
-Styles::Styles() {}
+Styles::Styles() {
+	this->lua_vm = new Lua_VM();
+}
 
 // name: document or new-style
 void Styles::Parse_Style_Identifier(QString name) {
@@ -18,17 +21,17 @@ void Styles::Parse_Style_Identifier(QString name) {
 }
 
 Style* Styles::Add_Style(QString name) {
-	Style* style = new Style(name);
+	Style* style = new Style(name, this->lua_vm);
 	this->list[name] = style;
 	return style;
 }
 
 Style* Styles::Add_Style_If_Nil(QString name) {
-	Style* style = this->list[name];
-	if (style == nullptr) {
-		style = this->Add_Style(name);
+	if (this->list.contains(name)) {
+		return this->list[name];
+	} else {
+		return this->Add_Style(name);
 	}
-	return style;
 }
 
 void Styles::Add_Value(QString key, QString value) {
@@ -62,7 +65,11 @@ void Styles::Add_Value(QString key, QString value) {
 	} else if (key == Joed::Declare_Key) {
 		this->new_style->declare += value + '\n';
 	} else if (key == Joed::Output_Key) {
-		this->new_style->output += value + '\n';
+		if (this->new_style->output == "") {
+			this->new_style->output = value;
+		} else {
+			this->new_style->output += " .. string.char(10) .. " + value;
+		}
 	} else if (key == Joed::Inherits_Key) {
 		Style* base_style = this->Add_Style_If_Nil(value);
 		this->new_style->base_style = base_style;

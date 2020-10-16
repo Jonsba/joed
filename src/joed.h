@@ -4,7 +4,7 @@
 #include <QStandardPaths>
 #include <QString>
 
-void print(QString text);
+void print(QString text); // Debug
 
 namespace Joed {
 

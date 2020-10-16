@@ -13,6 +13,7 @@ Text_Block_Widget::Text_Block_Widget(QVBoxLayout* widget_container, Text_Block* 
 	QObject::connect(this, &QTextEdit::textChanged, this, &Text_Block_Widget::Text_Changed);
 }
 void Text_Block_Widget::Text_Changed() {
+	this->block->Set_Text_Contents(this->toPlainText());
 	// Resize the block to fit its text
 	QSize size = this->document()->size().toSize();
 	this->setFixedHeight(size.height() + 3);

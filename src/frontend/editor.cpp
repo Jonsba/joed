@@ -1,5 +1,4 @@
 #include "editor.h"
-#include "src/backend.h"
 #include "src/document_root.h"
 #include "ui_editor.h"
 
@@ -27,15 +26,13 @@ Editor::Editor(QWidget* parent)
 	ui->Bookmark_View->setModel(bookmarkModel);
 
 	//	this->text_changed = true;
-	this->compilation_process = new QProcess();
-	this->backend = new Backend(this->compilation_process);
+	this->compile_process = new QProcess();
+	this->document_root = new Document_Root(ui->Document_Layout, this->compile_process);
 
-	//	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this,
-	//&Editor::Compile_When_Needed); 	QObject::connect(this->compilation_process,
-	//qOverload<int>(&QProcess::finished), this, 	                 &Editor::Compilation_Completed);
+	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile);
+	QObject::connect(this->compile_process, qOverload<int>(&QProcess::finished), this,
+	                 &Editor::Compilation_Completed);
 	QObject::connect(ui->Bookmark_View, &QTreeView::activated, this, &Editor::Bookmark_Selected);
-
-	this->document_root = new Document_Root(ui->Document_Layout);
 }
 
 void Editor::Bookmark_Selected(const QModelIndex& index) {
@@ -43,20 +40,20 @@ void Editor::Bookmark_Selected(const QModelIndex& index) {
 	this->pdf_view->pageNavigation()->setCurrentPage(page);
 }
 
-// void Editor::Compile_When_Needed(int tab_index) {
-//	if (tab_index != 1) {
-//		return;
-//	}
-//	if (! this->text_changed) {
-//		return;
-//	}
-//	this->text_changed = false;
-//	this->backend->Compile(ui->Backend_Code_Block->toPlainText());
-//}
+void Editor::Compile(int tab_index) {
+	if (tab_index != 1) {
+		return;
+	}
+	//	if (! this->text_changed) {
+	//		return;
+	//	}
+	//	this->text_changed = false;
+	this->document_root->Compile_Document();
+}
 
-// void Editor::Compilation_Completed() {
-//	this->pdf_document->load(PDF_DOCUMENT_PATH);
-//}
+void Editor::Compilation_Completed() {
+	this->pdf_document->load(PDF_DOCUMENT_PATH);
+}
 
 Editor::~Editor() {
 	delete ui;

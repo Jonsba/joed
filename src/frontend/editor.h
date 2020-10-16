@@ -24,12 +24,11 @@ class Editor : public QMainWindow {
 
  private:
 	void Bookmark_Selected(const QModelIndex& index);
-	void Compile_When_Needed(int tab_index);
+	void Compile(int tab_index);
 	void Compilation_Completed();
 
 	Ui::Editor* ui;
-	Backend* backend;
-	QProcess* compilation_process;
+	QProcess* compile_process;
 	//	bool text_changed;
 	QPdfView* pdf_view;
 	QPdfDocument* pdf_document;

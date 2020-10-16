@@ -2,19 +2,17 @@
 #define MULTI_BLOCK_H
 
 #include "abstract_block.h"
+#include <QLinkedList>
 #include <QString>
-#include <QVector>
 
 class Multi_Block : public Abstract_Block {
  public:
 	Multi_Block(Style* style);
-	QString Backend_Contents();
+	QString Compile();
 	void Add_Child(Abstract_Block* child);
-	void Add_Sibling(Abstract_Block* sibling);
 
  private:
-	QVector<Abstract_Block*> first_child;
-	QVector<Abstract_Block*> first_sibling;
+	QLinkedList<Abstract_Block*> first_child;
 };
 
 #endif // MULTI_BLOCK_H

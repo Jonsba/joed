@@ -1,4 +1,3 @@
-#include "src/backend.h"
 #include "src/frontend/editor.h"
 
 #include <QApplication>

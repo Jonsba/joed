@@ -10,7 +10,9 @@ styles:
 
 	document:
 		layout:
+			-- header
 			_children_block_
+			-- footer
 		output:
 			"\\setupinteraction[state=start]"
 			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
@@ -30,7 +32,7 @@ styles:
 			start_command = "\\startsection"
 			stop_command = "\\stopsection"
 		output:
-			start_command .. "[title={" .. _caption_block_ .. "}]"
+			start_command .. "[title={" .. section-title.output .. "}]"
 			_children_block_
 			stop_command
 		default-child-style: paragraph

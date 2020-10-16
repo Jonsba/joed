@@ -15,14 +15,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/abstract_block.cpp \
-    src/backend.cpp \
-    src/backend_translater.cpp \
+    src/compile_env.cpp \
     src/definitions_parser.cpp \
     src/document_root.cpp \
     src/frontend/multi_block_widget.cpp \
     src/frontend/text_block_widget.cpp \
     src/joed.cpp \
     src/layout_entry.cpp \
+    src/lua_vm.cpp \
     src/main.cpp \
     src/frontend/editor.cpp \
     src/multi_block.cpp \
@@ -32,8 +32,7 @@ SOURCES += \
 
 HEADERS += \
 	src/abstract_block.h \
-    src/backend.h \
-	src/backend_translater.h \
+	src/compile_env.h \
 	src/definitions_parser.h \
 	src/document_root.h \
     src/frontend/editor.h \ \
@@ -41,6 +40,7 @@ HEADERS += \
 	src/frontend/text_block_widget.h \
 	src/joed.h \
 	src/layout_entry.h \
+	src/lua_vm.h \
 	src/multi_block.h \
 	src/style.h \
 	src/styles.h \
@@ -48,6 +48,11 @@ HEADERS += \
 
 FORMS += \
     src/frontend/ui/editor.ui
+
+INCLUDEPATH += \
+    /usr/include/lua5.3
+LIBS += \
+    -llua5.3-c++
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

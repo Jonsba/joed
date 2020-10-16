@@ -4,12 +4,12 @@
 #include <QString>
 
 class Styles;
-class Backend_Translater;
+class Compile_Env;
 
 class Definitions_Parser {
  public:
 	static const int Max_Ident_Level = 3;
-	Definitions_Parser(Styles* styles, Backend_Translater* translater);
+	Definitions_Parser(Styles* styles, Compile_Env* compiler);
 
  private:
 	static const int Major_Version = 1;
@@ -25,7 +25,7 @@ class Definitions_Parser {
 	//
 	QString keys_hierarchy[Max_Ident_Level];
 	Styles* styles;
-	Backend_Translater* translater;
+	Compile_Env* compiler;
 	QString current_key;
 	int level;
 	// DEBUG ///////////////////////////////////////////////////////////////////////////////////////

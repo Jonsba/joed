@@ -5,7 +5,8 @@
 
 #include <QHash>
 #include <QString>
-#include <QVector>
+
+class Lua_VM;
 
 class Styles {
 
@@ -26,6 +27,7 @@ class Styles {
 	QHash<QString, Style*> list;
 	Style* new_style;
 	Layout_Entry* last_layout_entry;
+	Lua_VM* lua_vm;
 };
 
 #endif // STYLES

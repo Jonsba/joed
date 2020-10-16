@@ -1,4 +1,5 @@
 #include "abstract_block.h"
+#include "style.h"
 
 Abstract_Block::Abstract_Block(Style* style) {
 	this->style = style;

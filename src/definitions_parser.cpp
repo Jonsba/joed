@@ -2,14 +2,14 @@
 #include <QString>
 #include <QTextStream>
 
-#include "backend_translater.h"
+#include "compile_env.h"
 #include "definitions_parser.h"
 #include "joed.h"
 #include "styles.h"
 
-Definitions_Parser::Definitions_Parser(Styles* styles, Backend_Translater* compiler) {
+Definitions_Parser::Definitions_Parser(Styles* styles, Compile_Env* compiler) {
 	this->styles = styles;
-	this->translater = compiler;
+	this->compiler = compiler;
 	this->Parse(Joed::Base_Definitions_File);
 }
 void Definitions_Parser::Parse(QString definition_file) {
@@ -113,7 +113,7 @@ void Definitions_Parser::Add_Value_Line(QString value_line) {
 	if (this->current_key == Joed::Version_Key) {
 		Check_Version_Validity(value_line);
 	} else if (this->current_key == Joed::Backend_Key) {
-		this->translater->Set_Backend(value_line);
+		this->compiler->Set_Backend(value_line);
 	} else if (this->keys_hierarchy[0] == Joed::Styles_Key) {
 		this->styles->Add_Value(this->current_key, value_line);
 	}
