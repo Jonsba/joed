@@ -1,5 +1,6 @@
 #include "text_block.h"
 #include "joed.h"
+#include "lua_vm.h"
 #include "style.h"
 
 Text_Block::Text_Block(Style* style) : Abstract_Block(style) {
@@ -18,5 +19,7 @@ bool Text_Block::is_multiline() {
 }
 
 QString Text_Block::compile() {
-	return this->the_style->compile(Text_Value, this->text_content);
+	Global_Dict global_dict;
+	global_dict[Text_Value] = this->text_content;
+	return this->the_style->compile(global_dict);
 }

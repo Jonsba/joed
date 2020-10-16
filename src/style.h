@@ -1,6 +1,8 @@
 #ifndef STYLE_H
 #define STYLE_H
 
+#include "lua_vm.h"
+
 #include <QLinkedList>
 #include <QString>
 
@@ -21,7 +23,7 @@ class Style {
 	Type_Enum type();
 	Layout_Entry_List layout_entries();
 	Style* default_child_style();
-	QString compile(QString key, QString value);
+	QString compile(Global_Dict key_value);
 
  private:
 	QString the_name;

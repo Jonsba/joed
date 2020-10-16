@@ -1,10 +1,18 @@
 version: 1.0.0
 
-backend: /usr/bin/context
+backend:
+	name: context
+	exec: /opt/context/tex/texmf-linux-64/bin/context
 
 -- TODO:
 --   properties (space-before/after, formatting)
 --   _text_ vs _formatted_text_ in text blocks
+
+formatting:
+	bold: '{\\bf ' .. _text_ .. ' }'
+	italic: '{\\it ' .. _text_ .. ' }'
+	font-size:
+		<lua code>
 
 styles:
 

@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/abstract_block.cpp \
+    src/children_block.cpp \
     src/compile_env.cpp \
     src/definitions_parser.cpp \
     src/document_root.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
 	src/abstract_block.h \
+	src/children_block.h \
 	src/compile_env.h \
 	src/definitions_parser.h \
 	src/document_root.h \

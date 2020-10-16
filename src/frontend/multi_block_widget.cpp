@@ -35,7 +35,7 @@ void Multi_Block_Widget::create_layout() {
 			child_block = new Text_Block(style);
 			new_widget = new Text_Block_Widget(this->child_widget_container, (Text_Block*)child_block);
 		}
-		this->top_block->add_child(child_block);
+		this->top_block->add_block(child_block);
 		// TODO : check layout_entry.Is_A_Child()
 	}
 }

@@ -1,4 +1,5 @@
 #include "style.h"
+#include "joed.h"
 #include "layout_entry.h"
 #include "lua_vm.h"
 
@@ -25,10 +26,10 @@ Type_Enum Style::type() {
 Layout_Entry_List Style::layout_entries() {
 	return this->the_layout_entries;
 }
-QString Style::compile(QString key, QString value) {
+QString Style::compile(Global_Dict global_dict) {
 	if (this->lua_cookie == LUA_NOREF) {
 		this->lua_cookie = this->lua_vm->expr_init(this->output);
 	}
-	this->lua_vm->set_global_variable(key, value);
+	this->lua_vm->set_global_variables(global_dict);
 	return this->lua_vm->expr_exec(this->lua_cookie);
 }

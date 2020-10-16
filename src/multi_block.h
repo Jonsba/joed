@@ -9,10 +9,10 @@ class Multi_Block : public Abstract_Block {
  public:
 	Multi_Block(Style* the_style);
 	QString compile();
-	void add_child(Abstract_Block* child);
+	void add_block(Abstract_Block* block);
 
  private:
-	QLinkedList<Abstract_Block*> children;
+	QLinkedList<Abstract_Block*> blocks;
 };
 
 #endif // MULTI_BLOCK_H
