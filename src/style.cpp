@@ -5,11 +5,14 @@
 
 #include <lua.hpp>
 
-Style::Style(QString name, Lua_VM* lua_vm) {
+Style::Style(QString name, Lua_VM* lua_vm) { // : Document_Key("document") {
 	this->the_name = name;
 	this->lua_vm = lua_vm;
 	this->lua_cookie = LUA_NOREF;
+	// this->Document_Key = "document";
 }
+
+void Style::assign(QString key, QString value) {}
 
 QString Style::name() {
 	return this->the_name;

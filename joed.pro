@@ -1,6 +1,6 @@
 QT += core gui widgets pdfwidgets
 
-CONFIG += c++14
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/abstract_block.cpp \
+    src/abstract_buildable_object.cpp \
     src/children_block.cpp \
     src/compile_env.cpp \
     src/definitions_parser.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
 	src/abstract_block.h \
+	src/abstract_buildable_object.h \
 	src/children_block.h \
 	src/compile_env.h \
 	src/definitions_parser.h \
@@ -40,6 +42,7 @@ HEADERS += \
     src/frontend/editor.h \ \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \
+	src/initializer.h \
 	src/joed.h \
 	src/layout_entry.h \
 	src/lua_vm.h \

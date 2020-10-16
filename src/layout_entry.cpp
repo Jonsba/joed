@@ -10,7 +10,7 @@ Style* Layout_Entry::style() {
 }
 
 bool Layout_Entry::is_children_block() {
-	if (this->the_style->name() == Children_Block_Value) {
+	if (this->the_style->name() == Style::Children_Block_Value) {
 		return true;
 	}
 	return false;

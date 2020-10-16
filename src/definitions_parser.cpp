@@ -7,9 +7,10 @@
 #include "joed.h"
 #include "styles.h"
 
-Definitions_Parser::Definitions_Parser(Styles* styles, Compile_Env* compiler) {
-	this->styles = styles;
-	this->compiler = compiler;
+Definitions_Parser::Definitions_Parser(Initializer<Styles>* style_initializer,
+                                       Initializer<Compile_Env>* compiler) {
+	this->style_initializer = style_initializer;
+	this->compiler_initializer = compiler;
 	this->parse(Joed::Base_Definitions_File);
 }
 void Definitions_Parser::parse(QString definition_file) {
@@ -20,30 +21,19 @@ void Definitions_Parser::parse(QString definition_file) {
 	}
 	QTextStream stream(&file);
 	QString line, trimmed_line;
-	enum State { Starting = 0, Parsing_Key = 1, Check_For_Oneliner = 2, Parsing_Value = 3 };
 	State state = Starting;
 	this->level = 0;
 	while (true) {
 		switch (state) {
 		case Parsing_Key: {
-			QString key = parse_key(line, trimmed_line);
-			if (key != "") {
-				state = Check_For_Oneliner;
-				this->level++;
-			} else {
-				state = Parsing_Value;
-			}
-			continue;
-		}
-		case Check_For_Oneliner:
-			if (trimmed_line != "") { // One-liner found?
-				// Then we will parse the value
-				state = Parsing_Value;
+			QString key = read_key(trimmed_line);
+			state = parse_identifier(key, line);
+			if (state == Parsing_Value && trimmed_line != "") {
+				// We will check for one-liner
 				continue;
 			}
-			// Then a key or some data has to be read at the next line
-			state = Parsing_Key;
 			break;
+		}
 		case Parsing_Value:
 			this->add_value_line(trimmed_line);
 			state = Parsing_Key;
@@ -70,35 +60,14 @@ bool Definitions_Parser::is_comment(QString line) {
 	return false;
 }
 
-QString Definitions_Parser::parse_key(QString line, QString& trimmed_line) {
+QString Definitions_Parser::read_key(QString& trimmed_line) {
 	int delimiter = trimmed_line.indexOf(':');
 	if (delimiter < 0) {
 		return "";
 	}
-	QString current_key = trimmed_line.left(delimiter);
-	for (QString key : Joed::Keys) {
-		if (current_key == key) {
-			int counted_levels = count_levels(line);
-			if (counted_levels < this->level) {
-				for (int i = counted_levels + 1; i < this->level; i++) {
-					this->keys_hierarchy[i] = "";
-				}
-			}
-			this->level = counted_levels;
-			this->keys_hierarchy[this->level] = current_key;
-			if (counted_levels == 1) {
-				if (keys_hierarchy[0] != "styles") {
-					print("Unexpected structure for the definitions file");
-					throw;
-				}
-				this->styles->parse_style_identifier(current_key);
-			}
-			trimmed_line = trimmed_line.mid(delimiter + 1).trimmed();
-			this->current_key = current_key;
-			return current_key;
-		}
-	}
-	return "";
+	QString key = trimmed_line.left(delimiter);
+	trimmed_line = trimmed_line.mid(delimiter + 1).trimmed();
+	return key;
 }
 
 int Definitions_Parser::count_levels(QString line) {
@@ -109,13 +78,39 @@ int Definitions_Parser::count_levels(QString line) {
 	return i;
 }
 
+State Definitions_Parser::parse_identifier(QString key, QString line) {
+	if (count_levels(line) == 0) {
+		return parse_top_key(key);
+	}
+	if (this->top_key == Backend_Key) {
+		return this->compiler_initializer->parse_identifier(key);
+	} else {
+		return this->style_initializer->parse_identifier(key);
+	}
+}
+
+State Definitions_Parser::parse_top_key(QString key) {
+	if (key == Version_Key) {
+		this->top_key = Version_Key;
+		return Parsing_Value;
+	} else if (key == Backend_Key) {
+		this->top_key = Backend_Key;
+	} else if (key == Styles_Key) {
+		this->top_key = Styles_Key;
+	} else {
+		print("Invalid top key: " + key);
+		throw;
+	}
+	return Parsing_Key;
+}
+
 void Definitions_Parser::add_value_line(QString value_line) {
-	if (this->current_key == Joed::Version_Key) {
+	if (this->top_key == Version_Key) {
 		check_version_validity(value_line);
-	} else if (this->current_key == Joed::Backend_Key) {
-		this->compiler->set_backend(value_line);
-	} else if (this->keys_hierarchy[0] == Joed::Styles_Key) {
-		this->styles->add_value(this->current_key, value_line);
+	} else if (this->top_key == Backend_Key) {
+		this->compiler_initializer->add_value(value_line);
+	} else {
+		this->style_initializer->add_value(value_line);
 	}
 }
 

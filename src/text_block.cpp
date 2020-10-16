@@ -20,6 +20,6 @@ bool Text_Block::is_multiline() {
 
 QString Text_Block::compile() {
 	Global_Dict global_dict;
-	global_dict[Text_Value] = this->text_content;
+	global_dict[Style::Text_Value] = this->text_content;
 	return this->the_style->compile(global_dict);
 }

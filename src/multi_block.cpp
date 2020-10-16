@@ -17,6 +17,6 @@ QString Multi_Block::compile() {
 	// At the moment, the children block is the only one there. It needs to be fixed later to allow
 	// other blocks
 	Global_Dict global_dict;
-	global_dict[Children_Block_Value] = child_contents;
+	global_dict[Style::Children_Block_Value] = child_contents;
 	return this->the_style->compile(global_dict);
 }

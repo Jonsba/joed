@@ -1,7 +1,10 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
+#include "initializer.h"
 #include <QString>
+
+class Styles;
 
 #define DOCUMENT_NAME "document"
 #define TEX_DOCUMENT DOCUMENT_NAME ".tex"
@@ -23,11 +26,12 @@ class Document_Root {
 	void compile_document();
 
  private:
-	Styles* styles;
+	Initializer<Styles>* styles_initializer;
 	Multi_Block* top_block;
 	Multi_Block_Widget* top_widget_block;
-	Compile_Env* compile_env;
+	Initializer<Compile_Env>* compile_env_initializer;
 	QProcess* compile_process;
+	Styles* styles;
 };
 
 #endif // DOCUMENT_H
