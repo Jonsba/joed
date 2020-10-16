@@ -16,12 +16,12 @@ class Definitions_Parser {
 	static const int Minor_Version = 0;
 	static const int Revision_Version = 0;
 	//
-	void Parse(QString definition_file);
-	QString Parse_Key(QString line, QString& trimmed_line);
-	void Check_Version_Validity(QString version_string);
-	void Add_Value_Line(QString value_line);
-	bool Is_Comment(QString line);
-	int Count_Levels(QString line);
+	void parse(QString definition_file);
+	QString parse_key(QString line, QString& trimmed_line);
+	void check_version_validity(QString version_string);
+	void add_value_line(QString value_line);
+	bool is_comment(QString line);
+	int count_levels(QString line);
 	//
 	QString keys_hierarchy[Max_Ident_Level];
 	Styles* styles;
@@ -29,8 +29,8 @@ class Definitions_Parser {
 	QString current_key;
 	int level;
 	// DEBUG ///////////////////////////////////////////////////////////////////////////////////////
-	void Print_Indent(QString text);
-	QString To_String(QString string_vector[]);
+	void print_indent(QString text);
+	QString to_string(QString string_vector[]);
 };
 
 #endif // DEFINITIONS_PARSER_H

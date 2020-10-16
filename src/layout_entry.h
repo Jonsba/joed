@@ -9,11 +9,11 @@ class Layout_Entry {
  public:
 	Layout_Entry();
 	Layout_Entry* Next();
-	Style* Get_Style();
-	bool Is_Children_Block();
+	Style* style();
+	bool is_children_block();
 
  private:
-	Style* style;
+	Style* the_style;
 	Layout_Entry* next = nullptr;
 };
 

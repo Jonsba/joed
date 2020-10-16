@@ -2,9 +2,9 @@
 #include "style.h"
 
 Abstract_Block::Abstract_Block(Style* style) {
-	this->style = style;
+	this->the_style = style;
 }
 
-Style* Abstract_Block::Get_Style() {
-	return this->style;
+Style* Abstract_Block::style() {
+	return this->the_style;
 }

@@ -8,11 +8,11 @@ class Abstract_Block;
 class Compile_Env {
  public:
 	Compile_Env();
-	void Set_Backend(QString backend);
-	QString Get_Backend();
+	void set_backend(QString backend);
+	QString backend();
 
  private:
-	QString backend;
+	QString the_backend;
 };
 
 #endif // COMPILER_H

@@ -13,12 +13,12 @@ Lua_VM::Lua_VM() {
 	luaL_openlibs(L);
 }
 
-int Lua_VM::Expr_Init(QString expr) {
+int Lua_VM::expr_init(QString expr) {
 	luaL_loadstring(this->L, To_Chars("return " + expr));
 	return luaL_ref(this->L, LUA_REGISTRYINDEX);
 }
 
-QString Lua_VM::Expr_Exec(int cookie) {
+QString Lua_VM::expr_exec(int cookie) {
 	lua_rawgeti(this->L, LUA_REGISTRYINDEX, cookie);
 	lua_call(this->L, 0, 1);
 	const char* result = lua_tostring(this->L, -1);
@@ -26,7 +26,7 @@ QString Lua_VM::Expr_Exec(int cookie) {
 	return QString::fromLatin1(result);
 }
 
-void Lua_VM::Set_Global_Variable(QString key, QString value) {
+void Lua_VM::set_global_variable(QString key, QString value) {
 	lua_pushstring(this->L, To_Chars(value));
 	lua_setglobal(this->L, To_Chars(key));
 }

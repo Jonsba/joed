@@ -48,7 +48,7 @@ void Editor::Compile(int tab_index) {
 	//		return;
 	//	}
 	//	this->text_changed = false;
-	this->document_root->Compile_Document();
+	this->document_root->compile_document();
 }
 
 void Editor::Compilation_Completed() {

@@ -8,12 +8,12 @@ class Style;
 
 class Abstract_Block {
  public:
-	Abstract_Block(Style* style);
-	Style* Get_Style();
-	virtual QString Compile() = 0;
+	Abstract_Block(Style* the_style);
+	Style* style();
+	virtual QString compile() = 0;
 
  protected:
-	Style* style;
+	Style* the_style;
 	// QLinkedList<Abstract_Block*> first_sibling;
 };
 

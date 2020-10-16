@@ -10,9 +10,9 @@
 Definitions_Parser::Definitions_Parser(Styles* styles, Compile_Env* compiler) {
 	this->styles = styles;
 	this->compiler = compiler;
-	this->Parse(Joed::Base_Definitions_File);
+	this->parse(Joed::Base_Definitions_File);
 }
-void Definitions_Parser::Parse(QString definition_file) {
+void Definitions_Parser::parse(QString definition_file) {
 	QFile file(definition_file);
 	if (! file.open(QIODevice::ReadOnly)) {
 		print("Cannot open definitions file: " + definition_file);
@@ -26,7 +26,7 @@ void Definitions_Parser::Parse(QString definition_file) {
 	while (true) {
 		switch (state) {
 		case Parsing_Key: {
-			QString key = Parse_Key(line, trimmed_line);
+			QString key = parse_key(line, trimmed_line);
 			if (key != "") {
 				state = Check_For_Oneliner;
 				this->level++;
@@ -45,7 +45,7 @@ void Definitions_Parser::Parse(QString definition_file) {
 			state = Parsing_Key;
 			break;
 		case Parsing_Value:
-			this->Add_Value_Line(trimmed_line);
+			this->add_value_line(trimmed_line);
 			state = Parsing_Key;
 			break;
 		case Starting:
@@ -59,18 +59,18 @@ void Definitions_Parser::Parse(QString definition_file) {
 				return;
 			}
 			trimmed_line = line.trimmed();
-		} while (trimmed_line == "" || Is_Comment(trimmed_line));
+		} while (trimmed_line == "" || is_comment(trimmed_line));
 	}
 }
 
-bool Definitions_Parser::Is_Comment(QString line) {
+bool Definitions_Parser::is_comment(QString line) {
 	if (line.mid(0, 2) == "--") {
 		return true;
 	}
 	return false;
 }
 
-QString Definitions_Parser::Parse_Key(QString line, QString& trimmed_line) {
+QString Definitions_Parser::parse_key(QString line, QString& trimmed_line) {
 	int delimiter = trimmed_line.indexOf(':');
 	if (delimiter < 0) {
 		return "";
@@ -78,7 +78,7 @@ QString Definitions_Parser::Parse_Key(QString line, QString& trimmed_line) {
 	QString current_key = trimmed_line.left(delimiter);
 	for (QString key : Joed::Keys) {
 		if (current_key == key) {
-			int counted_levels = Count_Levels(line);
+			int counted_levels = count_levels(line);
 			if (counted_levels < this->level) {
 				for (int i = counted_levels + 1; i < this->level; i++) {
 					this->keys_hierarchy[i] = "";
@@ -91,7 +91,7 @@ QString Definitions_Parser::Parse_Key(QString line, QString& trimmed_line) {
 					print("Unexpected structure for the definitions file");
 					throw;
 				}
-				this->styles->Parse_Style_Identifier(current_key);
+				this->styles->parse_style_identifier(current_key);
 			}
 			trimmed_line = trimmed_line.mid(delimiter + 1).trimmed();
 			this->current_key = current_key;
@@ -101,7 +101,7 @@ QString Definitions_Parser::Parse_Key(QString line, QString& trimmed_line) {
 	return "";
 }
 
-int Definitions_Parser::Count_Levels(QString line) {
+int Definitions_Parser::count_levels(QString line) {
 	int i = 0;
 	while (line[i] == '\t') {
 		i++;
@@ -109,17 +109,17 @@ int Definitions_Parser::Count_Levels(QString line) {
 	return i;
 }
 
-void Definitions_Parser::Add_Value_Line(QString value_line) {
+void Definitions_Parser::add_value_line(QString value_line) {
 	if (this->current_key == Joed::Version_Key) {
-		Check_Version_Validity(value_line);
+		check_version_validity(value_line);
 	} else if (this->current_key == Joed::Backend_Key) {
-		this->compiler->Set_Backend(value_line);
+		this->compiler->set_backend(value_line);
 	} else if (this->keys_hierarchy[0] == Joed::Styles_Key) {
-		this->styles->Add_Value(this->current_key, value_line);
+		this->styles->add_value(this->current_key, value_line);
 	}
 }
 
-void Definitions_Parser::Check_Version_Validity(QString version_string) {
+void Definitions_Parser::check_version_validity(QString version_string) {
 	QStringList version_list = version_string.split(".");
 	int major_version = version_list.at(0).toInt();
 	int minor_version = version_list.at(1).toInt();
@@ -134,7 +134,7 @@ void Definitions_Parser::Check_Version_Validity(QString version_string) {
 
 // DEBUG //////////////////////////////////////////////////////////////////////////////////////////
 
-void Definitions_Parser::Print_Indent(QString text) {
+void Definitions_Parser::print_indent(QString text) {
 	QString indentation = "";
 	for (int i = 0; i < this->level; i++) {
 		indentation += '\t';
@@ -142,7 +142,7 @@ void Definitions_Parser::Print_Indent(QString text) {
 	print(indentation + text);
 }
 
-QString Definitions_Parser::To_String(QString string_vector[]) {
+QString Definitions_Parser::to_string(QString string_vector[]) {
 	QString result = string_vector[0];
 	for (int i = 1; i < Max_Ident_Level; i++) {
 		if (string_vector[i] == "") break;

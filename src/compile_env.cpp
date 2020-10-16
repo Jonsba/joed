@@ -5,10 +5,10 @@
 
 Compile_Env::Compile_Env() {}
 
-void Compile_Env::Set_Backend(QString backend) {
-	this->backend = backend;
+void Compile_Env::set_backend(QString backend) {
+	this->the_backend = backend;
 }
 
-QString Compile_Env::Get_Backend() {
-	return this->backend;
+QString Compile_Env::backend() {
+	return this->the_backend;
 }

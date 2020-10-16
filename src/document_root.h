@@ -20,7 +20,7 @@ class QProcess;
 class Document_Root {
  public:
 	Document_Root(QVBoxLayout* container_widget, QProcess* compile_process);
-	void Compile_Document();
+	void compile_document();
 
  private:
 	Styles* styles;

@@ -7,9 +7,9 @@
 
 class Multi_Block : public Abstract_Block {
  public:
-	Multi_Block(Style* style);
-	QString Compile();
-	void Add_Child(Abstract_Block* child);
+	Multi_Block(Style* the_style);
+	QString compile();
+	void add_child(Abstract_Block* child);
 
  private:
 	QLinkedList<Abstract_Block*> first_child;

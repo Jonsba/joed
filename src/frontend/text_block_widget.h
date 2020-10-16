@@ -14,7 +14,7 @@ class Text_Block_Widget : public QTextEdit {
 	explicit Text_Block_Widget(QVBoxLayout* widget_container, Text_Block* top_block);
 
  private:
-	void Text_Changed();
+	void text_changed();
 	//
 	Text_Block* block;
 };

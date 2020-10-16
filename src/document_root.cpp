@@ -15,14 +15,14 @@ Document_Root::Document_Root(QVBoxLayout* widget_container, QProcess* compile_pr
 	this->styles = new Styles();
 	this->compile_env = new Compile_Env();
 	Definitions_Parser(this->styles, this->compile_env);
-	this->top_block = new Multi_Block(this->styles->Find(Joed::Document_Key));
+	this->top_block = new Multi_Block(this->styles->find(Joed::Document_Key));
 	this->top_widget_block = new Multi_Block_Widget(widget_container, this->top_block);
 	this->compile_process = compile_process;
 }
 
-void Document_Root::Compile_Document() {
+void Document_Root::compile_document() {
 
-	QString code = this->top_block->Compile();
+	QString code = this->top_block->compile();
 
 	QFile file(TEX_DOCUMENT_PATH);
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -31,5 +31,5 @@ void Document_Root::Compile_Document() {
 	}
 	file.close();
 	compile_process->setWorkingDirectory(TEX_WORKING_DIRECTORY);
-	compile_process->start(this->compile_env->Get_Backend(), QStringList() << TEX_DOCUMENT);
+	compile_process->start(this->compile_env->backend(), QStringList() << TEX_DOCUMENT);
 }

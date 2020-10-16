@@ -12,7 +12,7 @@ class Multi_Block_Widget : public QWidget {
 	explicit Multi_Block_Widget(QVBoxLayout* widget_container, Multi_Block* top_block);
 
  private:
-	void Create_Layout();
+	void create_layout();
 	//
 	Multi_Block* top_block;
 	QVBoxLayout* child_widget_container;

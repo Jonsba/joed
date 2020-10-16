@@ -14,22 +14,22 @@ class Style {
 	friend class Styles;
 
  public:
-	Style(QString name, Lua_VM* lua_vm);
-	QString Get_Name();
-	Type_Enum Get_Type();
-	Layout_Entry* First_Layout_Entry();
-	Style* Default_Child_Style();
-	QString Compile(QString key, QString value);
+	Style(QString style_name, Lua_VM* lua_vm);
+	QString name();
+	Type_Enum type();
+	Layout_Entry* first_layout_entry();
+	Style* default_child_style();
+	QString compile(QString key, QString value);
 
  private:
-	QString name;
-	Type_Enum type = Unspecified_E;
+	QString style_name;
+	Type_Enum the_type = Unspecified_E;
 	Style* base_style = nullptr;
 	QString declare;
 	QString output;
 	Style* parent = nullptr;
-	Layout_Entry* first_layout_entry = nullptr;
-	Style* default_child_style = nullptr;
+	Layout_Entry* the_first_layout_entry = nullptr;
+	Style* the_default_child_style = nullptr;
 	Lua_VM* lua_vm;
 	int lua_cookie;
 };

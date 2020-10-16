@@ -4,19 +4,19 @@
 
 Text_Block::Text_Block(Style* style) : Abstract_Block(style) {
 	this->multiline = false;
-	if (style->Get_Type() == Multiline_Text_Block_E) {
+	if (style->type() == Multiline_Text_Block_E) {
 		this->multiline = true;
 	}
 }
 
-void Text_Block::Set_Text_Contents(QString content) {
+void Text_Block::set_text_contents(QString content) {
 	this->text_content = content;
 }
 
-bool Text_Block::Is_Multiline() {
+bool Text_Block::is_multiline() {
 	return this->multiline;
 }
 
-QString Text_Block::Compile() {
-	return this->style->Compile(Text_Value, this->text_content);
+QString Text_Block::compile() {
+	return this->the_style->compile(Text_Value, this->text_content);
 }

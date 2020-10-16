@@ -5,30 +5,30 @@
 #include <lua.hpp>
 
 Style::Style(QString name, Lua_VM* lua_vm) {
-	this->name = name;
+	this->style_name = name;
 	this->lua_vm = lua_vm;
 	this->lua_cookie = LUA_NOREF;
 }
 
-QString Style::Get_Name() {
-	return this->name;
+QString Style::name() {
+	return this->style_name;
 }
 
-Style* Style::Default_Child_Style() {
-	return this->default_child_style;
+Style* Style::default_child_style() {
+	return this->the_default_child_style;
 }
 
-Type_Enum Style::Get_Type() {
-	return this->type;
+Type_Enum Style::type() {
+	return this->the_type;
 }
 
-Layout_Entry* Style::First_Layout_Entry() {
-	return this->first_layout_entry;
+Layout_Entry* Style::first_layout_entry() {
+	return this->the_first_layout_entry;
 }
-QString Style::Compile(QString key, QString value) {
+QString Style::compile(QString key, QString value) {
 	if (this->lua_cookie == LUA_NOREF) {
-		this->lua_cookie = this->lua_vm->Expr_Init(this->output);
+		this->lua_cookie = this->lua_vm->expr_init(this->output);
 	}
-	this->lua_vm->Set_Global_Variable(key, value);
-	return this->lua_vm->Expr_Exec(this->lua_cookie);
+	this->lua_vm->set_global_variable(key, value);
+	return this->lua_vm->expr_exec(this->lua_cookie);
 }

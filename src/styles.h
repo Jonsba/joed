@@ -12,12 +12,11 @@ class Styles {
 
  public:
 	Styles();
-	void Parse_Style_Identifier(QString name);
-	Style* Add_Style(QString name);
-	Style* Add_Style_If_Nil(QString name);
-	void Add_Value(QString key, QString value);
-	void Finalize();
-	Style* Find(QString key);
+	void parse_style_identifier(QString name);
+	Style* add_style(QString name);
+	Style* add_style_if_nil(QString name);
+	void add_value(QString key, QString value);
+	Style* find(QString key);
 
  private:
 	const QString Multi_Block_Value = "multi_block";

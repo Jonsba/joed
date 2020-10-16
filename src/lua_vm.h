@@ -10,9 +10,9 @@ class lua_State;
 class Lua_VM {
  public:
 	Lua_VM();
-	int Expr_Init(QString expr);
-	QString Expr_Exec(int cookie);
-	void Set_Global_Variable(QString key, QString value);
+	int expr_init(QString expr);
+	QString expr_exec(int cookie);
+	void set_global_variable(QString key, QString value);
 
  private:
 	//
