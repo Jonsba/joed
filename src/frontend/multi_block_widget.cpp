@@ -19,8 +19,7 @@ Multi_Block_Widget::Multi_Block_Widget(QVBoxLayout* widget_container, Multi_Bloc
 
 void Multi_Block_Widget::create_layout() {
 	QWidget* new_widget;
-	Layout_Entry* layout_entry = top_block->style()->first_layout_entry();
-	while (layout_entry != nullptr) {
+	for (Layout_Entry* layout_entry : top_block->style()->layout_entries()) {
 		Style* style;
 		if (layout_entry->is_children_block()) {
 			style = this->top_block->style()->default_child_style();
@@ -38,6 +37,5 @@ void Multi_Block_Widget::create_layout() {
 		}
 		this->top_block->add_child(child_block);
 		// TODO : check layout_entry.Is_A_Child()
-		layout_entry = layout_entry->Next();
 	}
 }

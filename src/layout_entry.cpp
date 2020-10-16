@@ -1,14 +1,12 @@
 #include "layout_entry.h"
 #include "style.h"
 
-Layout_Entry::Layout_Entry() {}
+Layout_Entry::Layout_Entry(Style* the_style) {
+	this->the_style = the_style;
+}
 
 Style* Layout_Entry::style() {
 	return this->the_style;
-}
-
-Layout_Entry* Layout_Entry::Next() {
-	return this->next;
 }
 
 bool Layout_Entry::is_children_block() {

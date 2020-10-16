@@ -12,12 +12,11 @@ void Styles::parse_style_identifier(QString name) {
 	if (name == Joed::Document_Key) {
 		this->new_style = this->add_style(name);
 		this->new_style->the_type = Multi_Block_E;
-		this->new_style->style_name = name;
+		this->new_style->the_name = name;
 	} else if (name != Joed::New_Style_Key) {
 		print(name + " is an unknown style");
 		throw;
 	}
-	last_layout_entry = nullptr;
 }
 
 Style* Styles::add_style(QString name) {
@@ -52,16 +51,8 @@ void Styles::add_value(QString key, QString value) {
 	} else if (key == Joed::Child_Of_Key) {
 		this->new_style->parent = this->list[value];
 	} else if (key == Joed::Layout_Key) {
-		Layout_Entry* layout_entry = new Layout_Entry();
-		// last_layout_entry = layout_entry;
-		if (last_layout_entry == nullptr) {
-			this->new_style->the_first_layout_entry = layout_entry;
-			last_layout_entry = layout_entry;
-		} else {
-			last_layout_entry->next = layout_entry;
-			last_layout_entry = last_layout_entry->next;
-		}
-		layout_entry->the_style = this->add_style_if_nil(value);
+		Layout_Entry* layout_entry = new Layout_Entry(this->add_style_if_nil(value));
+		new_style->the_layout_entries.append(layout_entry);
 	} else if (key == Joed::Declare_Key) {
 		this->new_style->declare += value + '\n';
 	} else if (key == Joed::Output_Key) {

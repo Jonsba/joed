@@ -12,7 +12,7 @@ class Multi_Block : public Abstract_Block {
 	void add_child(Abstract_Block* child);
 
  private:
-	QLinkedList<Abstract_Block*> first_child;
+	QLinkedList<Abstract_Block*> children;
 };
 
 #endif // MULTI_BLOCK_H

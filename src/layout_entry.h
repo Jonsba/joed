@@ -4,17 +4,14 @@
 class Style;
 
 class Layout_Entry {
-	friend class Styles;
 
  public:
-	Layout_Entry();
-	Layout_Entry* Next();
+	Layout_Entry(Style* the_style);
 	Style* style();
 	bool is_children_block();
 
  private:
 	Style* the_style;
-	Layout_Entry* next = nullptr;
 };
 
 #endif // LAYOUT_NODE_H

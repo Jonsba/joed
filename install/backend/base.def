@@ -10,7 +10,9 @@ styles:
 
 	document:
 		layout:
+			-- header
 			_children_block_
+			-- footer
 		output:
 			'\\setupinteraction[state=start]'
 			'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
