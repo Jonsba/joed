@@ -15,11 +15,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/abstract_block.cpp \
-    src/abstract_buildable_object.cpp \
+    src/abstract_loadable_object.cpp \
+    src/backend.cpp \
     src/children_block.cpp \
-    src/compile_env.cpp \
     src/definitions_parser.cpp \
-    src/document_root.cpp \
+    src/document.cpp \
     src/frontend/multi_block_widget.cpp \
     src/frontend/text_block_widget.cpp \
     src/joed.cpp \
@@ -34,11 +34,11 @@ SOURCES += \
 
 HEADERS += \
 	src/abstract_block.h \
-	src/abstract_buildable_object.h \
+	src/abstract_loadable_object.h \
+	src/backend.h \
 	src/children_block.h \
-	src/compile_env.h \
 	src/definitions_parser.h \
-	src/document_root.h \
+	src/document.h \
     src/frontend/editor.h \ \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \

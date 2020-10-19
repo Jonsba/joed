@@ -2,15 +2,15 @@
 #include <QString>
 #include <QTextStream>
 
-#include "compile_env.h"
+#include "backend.h"
 #include "definitions_parser.h"
 #include "joed.h"
 #include "styles.h"
 
 Definitions_Parser::Definitions_Parser(Initializer<Styles>* style_initializer,
-                                       Initializer<Compile_Env>* compiler) {
+                                       Initializer<Backend>* compiler_initializer) {
 	this->style_initializer = style_initializer;
-	this->compiler_initializer = compiler;
+	this->compiler_initializer = compiler_initializer;
 	this->parse(Joed::Base_Definitions_File);
 }
 void Definitions_Parser::parse(QString definition_file) {

@@ -10,7 +10,7 @@ class Abstract_Block {
  public:
 	Abstract_Block(Style* the_style);
 	Style* style();
-	virtual QString compile() = 0;
+	virtual QString to_backend_code() = 0;
 
  protected:
 	Style* the_style;

@@ -1,7 +1,7 @@
 #ifndef STYLES_H
 #define STYLES_H
 
-#include "abstract_buildable_object.h"
+#include "abstract_loadable_object.h"
 #include "style.h"
 
 #include <QHash>
@@ -9,7 +9,7 @@
 
 class Lua_VM;
 
-class Styles : public Abstract_Buildable_Object {
+class Styles : public Abstract_Loadable_Object {
  public:
 	Styles();
 	virtual void process_intermediate_key(QString key);

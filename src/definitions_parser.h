@@ -6,14 +6,14 @@
 #include <QVector>
 
 class Styles;
-class Compile_Env;
-class Abstract_Buildable_Object;
+class Backend;
+class Abstract_Loadable_Object;
 
 class Definitions_Parser {
  public:
 	static const int Max_Ident_Level = 3;
 	Definitions_Parser(Initializer<Styles>* style_initializer,
-	                   Initializer<Compile_Env>* compiler_initializer);
+	                   Initializer<Backend>* compiler_initializer);
 
  private:
 	static const int Major_Version = 1;
@@ -36,7 +36,7 @@ class Definitions_Parser {
 	//
 	QString keys_hierarchy[Max_Ident_Level];
 	Initializer<Styles>* style_initializer;
-	Initializer<Compile_Env>* compiler_initializer;
+	Initializer<Backend>* compiler_initializer;
 	QString top_key;
 	QString current_key;
 	int level;

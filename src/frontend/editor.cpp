@@ -1,5 +1,6 @@
 #include "editor.h"
-#include "src/document_root.h"
+#include "src/backend.h"
+#include "src/document.h"
 #include "ui_editor.h"
 
 #include <QLabel>
@@ -27,7 +28,7 @@ Editor::Editor(QWidget* parent)
 
 	//	this->text_changed = true;
 	this->compile_process = new QProcess();
-	this->document_root = new Document_Root(ui->Document_Layout, this->compile_process);
+	this->document = new Document(ui->Document_Layout, this->compile_process);
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile);
 	QObject::connect(this->compile_process, qOverload<int>(&QProcess::finished), this,
@@ -48,7 +49,7 @@ void Editor::Compile(int tab_index) {
 	//		return;
 	//	}
 	//	this->text_changed = false;
-	this->document_root->compile_document();
+	this->document->compile();
 }
 
 void Editor::Compilation_Completed() {

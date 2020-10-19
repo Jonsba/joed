@@ -9,10 +9,10 @@ void Multi_Block::add_block(Abstract_Block* child) {
 	this->blocks.append(child);
 }
 
-QString Multi_Block::compile() {
+QString Multi_Block::to_backend_code() {
 	QString child_contents = "";
 	for (Abstract_Block* child_block : this->blocks) {
-		child_contents += child_block->compile();
+		child_contents += child_block->to_backend_code();
 	}
 	// At the moment, the children block is the only one there. It needs to be fixed later to allow
 	// other blocks

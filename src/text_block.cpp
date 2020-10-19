@@ -18,7 +18,7 @@ bool Text_Block::is_multiline() {
 	return this->multiline;
 }
 
-QString Text_Block::compile() {
+QString Text_Block::to_backend_code() {
 	Global_Dict global_dict;
 	global_dict[Style::Text_Value] = this->text_content;
 	return this->the_style->compile(global_dict);

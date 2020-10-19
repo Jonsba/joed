@@ -8,7 +8,7 @@
 class Multi_Block : public Abstract_Block {
  public:
 	Multi_Block(Style* the_style);
-	QString compile();
+	QString to_backend_code();
 	void add_block(Abstract_Block* block);
 
  private:
