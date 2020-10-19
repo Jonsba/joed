@@ -19,7 +19,7 @@ class Definitions_Parser {
 	static const int Major_Version = 1;
 	static const int Minor_Version = 0;
 	static const int Revision_Version = 0;
-	const QString Version_Key = "version";
+	const QString Version_Key = "format-version";
 	const QString Backend_Key = "backend";
 	const QString Styles_Key = "styles";
 	const QString_Vector Top_Keys = {Version_Key, Backend_Key, Styles_Key};
