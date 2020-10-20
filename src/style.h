@@ -15,11 +15,14 @@ typedef QLinkedList<Layout_Entry*> Layout_Entry_List;
 enum Type_Enum { Unspecified_E, Multi_Block_E, Text_Block_E, Multiline_Text_Block_E };
 
 class Style {
-	friend class Styles;
 
  public:
 	Style(QString the_name, Lua_VM* lua_vm);
 	void assign(QString key, QString value);
+	void set_parent(Style* parent);
+	void set_base_style(Style* base_style);
+	void set_default_child_style(Style* the_default_child_style);
+	void append_layout_entry(Layout_Entry* layout_entry);
 	QString name();
 	Type_Enum type();
 	Layout_Entry_List layout_entries();
@@ -38,7 +41,12 @@ class Style {
 	inline static const QString Inherits_Key = "inherits";
 	inline static const QString Default_Child_Style_Key = "default-child-style";
 	inline static const QString Children_Block_Value = "_children_block_";
+
 	inline static const QString Text_Value = "_text_";
+
+	inline static const QString Multi_Block_Value = "multi_block";
+	inline static const QString Text_Block_Value = "text_block";
+	inline static const QString Multiline_Text_Block_Value = "multiline_text_block";
 
  private:
 	QString the_name;

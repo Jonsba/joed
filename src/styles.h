@@ -17,9 +17,6 @@ class Styles : public Abstract_Loadable_Object {
 	Style* find(QString key);
 
  private:
-	const QString Multi_Block_Value = "multi_block";
-	const QString Text_Block_Value = "text_block";
-	const QString Multiline_Text_Block_Value = "multiline_text_block";
 	//
 	Style* add_style(QString name);
 	Style* add_style_if_nil(QString name);

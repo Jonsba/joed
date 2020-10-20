@@ -14,8 +14,7 @@ State Styles::process_intermediate_key(QString key, int level) {
 		// N level is 2, then level == 0 is the only possibility here
 		if (key == Style::Document_Key) {
 			this->new_style = this->add_style(Style::Document_Key);
-			this->new_style->the_type = Multi_Block_E;
-			this->new_style->the_name = Style::Document_Key;
+			this->new_style->assign(Style::Type_Key, Style::Multi_Block_Value);
 		} else if (key != Style::Style_Key) {
 			error(key + " is an unknown style");
 		}
@@ -27,37 +26,16 @@ void Styles::assign(QString key, QString value) {
 	if (key == Style::Name_Key) {
 		// Style may be already created (e.g. it was referenced by a default-child-style entry)
 		this->new_style = add_style_if_nil(value);
-	} else if (key == Style::Type_Key) {
-		if (value == Multi_Block_Value) {
-			this->new_style->the_type = Multi_Block_E;
-		} else if (value == Text_Block_Value) {
-			this->new_style->the_type = Text_Block_E;
-		} else if (value == Multiline_Text_Block_Value) {
-			this->new_style->the_type = Multiline_Text_Block_E;
-		} else {
-			error("Unknown type: " + value);
-		}
 	} else if (key == Style::Child_Of_Key) {
-		this->new_style->parent = this->list[value];
+		this->new_style->set_parent(this->list[value]);
 	} else if (key == Style::Layout_Key) {
-		Layout_Entry* layout_entry = new Layout_Entry(this->add_style_if_nil(value));
-		new_style->the_layout_entries.append(layout_entry);
-	} else if (key == Style::Declare_Key) {
-		this->new_style->declare += value + '\n';
-	} else if (key == Style::Output_Key) {
-		if (this->new_style->output == "") {
-			this->new_style->output = value;
-		} else {
-			this->new_style->output += " .. string.char(10) .. " + value;
-		}
+		this->new_style->append_layout_entry(new Layout_Entry(this->add_style_if_nil(value)));
 	} else if (key == Style::Inherits_Key) {
-		Style* base_style = this->add_style_if_nil(value);
-		this->new_style->base_style = base_style;
+		this->new_style->set_base_style(this->add_style_if_nil(value));
 	} else if (key == Style::Default_Child_Style_Key) {
-		Style* default_child_style = this->add_style_if_nil(value);
-		this->new_style->the_default_child_style = default_child_style;
+		this->new_style->set_default_child_style(this->add_style_if_nil(value));
 	} else {
-		error(key + " is an unknown key");
+		this->new_style->assign(key, value);
 	}
 }
 
@@ -67,6 +45,7 @@ Style* Styles::find(QString key) {
 
 Style* Styles::add_style(QString name) {
 	Style* style = new Style(name, this->lua_vm);
+	style->assign(Style::Name_Key, name);
 	this->list[name] = style;
 	return style;
 }
