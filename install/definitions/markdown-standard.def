@@ -1,0 +1,21 @@
+format-version: 1.0.0
+
+-- TODO: correct that
+environment:
+	name: standard
+	output:
+		'\\startenvironment ' .. _name_
+		'	\\setupinteraction[state=start]'
+		'	\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
+		'\\stopenvironment'
+
+styles:
+	document:
+		layout:
+			_children_block_
+		output:
+			'\\environment {' _environment_name_ '}'
+			'\\starttext'
+			_children_block_
+			'\\stoptext'
+		default-child-style: paragraph

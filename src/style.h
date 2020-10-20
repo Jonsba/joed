@@ -26,8 +26,9 @@ class Style {
 	Style* default_child_style();
 	QString compile(Global_Dict key_value);
 	//
+	inline static const QString Styles_Key = "styles";
 	inline static const QString Document_Key = "document";
-	inline static const QString New_Style_Key = "new-style";
+	inline static const QString Style_Key = "style";
 	inline static const QString Name_Key = "name";
 	inline static const QString Child_Of_Key = "child-of";
 	inline static const QString Type_Key = "type";
@@ -36,10 +37,6 @@ class Style {
 	inline static const QString Output_Key = "output";
 	inline static const QString Inherits_Key = "inherits";
 	inline static const QString Default_Child_Style_Key = "default-child-style";
-	inline static const QString_Vector Intermediate_Keys = {Document_Key, New_Style_Key};
-	inline static const QString_Vector End_Keys = {
-	    Name_Key,    Child_Of_Key, Type_Key,     Layout_Key,
-	    Declare_Key, Output_Key,   Inherits_Key, Default_Child_Style_Key};
 	inline static const QString Children_Block_Value = "_children_block_";
 	inline static const QString Text_Value = "_text_";
 

@@ -19,7 +19,7 @@ QT_END_NAMESPACE
 class Editor : public QMainWindow {
 
  public:
-	Editor(QWidget* parent = nullptr);
+	Editor(QString document_path, QWidget* parent = nullptr);
 	~Editor();
 
  private:

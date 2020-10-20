@@ -3,9 +3,9 @@
 
 #include "multi_block.h"
 
-class Children_Block : public Multi_Block {
+class Children_Blocks : public Multi_Block {
  public:
-	Children_Block();
+	Children_Blocks();
 };
 
 #endif // CHILDREN_BLOCK_H

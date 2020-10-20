@@ -4,6 +4,7 @@ backend:
 	name: context
 	exec: /opt/context/tex/texmf-linux-64/bin/context
 
+
 -- TODO:
 --   properties (space-before/after, formatting)
 --   _text_ vs _formatted_text_ in text blocks
@@ -12,18 +13,16 @@ styles:
 
 	document:
 		layout:
-			-- header
 			_children_block_
-			-- footer
 		output:
-			'\\setupinteraction[state=start]'
-			'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
-			'\\starttext'
+			"\\setupinteraction[state=start]"
+			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
+			"\\starttext"
 			_children_block_
-			'\\stoptext'
+			"\\stoptext"
 		default-child-style: paragraph
 
-	new-style:
+	style:
 		name: paragraph
 		type: multiline_text_block
 		output:

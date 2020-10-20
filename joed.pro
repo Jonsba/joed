@@ -16,18 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/abstract_block.cpp \
     src/abstract_loadable_object.cpp \
+    src/abstract_versioned_loadable_object.cpp \
     src/backend.cpp \
-    src/children_block.cpp \
-    src/definitions_parser.cpp \
+    src/children_blocks.cpp \
+    src/definitions_file.cpp \
     src/document.cpp \
     src/frontend/multi_block_widget.cpp \
     src/frontend/text_block_widget.cpp \
     src/joed.cpp \
+    src/joed_conf.cpp \
     src/layout_entry.cpp \
     src/lua_vm.cpp \
     src/main.cpp \
     src/frontend/editor.cpp \
     src/multi_block.cpp \
+    src/parser.cpp \
     src/style.cpp \
     src/styles.cpp \
     src/text_block.cpp
@@ -35,18 +38,20 @@ SOURCES += \
 HEADERS += \
 	src/abstract_block.h \
 	src/abstract_loadable_object.h \
+	src/abstract_versioned_loadable_object.h \
 	src/backend.h \
-	src/children_block.h \
-	src/definitions_parser.h \
+	src/children_blocks.h \
+	src/definitions_file.h \
 	src/document.h \
     src/frontend/editor.h \ \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \
-	src/initializer.h \
 	src/joed.h \
+	src/joed_conf.h \
 	src/layout_entry.h \
 	src/lua_vm.h \
 	src/multi_block.h \
+	src/parser.h \
 	src/style.h \
 	src/styles.h \
 	src/text_block.h

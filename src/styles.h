@@ -2,17 +2,17 @@
 #define STYLES_H
 
 #include "abstract_loadable_object.h"
-#include "style.h"
 
 #include <QHash>
 #include <QString>
 
 class Lua_VM;
+class Style;
 
 class Styles : public Abstract_Loadable_Object {
  public:
 	Styles();
-	virtual void process_intermediate_key(QString key);
+	virtual State process_intermediate_key(QString key, int level);
 	virtual void assign(QString end_key, QString value);
 	Style* find(QString key);
 

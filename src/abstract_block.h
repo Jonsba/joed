@@ -14,7 +14,6 @@ class Abstract_Block {
 
  protected:
 	Style* the_style;
-	// QLinkedList<Abstract_Block*> first_sibling;
 };
 
 #endif // BLOCK_CONTENT_H

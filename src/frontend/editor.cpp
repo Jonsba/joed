@@ -12,7 +12,7 @@
 #include <QTextEdit>
 #include <qpdfview.h>
 
-Editor::Editor(QWidget* parent)
+Editor::Editor(QString document_path, QWidget* parent)
     : QMainWindow(parent), ui(new Ui::Editor), pdf_document(new QPdfDocument(this)) {
 	ui->setupUi(this);
 	// ui->Backend_Code_Block->setFocus();
@@ -28,7 +28,7 @@ Editor::Editor(QWidget* parent)
 
 	//	this->text_changed = true;
 	this->compile_process = new QProcess();
-	this->document = new Document(ui->Document_Layout, this->compile_process);
+	this->document = new Document(ui->Document_Layout, this->compile_process, document_path);
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile);
 	QObject::connect(this->compile_process, qOverload<int>(&QProcess::finished), this,

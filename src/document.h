@@ -1,12 +1,11 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
-#include "initializer.h"
 #include <QString>
 
-class Styles;
-
-class Definitions_Parser;
+class Joed_Conf;
+class Definitions_File;
+class Parser;
 class Styles;
 class Multi_Block;
 class Multi_Block_Widget;
@@ -16,13 +15,17 @@ class QProcess;
 
 class Document {
  public:
-	Document(QVBoxLayout* container_widget, QProcess* compile_process);
+	Document(QVBoxLayout* container_widget, QProcess* compile_process, QString document_path);
+	void new_document(QVBoxLayout* widget_container);
+	void open(QVBoxLayout* widget_container, QString document_path);
 	void compile();
 
  private:
-	Initializer<Styles>* styles_initializer;
+	void load_config();
+	Parser* parser;
+	Joed_Conf* joed_conf;
+	Definitions_File* definition_file;
 	Styles* styles;
-	Initializer<Backend>* backend_initializer;
 	Backend* backend;
 	Multi_Block* top_block;
 	Multi_Block_Widget* top_widget_block;

@@ -14,17 +14,16 @@
 
 class QProcess;
 
-class Backend : Abstract_Loadable_Object {
+class Backend : public Abstract_Loadable_Object {
  public:
 	Backend();
-	virtual void process_intermediate_key(QString key);
-	virtual void assign(QString end_key, QString value);
+	State process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value);
 	void set_compile_process(QProcess* compile_process);
 	void compile(QString code);
 	//
 	inline static const QString Name_Key = "name";
 	inline static const QString Exec_Key = "exec";
-	inline static const QString_Vector Backend_Keys = {Name_Key, Exec_Key};
 
  private:
 	QString name;

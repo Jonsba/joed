@@ -1,0 +1,11 @@
+format-version: 1.0.0
+
+backend: context
+
+document-class: article
+
+blocks:
+	children-blocks:
+		block:
+			style: paragraph
+			text: "My first paragraph"

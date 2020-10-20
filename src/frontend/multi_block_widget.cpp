@@ -3,6 +3,7 @@
 #include "src/joed.h"
 #include "src/layout_entry.h"
 #include "src/multi_block.h"
+#include "src/style.h"
 #include "src/styles.h"
 #include "src/text_block.h"
 #include "text_block_widget.h"

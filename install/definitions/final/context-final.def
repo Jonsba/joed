@@ -2,7 +2,12 @@ format-version: 1.0.0
 
 backend:
 	name: context
-	exec: /opt/context/tex/texmf-linux-64/bin/context
+	file-extension: .tex
+	environment-file-extension: .tex
+	compile-command: /opt/context/tex/texmf-linux-64/bin/context _document_backend_name_
+	viewer:
+		type: pdf
+		opens: _document_name_
 
 -- TODO:
 --   properties (space-before/after, formatting)
@@ -10,6 +15,7 @@ backend:
 
 styles:
 
+	-- TODO: merge concepts with context-article.def
 	document:
 		layout:
 			header OR _None_
@@ -41,7 +47,7 @@ styles:
 			start_command = "\\startsection"
 			stop_command = "\\stopsection"
 		output:
-			start_command .. "[title={" .. section-title.output .. "}]"
+			start_command .. "[title={" .. section-title._output_ .. "}]"
 			_children_block_
 			stop_command
 		default-child-style: paragraph

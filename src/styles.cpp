@@ -1,19 +1,26 @@
 #include "styles.h"
 #include "layout_entry.h"
+#include "style.h"
 
 Styles::Styles() {
 	this->lua_vm = new Lua_VM();
 }
 
-void Styles::process_intermediate_key(QString key) {
-	if (key == Style::Document_Key) {
-		this->new_style = this->add_style(Style::Document_Key);
-		this->new_style->the_type = Multi_Block_E;
-		this->new_style->the_name = Style::Document_Key;
-	} else if (key != Style::New_Style_Key) {
-		print(key + " is an unknown style");
-		throw;
+State Styles::process_intermediate_key(QString key, int level) {
+	if (level == 2) {
+		return Parsing_Value;
 	}
+	if (level == 1) {
+		// N level is 2, then level == 0 is the only possibility here
+		if (key == Style::Document_Key) {
+			this->new_style = this->add_style(Style::Document_Key);
+			this->new_style->the_type = Multi_Block_E;
+			this->new_style->the_name = Style::Document_Key;
+		} else if (key != Style::Style_Key) {
+			error(key + " is an unknown style");
+		}
+	}
+	return Parsing_Key;
 }
 
 void Styles::assign(QString key, QString value) {
@@ -28,8 +35,7 @@ void Styles::assign(QString key, QString value) {
 		} else if (value == Multiline_Text_Block_Value) {
 			this->new_style->the_type = Multiline_Text_Block_E;
 		} else {
-			print("Unknown type: " + value);
-			throw;
+			error("Unknown type: " + value);
 		}
 	} else if (key == Style::Child_Of_Key) {
 		this->new_style->parent = this->list[value];
@@ -51,8 +57,7 @@ void Styles::assign(QString key, QString value) {
 		Style* default_child_style = this->add_style_if_nil(value);
 		this->new_style->the_default_child_style = default_child_style;
 	} else {
-		print(key + " is an unknown key");
-		throw;
+		error(key + " is an unknown key");
 	}
 }
 

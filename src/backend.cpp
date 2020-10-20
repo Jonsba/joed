@@ -9,7 +9,9 @@
 
 Backend::Backend() {}
 
-void Backend::process_intermediate_key(QString key) {}
+State Backend::process_intermediate_key(QString key, int level) {
+	return Parsing_Value;
+}
 
 void Backend::assign(QString end_key, QString value) {
 	if (end_key == Name_Key) {
@@ -17,8 +19,7 @@ void Backend::assign(QString end_key, QString value) {
 	} else if (end_key == Exec_Key) {
 		this->exec = value;
 	} else {
-		print("Unknown backend key: " + end_key + " = " + value);
-		throw;
+		error("Unknown backend key: " + end_key + " = " + value);
 	}
 }
 
