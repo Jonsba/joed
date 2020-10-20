@@ -12,9 +12,10 @@ styles:
 
 	document:
 		layout:
-			-- header
+			header OR _None_
+			document.title OR page_title OR _None_
 			_children_block_
-			-- footer
+			footer OR _None_
 		output:
 			"\\setupinteraction[state=start]"
 			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
@@ -22,13 +23,19 @@ styles:
 			_children_block_
 			"\\stoptext"
 		default-child-style: paragraph
+		styles:
+			style:
+				name: document.title
+				type: text_block
+				output:
+					_text_
 
-	new-style:
+	style:
 		name: section
 		child-of: document
 		type: multi_block
 		layout:
-			section-title
+			section.title
 			_children_block_
 		declare:
 			start_command = "\\startsection"
@@ -38,37 +45,61 @@ styles:
 			_children_block_
 			stop_command
 		default-child-style: paragraph
+		styles:
+			style:
+				name: section.title
+				type: text_block
+				output:
+					_text_
 
-	new-style:
-		name: section-title
-		type: text_block
-		output:
-			_text_
-
-	new-style:
+	style:
 		name: subsection
 		child-of: section
 		inherits: section
 		layout:
-			sub-section-title
+			subsection.title
 			_children_block_
 		declare:
 			start_command = "\\startsubsection"
 			stop_command = "\\stopsubsection"
+		styles:
+			style:
+				name: subsection.title
+				type: text_block
+				output:
+					_text_
 
-	new-style:
-		name: sub-section-title
-		type: text_block
-		output:
-			_text_
-
-	new-style:
+	style:
 		name: paragraph
 		type: multiline_text_block
 		output:
 			"{\\par" .. _text_ .. "}"
 
-	new-inline-style:
+	style:
+		name: image
+		code:
+			"\externalfigure[" .. _image_path_ .. "]"
+		layout:
+			image
+
+	style:
+		name: floating_image:
+		layout:
+			floating_image.label
+			label
+		code:
+			"\placefigure{" .. floating_image_label._output_ .. "} {\externalfigure[" .. _image_path_ .. "]}"
+		styles:
+			style:
+				name: floating_image.label:
+				type: text_block
+				output:
+					-- Numbering ???
+					"Figure: " .. _text_
+
+inline-styles:
+
+	inline-style:
 		name: _bold_
 		output: '{\\bf ' .. _text_ .. ' }'
 
@@ -79,7 +110,7 @@ styles:
 		icon: (inline-styles/)bold.png
 	--
 
-	new-inline-style:
+	inline-style:
 		name: _font_size_
 		output:
 			<lua code>
@@ -93,7 +124,7 @@ styles:
 			<lua code>
 	--
 
-	new-inline-style:
+	inline-style:
 		name: my_custom_inline_style
 		output:
 			(...)
