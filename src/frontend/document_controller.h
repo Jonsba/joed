@@ -3,7 +3,8 @@
 
 #include <QString>
 
-class Joed_Conf;
+class Backend;
+class Joed_Conf_File;
 class Definitions_File;
 class Parser;
 class Styles;
@@ -23,7 +24,7 @@ class Document_Controller {
 
  private:
 	void load_config();
-	Joed_Conf* joed_conf;
+	Joed_Conf_File* joed_conf;
 	Definitions_File* definition_file;
 	Styles* styles;
 	Backend* backend;

@@ -24,7 +24,7 @@ SOURCES += \
     src/frontend/multi_block_widget.cpp \
     src/frontend/text_block_widget.cpp \
     src/joed.cpp \
-    src/joed_conf.cpp \
+    src/joed_conf_file.cpp \
     src/layout_entry.cpp \
     src/lua_vm.cpp \
     src/main.cpp \
@@ -46,7 +46,7 @@ HEADERS += \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \
 	src/joed.h \
-	src/joed_conf.h \
+	src/joed_conf_file.h \
 	src/layout_entry.h \
 	src/lua_vm.h \
 	src/multi_block.h \

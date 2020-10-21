@@ -7,9 +7,9 @@
 #include <QString>
 #include <QVector>
 
-class Joed_Conf : public Abstract_Loadable_File {
+class Joed_Conf_File : public Abstract_Loadable_File {
  public:
-	Joed_Conf();
+	Joed_Conf_File();
 	State process_intermediate_key(QString key, int level);
 	void assign(QString end_key, QString value);
 	QString backend_name();

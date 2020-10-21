@@ -2,7 +2,7 @@
 #include "multi_block_widget.h"
 #include "src/backend.h"
 #include "src/definitions_file.h"
-#include "src/joed_conf.h"
+#include "src/joed_conf_file.h"
 #include "src/multi_block.h"
 #include "src/style.h"
 #include "src/styles.h"
@@ -24,7 +24,7 @@ Document_Controller::Document_Controller(QVBoxLayout* widget_container, QProcess
 
 void Document_Controller::new_document(QVBoxLayout* widget_container) {
 
-	this->joed_conf = new Joed_Conf();
+	this->joed_conf = new Joed_Conf_File();
 	this->joed_conf->parse(Joed::Joed_Conf_File);
 
 	this->definition_file = new Definitions_File();

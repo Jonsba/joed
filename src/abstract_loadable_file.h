@@ -12,7 +12,6 @@ struct File_Version {
 class Abstract_Loadable_File : public Abstract_Loadable_Object {
  public:
 	Abstract_Loadable_File(const File_Version Version);
-	void check_version_validity(QString version_string);
 	//
 	const QString Version_Key = "format-version";
 	void parse(QString file_path);
@@ -22,6 +21,7 @@ class Abstract_Loadable_File : public Abstract_Loadable_Object {
 	void add_value_line(QString value_line);
 	bool is_comment(QString line);
 	int count_levels(QString line);
+	void check_version_validity(QString version_string);
 	//
 	// DEBUG ///////////////////////////////////////////////////////////////////////////////////////
 	void print_indent(QString text, int level);

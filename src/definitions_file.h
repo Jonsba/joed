@@ -7,7 +7,7 @@
 #include <QString>
 #include <QVector>
 
-class Joed_Conf;
+class Joed_Conf_File;
 class Styles;
 class Backend;
 

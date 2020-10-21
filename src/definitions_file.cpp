@@ -10,9 +10,6 @@ Definitions_File::Definitions_File() : Abstract_Loadable_File(Version) {
 
 State Definitions_File::process_intermediate_key(QString key, int level) {
 	if (level == 0) {
-		if (key == Version_Key) {
-			return Parsing_Value;
-		}
 		this->current_object = this->objects_table[key];
 		if (this->current_object == nullptr) {
 			error("Unknown top level key: " + key);
@@ -24,11 +21,7 @@ State Definitions_File::process_intermediate_key(QString key, int level) {
 }
 
 void Definitions_File::assign(QString key, QString value) {
-	if (key == Version_Key) {
-		this->check_version_validity(value);
-	} else {
-		this->current_object->assign(key, value);
-	}
+	this->current_object->assign(key, value);
 }
 
 Styles* Definitions_File::styles() {

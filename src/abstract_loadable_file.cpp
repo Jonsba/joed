@@ -8,18 +8,6 @@ Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version) {
 	this->Version = Version;
 }
 
-void Abstract_Loadable_File::check_version_validity(QString version_string) {
-	QStringList version_list = version_string.split(".");
-	int major_version = version_list.at(0).toInt();
-	int minor_version = version_list.at(1).toInt();
-	if (major_version != Version.Major || minor_version > Version.Minor) {
-		print("Unsupporter version: " + version_string);
-		error("Any version between " + QString::number(Version.Major) + ".0.0 and " +
-		      QString::number(Version.Major) + "." + QString::number(Version.Minor) +
-		      ".x are supported");
-	}
-}
-
 void Abstract_Loadable_File::parse(QString file_path) {
 	QFile file(file_path);
 	if (! file.open(QIODevice::ReadOnly)) {
@@ -38,14 +26,22 @@ void Abstract_Loadable_File::parse(QString file_path) {
 				state = Parsing_Value;
 				continue;
 			}
-			state = this->process_intermediate_key(key, level);
+			if (key == Version_Key) {
+				state = Parsing_Value;
+			} else {
+				state = this->process_intermediate_key(key, level);
+			}
 			if (state == Parsing_Value && trimmed_line != "") {
 				// We will check for one-liner
 				continue;
 			}
 			break;
 		case Parsing_Value:
-			this->assign(key, trimmed_line);
+			if (key == Version_Key) {
+				this->check_version_validity(trimmed_line);
+			} else {
+				this->assign(key, trimmed_line);
+			}
 			state = Parsing_Key;
 			break;
 		case Starting:
@@ -61,6 +57,18 @@ void Abstract_Loadable_File::parse(QString file_path) {
 			trimmed_line = line.trimmed();
 		} while (trimmed_line == "" || is_comment(trimmed_line));
 		level = count_levels(line);
+	}
+}
+
+void Abstract_Loadable_File::check_version_validity(QString version_string) {
+	QStringList version_list = version_string.split(".");
+	int major_version = version_list.at(0).toInt();
+	int minor_version = version_list.at(1).toInt();
+	if (major_version != Version.Major || minor_version > Version.Minor) {
+		print("Unsupporter version: " + version_string);
+		error("Any version between " + QString::number(Version.Major) + ".0.0 and " +
+		      QString::number(Version.Major) + "." + QString::number(Version.Minor) +
+		      ".x are supported");
 	}
 }
 
