@@ -12,8 +12,8 @@ class Style;
 class Styles : public Abstract_Loadable_Object {
  public:
 	Styles();
-	virtual State process_intermediate_key(QString key, int level);
-	virtual void assign(QString end_key, QString value);
+	State process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value);
 	Style* find(QString key);
 
  private:

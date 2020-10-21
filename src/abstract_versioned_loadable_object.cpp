@@ -1,6 +1,5 @@
 #include "abstract_versioned_loadable_object.h"
 #include "joed.h"
-#include <QStringList>
 
 Abstract_Versioned_Loadable_Object::Abstract_Versioned_Loadable_Object(const File_Version Version) {
 	this->Version = Version;

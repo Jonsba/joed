@@ -2,7 +2,9 @@
 #include "layout_entry.h"
 #include "style.h"
 
-Styles::Styles() {
+Styles::Styles()
+    : Abstract_Loadable_Object({Style::Child_Of_Key, Style::Layout_Key, Style::Inherits_Key,
+                                Style::Default_Child_Style_Key}) {
 	this->lua_vm = new Lua_VM();
 }
 
@@ -26,14 +28,8 @@ void Styles::assign(QString key, QString value) {
 	if (key == Style::Name_Key) {
 		// Style may be already created (e.g. it was referenced by a default-child-style entry)
 		this->new_style = add_style_if_nil(value);
-	} else if (key == Style::Child_Of_Key) {
-		this->new_style->set_parent(this->list[value]);
-	} else if (key == Style::Layout_Key) {
-		this->new_style->append_layout_entry(new Layout_Entry(this->add_style_if_nil(value)));
-	} else if (key == Style::Inherits_Key) {
-		this->new_style->set_base_style(this->add_style_if_nil(value));
-	} else if (key == Style::Default_Child_Style_Key) {
-		this->new_style->set_default_child_style(this->add_style_if_nil(value));
+	} else if (this->is_key_object(key)) {
+		this->new_style->assign(key, this->add_style_if_nil(value));
 	} else {
 		this->new_style->assign(key, value);
 	}

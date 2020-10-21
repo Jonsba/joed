@@ -37,17 +37,16 @@ void Style::assign(QString key, QString value) {
 	}
 }
 
-void Style::set_parent(Style* parent) {
-	this->parent = parent;
-}
-void Style::set_base_style(Style* base_style) {
-	this->base_style = base_style;
-}
-void Style::set_default_child_style(Style* the_default_child_style) {
-	this->the_default_child_style = the_default_child_style;
-}
-void Style::append_layout_entry(Layout_Entry* layout_entry) {
-	this->the_layout_entries.append(layout_entry);
+void Style::assign(QString key, Style* object) {
+	if (key == Style::Child_Of_Key) {
+		this->parent = object;
+	} else if (key == Style::Layout_Key) {
+		this->the_layout_entries.append(new Layout_Entry(object));
+	} else if (key == Style::Inherits_Key) {
+		this->base_style = object;
+	} else if (key == Style::Default_Child_Style_Key) {
+		this->the_default_child_style = object;
+	}
 }
 
 QString Style::name() {
@@ -62,7 +61,7 @@ Type_Enum Style::type() {
 	return this->the_type;
 }
 
-Layout_Entry_List Style::layout_entries() {
+QLinkedList<Layout_Entry*> Style::layout_entries() {
 	return this->the_layout_entries;
 }
 QString Style::compile(Global_Dict global_dict) {

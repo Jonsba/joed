@@ -6,11 +6,9 @@
 
 #include <QLinkedList>
 #include <QString>
-#include <QVector>
 
 class Lua_VM;
 class Layout_Entry;
-typedef QLinkedList<Layout_Entry*> Layout_Entry_List;
 
 enum Type_Enum { Unspecified_E, Multi_Block_E, Text_Block_E, Multiline_Text_Block_E };
 
@@ -19,13 +17,10 @@ class Style {
  public:
 	Style(QString the_name, Lua_VM* lua_vm);
 	void assign(QString key, QString value);
-	void set_parent(Style* parent);
-	void set_base_style(Style* base_style);
-	void set_default_child_style(Style* the_default_child_style);
-	void append_layout_entry(Layout_Entry* layout_entry);
+	void assign(QString key, Style* object);
 	QString name();
 	Type_Enum type();
-	Layout_Entry_List layout_entries();
+	QLinkedList<Layout_Entry*> layout_entries();
 	Style* default_child_style();
 	QString compile(Global_Dict key_value);
 	//
@@ -55,7 +50,7 @@ class Style {
 	QString declare;
 	QString output;
 	Style* parent = nullptr;
-	Layout_Entry_List the_layout_entries;
+	QLinkedList<Layout_Entry*> the_layout_entries;
 	Style* the_default_child_style = nullptr;
 	Lua_VM* lua_vm;
 	int lua_cookie;
