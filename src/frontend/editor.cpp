@@ -1,6 +1,6 @@
 #include "editor.h"
+#include "document_controller.h"
 #include "src/backend.h"
-#include "src/document.h"
 #include "ui_editor.h"
 
 #include <QLabel>
@@ -28,7 +28,8 @@ Editor::Editor(QString document_path, QWidget* parent)
 
 	//	this->text_changed = true;
 	this->compile_process = new QProcess();
-	this->document = new Document(ui->Document_Layout, this->compile_process, document_path);
+	this->document =
+	    new Document_Controller(ui->Document_Layout, this->compile_process, document_path);
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile);
 	QObject::connect(this->compile_process, qOverload<int>(&QProcess::finished), this,

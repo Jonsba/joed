@@ -20,7 +20,7 @@ SOURCES += \
     src/backend.cpp \
     src/children_blocks.cpp \
     src/definitions_file.cpp \
-    src/document.cpp \
+    src/frontend/document_controller.cpp \
     src/frontend/multi_block_widget.cpp \
     src/frontend/text_block_widget.cpp \
     src/joed.cpp \
@@ -42,7 +42,7 @@ HEADERS += \
 	src/backend.h \
 	src/children_blocks.h \
 	src/definitions_file.h \
-	src/document.h \
+	src/frontend/document_controller.h \
     src/frontend/editor.h \ \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \

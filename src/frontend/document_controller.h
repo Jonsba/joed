@@ -1,5 +1,5 @@
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef DOCUMENT_CONTROLLER_H
+#define DOCUMENT_CONTROLLER_H
 
 #include <QString>
 
@@ -13,9 +13,10 @@ class Backend;
 class QVBoxLayout;
 class QProcess;
 
-class Document {
+class Document_Controller {
  public:
-	Document(QVBoxLayout* container_widget, QProcess* compile_process, QString document_path);
+	Document_Controller(QVBoxLayout* container_widget, QProcess* compile_process,
+	                    QString document_path);
 	void new_document(QVBoxLayout* widget_container);
 	void open(QVBoxLayout* widget_container, QString document_path);
 	void compile();
@@ -31,4 +32,4 @@ class Document {
 	Multi_Block_Widget* top_widget_block;
 };
 
-#endif // DOCUMENT_H
+#endif // DOCUMENT_CONTROLLER_H
