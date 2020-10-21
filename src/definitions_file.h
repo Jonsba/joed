@@ -1,7 +1,7 @@
 #ifndef DEFINITION_FILE_H
 #define DEFINITION_FILE_H
 
-#include "abstract_versioned_loadable_object.h"
+#include "abstract_loadable_file.h"
 #include "joed.h"
 #include <QHash>
 #include <QString>
@@ -11,7 +11,7 @@ class Joed_Conf;
 class Styles;
 class Backend;
 
-class Definitions_File : public Abstract_Versioned_Loadable_Object {
+class Definitions_File : public Abstract_Loadable_File {
  public:
 	Definitions_File();
 	State process_intermediate_key(QString key, int level);
@@ -19,7 +19,7 @@ class Definitions_File : public Abstract_Versioned_Loadable_Object {
 	Styles* styles();
 	Backend* backend();
 	//
-	inline static const File_Version Version = {1, 1, 1};
+	inline static const File_Version Version = {1, 0, 0};
 	const QString Version_Key = "format-version";
 	const QString Backend_Key = "backend";
 	const QString Styles_Key = "styles";

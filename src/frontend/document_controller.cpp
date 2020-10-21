@@ -4,7 +4,6 @@
 #include "src/definitions_file.h"
 #include "src/joed_conf.h"
 #include "src/multi_block.h"
-#include "src/parser.h"
 #include "src/style.h"
 #include "src/styles.h"
 
@@ -15,7 +14,6 @@
 
 Document_Controller::Document_Controller(QVBoxLayout* widget_container, QProcess* compile_process,
                                          QString document_path) {
-	this->parser = new Parser();
 	if (document_path == "") {
 		this->new_document(widget_container);
 	} else {
@@ -27,12 +25,11 @@ Document_Controller::Document_Controller(QVBoxLayout* widget_container, QProcess
 void Document_Controller::new_document(QVBoxLayout* widget_container) {
 
 	this->joed_conf = new Joed_Conf();
-	this->parser->parse(Joed::Joed_Conf_File, this->joed_conf);
+	this->joed_conf->parse(Joed::Joed_Conf_File);
 
 	this->definition_file = new Definitions_File();
-	QString file_path = Joed::Base_Definitions_Directory + this->joed_conf->backend_name() +
-	                    Joed::Definitions_File_Extension;
-	this->parser->parse(file_path, this->definition_file);
+	this->definition_file->parse(Joed::Base_Definitions_Directory + this->joed_conf->backend_name() +
+	                             Joed::Definitions_File_Extension);
 	this->backend = this->definition_file->backend();
 	this->styles = this->definition_file->styles();
 

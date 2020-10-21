@@ -3,7 +3,7 @@
 #include "style.h"
 #include "styles.h"
 
-Definitions_File::Definitions_File() : Abstract_Versioned_Loadable_Object(Version) {
+Definitions_File::Definitions_File() : Abstract_Loadable_File(Version) {
 	this->objects_table[Styles_Key] = new Styles();
 	this->objects_table[Backend_Key] = new Backend();
 }

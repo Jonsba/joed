@@ -15,8 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/abstract_block.cpp \
+    src/abstract_loadable_file.cpp \
     src/abstract_loadable_object.cpp \
-    src/abstract_versioned_loadable_object.cpp \
     src/backend.cpp \
     src/children_blocks.cpp \
     src/definitions_file.cpp \
@@ -30,15 +30,14 @@ SOURCES += \
     src/main.cpp \
     src/frontend/editor.cpp \
     src/multi_block.cpp \
-    src/parser.cpp \
     src/style.cpp \
     src/styles.cpp \
     src/text_block.cpp
 
 HEADERS += \
 	src/abstract_block.h \
+	src/abstract_loadable_file.h \
 	src/abstract_loadable_object.h \
-	src/abstract_versioned_loadable_object.h \
 	src/backend.h \
 	src/children_blocks.h \
 	src/definitions_file.h \
@@ -51,7 +50,6 @@ HEADERS += \
 	src/layout_entry.h \
 	src/lua_vm.h \
 	src/multi_block.h \
-	src/parser.h \
 	src/style.h \
 	src/styles.h \
 	src/text_block.h

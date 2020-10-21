@@ -23,7 +23,6 @@ class Document_Controller {
 
  private:
 	void load_config();
-	Parser* parser;
 	Joed_Conf* joed_conf;
 	Definitions_File* definition_file;
 	Styles* styles;

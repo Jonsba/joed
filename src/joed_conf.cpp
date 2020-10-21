@@ -1,6 +1,6 @@
 #include "joed_conf.h"
 
-Joed_Conf::Joed_Conf() {}
+Joed_Conf::Joed_Conf() : Abstract_Loadable_File(Version) {}
 
 State Joed_Conf::process_intermediate_key(QString key, int level) {
 	if (key == Defaults_Key) {
