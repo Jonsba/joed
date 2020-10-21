@@ -27,9 +27,8 @@ Editor::Editor(QString document_path, QWidget* parent)
 	ui->Bookmark_View->setModel(bookmarkModel);
 
 	//	this->text_changed = true;
-	this->compile_process = new QProcess();
-	this->document =
-	    new Document_Controller(ui->Document_Layout, this->compile_process, document_path);
+	this->document_controller = new Document_Controller(ui->Document_Layout, document_path);
+	this->compile_process = this->document_controller->compile_process();
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile);
 	QObject::connect(this->compile_process, qOverload<int>(&QProcess::finished), this,
@@ -50,7 +49,7 @@ void Editor::Compile(int tab_index) {
 	//		return;
 	//	}
 	//	this->text_changed = false;
-	this->document->compile();
+	this->document_controller->compile();
 }
 
 void Editor::Compilation_Completed() {

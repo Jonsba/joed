@@ -19,7 +19,7 @@ class Backend : public Abstract_Loadable_Object {
 	Backend();
 	State process_intermediate_key(QString key, int level);
 	void assign(QString end_key, QString value);
-	void set_compile_process(QProcess* compile_process);
+	QProcess* compile_process();
 	void compile(QString code);
 	//
 	inline static const QString Name_Key = "name";
@@ -28,7 +28,7 @@ class Backend : public Abstract_Loadable_Object {
  private:
 	QString name;
 	QString exec;
-	QProcess* compile_process;
+	QProcess* the_compile_process;
 };
 
 #endif // COMPILER_H

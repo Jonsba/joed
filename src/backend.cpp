@@ -7,7 +7,9 @@
 #include <QProcess>
 #include <QTextStream>
 
-Backend::Backend() {}
+Backend::Backend() {
+	this->the_compile_process = new QProcess();
+}
 
 State Backend::process_intermediate_key(QString key, int level) {
 	return Parsing_Value;
@@ -23,8 +25,8 @@ void Backend::assign(QString end_key, QString value) {
 	}
 }
 
-void Backend::set_compile_process(QProcess* compile_process) {
-	this->compile_process = compile_process;
+QProcess* Backend::compile_process() {
+	return this->the_compile_process;
 }
 
 void Backend::compile(QString code) {
@@ -34,6 +36,6 @@ void Backend::compile(QString code) {
 		stream << code.toUtf8() << endl;
 	}
 	file.close();
-	compile_process->setWorkingDirectory(TEX_WORKING_DIRECTORY);
-	compile_process->start(this->exec, QStringList() << TEX_DOCUMENT);
+	this->the_compile_process->setWorkingDirectory(TEX_WORKING_DIRECTORY);
+	this->the_compile_process->start(this->exec, QStringList() << TEX_DOCUMENT);
 }

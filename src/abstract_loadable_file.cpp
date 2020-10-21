@@ -8,7 +8,7 @@ Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version) {
 	this->Version = Version;
 }
 
-void Abstract_Loadable_File::parse(QString file_path) {
+void Abstract_Loadable_File::load(QString file_path) {
 	QFile file(file_path);
 	if (! file.open(QIODevice::ReadOnly)) {
 		error("Cannot open file: " + file_path);

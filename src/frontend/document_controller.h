@@ -6,29 +6,23 @@
 class Backend;
 class Joed_Conf_File;
 class Definitions_File;
-class Parser;
-class Styles;
+class Document;
 class Multi_Block;
 class Multi_Block_Widget;
-class Backend;
+class Styles;
 class QVBoxLayout;
 class QProcess;
 
 class Document_Controller {
  public:
-	Document_Controller(QVBoxLayout* container_widget, QProcess* compile_process,
-	                    QString document_path);
-	void new_document(QVBoxLayout* widget_container);
-	void open(QVBoxLayout* widget_container, QString document_path);
+	Document_Controller(QVBoxLayout* container_widget, QString document_path);
+	QProcess* compile_process();
 	void compile();
 
  private:
 	void load_config();
-	Joed_Conf_File* joed_conf;
-	Definitions_File* definition_file;
-	Styles* styles;
 	Backend* backend;
-	Multi_Block* top_block;
+	Document* document;
 	Multi_Block_Widget* top_widget_block;
 };
 

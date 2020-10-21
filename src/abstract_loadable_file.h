@@ -14,7 +14,7 @@ class Abstract_Loadable_File : public Abstract_Loadable_Object {
 	Abstract_Loadable_File(const File_Version Version);
 	//
 	const QString Version_Key = "format-version";
-	void parse(QString file_path);
+	void load(QString file_path);
 
  private:
 	bool read_key(QString& trimmed_line, QString& key);

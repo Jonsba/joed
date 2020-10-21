@@ -20,7 +20,6 @@ class Definitions_File : public Abstract_Loadable_File {
 	Backend* backend();
 	//
 	inline static const File_Version Version = {1, 0, 0};
-	const QString Version_Key = "format-version";
 	const QString Backend_Key = "backend";
 	const QString Styles_Key = "styles";
 

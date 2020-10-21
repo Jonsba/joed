@@ -32,7 +32,7 @@ class Editor : public QMainWindow {
 	//	bool text_changed;
 	QPdfView* pdf_view;
 	QPdfDocument* pdf_document;
-	Document_Controller* document;
+	Document_Controller* document_controller;
 };
 
 #endif // EDITOR_H
