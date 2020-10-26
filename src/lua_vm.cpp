@@ -5,8 +5,14 @@
 #include <lua.hpp>
 
 char* To_Chars(QString text) {
+	// Needs a pointer to a QByteArray to be explicitely created, so that it will persist after the
+	// function returns. The earlier version of To_Chars caused random issues because the lambda
+	// QByteArray created by the expression 'return text.toLatin1().data()' didn't persist, which
+	// means that its 'char *' data returned by the function didn't persist as well.
+	QByteArray* ba = new QByteArray();
 	// Needs latin1 encoding for Lua
-	return text.toLatin1().data();
+	*ba = text.toLatin1();
+	return ba->data();
 }
 
 Lua_VM::Lua_VM() {
@@ -15,10 +21,7 @@ Lua_VM::Lua_VM() {
 }
 
 int Lua_VM::expr_init(QString expr) {
-	// If expr value is a plain joed variable (e.g. _text_content_), then an error will strangely be
-	// most of the time thrown, while executing the expression with lua_call in expr_exec method.
-	// To fix this, 'return '' .. expr .. ''' will work, or better: using table.concat
-	luaL_loadstring(this->L, To_Chars("return table.concat({" + expr + "})"));
+	luaL_loadstring(this->L, To_Chars("return " + expr));
 	return luaL_ref(this->L, LUA_REGISTRYINDEX);
 }
 
