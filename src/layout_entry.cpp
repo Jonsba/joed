@@ -9,8 +9,8 @@ Style* Layout_Entry::style() {
 	return this->the_style;
 }
 
-bool Layout_Entry::is_children_block() {
-	if (this->the_style->name() == Style::Children_Block_Value) {
+bool Layout_Entry::is_children_entry() {
+	if (this->style() == nullptr) {
 		return true;
 	}
 	return false;

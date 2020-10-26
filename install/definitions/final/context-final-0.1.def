@@ -18,23 +18,30 @@ styles:
 	-- TODO: merge concepts with context-article.def
 	document:
 		layout:
-			header OR _None_
-			document.title OR page_title OR _None_
-			_children_block_
-			footer OR _None_
+			header
+			_children_content_
+			footer
 		output:
+			header
+			footer
 			"\\setupinteraction[state=start]"
 			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
 			"\\starttext"
-			_children_block_
+			_children_content_
 			"\\stoptext"
 		default-child-style: paragraph
-		styles:
-			style:
-				name: document.title
-				type: text_block
-				output:
-					_text_
+
+	style:
+		name: header
+		layout: _text_content_
+		output:
+			"\setupheadertexts[" .. _text_content_ .. "]"
+
+	style:
+		name: footer
+		layout: _text_content_
+		output:
+			"\setupfootertexts[" .. _text_content_ .. "]"
 
 	style:
 		name: section
@@ -42,13 +49,13 @@ styles:
 		type: multi_block
 		layout:
 			section.title
-			_children_block_
+			_children_
 		declare:
 			start_command = "\\startsection"
 			stop_command = "\\stopsection"
 		output:
 			start_command .. "[title={" .. section-title._output_ .. "}]"
-			_children_block_
+			_children_
 			stop_command
 		default-child-style: paragraph
 		styles:
@@ -64,7 +71,7 @@ styles:
 		inherits: section
 		layout:
 			subsection.title
-			_children_block_
+			_children_
 		declare:
 			start_command = "\\startsubsection"
 			stop_command = "\\stopsubsection"
@@ -77,7 +84,8 @@ styles:
 
 	style:
 		name: paragraph
-		type: multiline_text_block
+		layout:
+			_text_
 		output:
 			"{\\par" .. _text_ .. "}"
 
@@ -92,7 +100,7 @@ styles:
 		name: floating_image:
 		layout:
 			floating_image.label
-			label
+			image
 		code:
 			"\placefigure{" .. floating_image_label._output_ .. "} {\externalfigure[" .. _image_path_ .. "]}"
 		styles:

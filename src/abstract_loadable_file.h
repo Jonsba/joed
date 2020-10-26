@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_LOADABLE_FILE_H
 #define ABSTRACT_LOADABLE_FILE_H
 
-#include "abstract_loadable_object.h"
+#include "abstract_loadable_tree.h"
 
 struct File_Version {
 	int Major;
@@ -9,12 +9,12 @@ struct File_Version {
 	int Revision;
 };
 
-class Abstract_Loadable_File : public Abstract_Loadable_Object {
+class Abstract_Loadable_File : public Abstract_Loadable_Tree {
  public:
-	Abstract_Loadable_File(const File_Version Version);
+	Abstract_Loadable_File(const File_Version Version, QString file_path = "");
+	void load(QString file_path);
 	//
 	const QString Version_Key = "format-version";
-	void load(QString file_path);
 
  private:
 	bool read_key(QString& trimmed_line, QString& key);

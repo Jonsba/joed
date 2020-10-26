@@ -1,7 +1,7 @@
-#ifndef COMPILER_H
-#define COMPILER_H
+#ifndef BACKEND_H
+#define BACKEND_H
 
-#include "abstract_loadable_object.h"
+#include "abstract_loadable_tree.h"
 #include "joed.h"
 #include <QString>
 #include <QVector>
@@ -14,16 +14,15 @@
 
 class QProcess;
 
-class Backend : public Abstract_Loadable_Object {
+class Backend : public Abstract_Loadable_Tree {
  public:
 	Backend();
-	State process_intermediate_key(QString key, int level);
+	State process_key(QString key, int level);
 	void assign(QString end_key, QString value);
 	QProcess* compile_process();
 	void compile(QString code);
 	//
-	inline static const QString Name_Key = "name";
-	inline static const QString Exec_Key = "exec";
+	// inline static const QStringList End_Keys = {Keys[Name_E], Keys[Exec_E]};
 
  private:
 	QString name;
@@ -31,4 +30,4 @@ class Backend : public Abstract_Loadable_Object {
 	QProcess* the_compile_process;
 };
 
-#endif // COMPILER_H
+#endif // BACKEND_H

@@ -1,18 +1,13 @@
 #ifndef TEXT_BLOCK_H
 #define TEXT_BLOCK_H
 
-#include "abstract_block.h"
+#include "abstract_non_layouted_block.h"
+#include "i_styled_block.h"
 
-class Text_Block : public Abstract_Block {
+class Text_Block : public Abstract_Non_Layouted_Block, I_Styled_Block {
  public:
 	Text_Block(Style* style);
-	void set_text_contents(QString content);
-	bool is_multiline();
 	QString to_backend_code();
-
- private:
-	QString text_content;
-	bool multiline;
 };
 
 #endif // TEXT_BLOCK_H

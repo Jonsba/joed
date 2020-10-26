@@ -1,4 +1,5 @@
 #include "lua_vm.h"
+#include "joed.h"
 
 #include <QTextCodec>
 #include <lua.hpp>
@@ -14,7 +15,10 @@ Lua_VM::Lua_VM() {
 }
 
 int Lua_VM::expr_init(QString expr) {
-	luaL_loadstring(this->L, To_Chars("return " + expr));
+	// If expr value is a plain joed variable (e.g. _text_content_), then an error will strangely be
+	// most of the time thrown, while executing the expression with lua_call in expr_exec method.
+	// To fix this, 'return '' .. expr .. ''' will work, or better: using table.concat
+	luaL_loadstring(this->L, To_Chars("return table.concat({" + expr + "})"));
 	return luaL_ref(this->L, LUA_REGISTRYINDEX);
 }
 

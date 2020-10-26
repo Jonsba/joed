@@ -2,20 +2,18 @@
 
 Joed_Conf_File::Joed_Conf_File() : Abstract_Loadable_File(Version) {}
 
-State Joed_Conf_File::process_intermediate_key(QString key, int level) {
-	if (key == Defaults_Key) {
+State Joed_Conf_File::process_key(QString key, int level) {
+	if (key == Keys[Defaults_E]) {
 		return Parsing_Key;
 	}
 	return Parsing_Value;
 }
 
 void Joed_Conf_File::assign(QString end_key, QString value) {
-	if (end_key == Backend_Key) {
+	if (end_key == Keys[Backend_E]) {
 		this->the_backend_name = value;
-	} else if (end_key == Document_Class_Key) {
+	} else if (end_key == Keys[Document_Class_E]) {
 		this->the_document_class = value;
-	} else {
-		error("Unknown joed-conf key: " + end_key + " = " + value);
 	}
 }
 

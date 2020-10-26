@@ -12,18 +12,54 @@ backend:
 styles:
 
 	document:
+		type: layout_block
 		layout:
-			_children_block_
+			header
+			_children_
+			footer
 		output:
-			"\\setupinteraction[state=start]"
-			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
-			"\\starttext"
-			_children_block_
-			"\\stoptext"
+			header
+			footer
+			'\\setupinteraction[state=start]'
+			'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
+			'\\starttext'
+			_children_
+			'\\stoptext'
 		default-child-style: paragraph
 
 	style:
 		name: paragraph
-		type: multiline_text_block
+		type: text_block
 		output:
-			'{\\par ' .. _text_ .. ' }'
+			'{\\par ' .. _text_content_ .. ' }'
+
+	style:
+		name: header
+		type: text_block
+		output:
+			'\\setupheadertexts[' .. _text_content_ .. ']'
+
+	style:
+		name: footer
+		type: text_block
+		output:
+			'\\setupfootertexts[' .. _text_content_ .. ']'
+
+	style:
+		name: section
+		child-of: document
+		type: layout_block
+		layout:
+			section_title
+			_children_
+		output:
+			'\\startsection[title={' .. section_title .. '}]'
+			_children_
+			'\\stopsection'
+		default-child-style: paragraph
+
+	style:
+		name: section_title
+		type: text_block
+		output:
+			_text_content_

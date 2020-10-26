@@ -1,6 +1,6 @@
 #include "backend.h"
 #include "joed.h"
-#include "multi_block.h"
+#include "layout_block.h"
 #include "style.h"
 
 #include <QFile>
@@ -11,17 +11,15 @@ Backend::Backend() {
 	this->the_compile_process = new QProcess();
 }
 
-State Backend::process_intermediate_key(QString key, int level) {
+State Backend::process_key(QString key, int level) {
 	return Parsing_Value;
 }
 
 void Backend::assign(QString end_key, QString value) {
-	if (end_key == Name_Key) {
+	if (end_key == Keys[Name_E]) {
 		this->name = value;
-	} else if (end_key == Exec_Key) {
+	} else if (end_key == Keys[Exec_E]) {
 		this->exec = value;
-	} else {
-		error("Unknown backend key: " + end_key + " = " + value);
 	}
 }
 

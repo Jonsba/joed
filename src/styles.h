@@ -1,7 +1,7 @@
 #ifndef STYLES_H
 #define STYLES_H
 
-#include "abstract_loadable_object.h"
+#include "abstract_loadable_tree.h"
 
 #include <QHash>
 #include <QString>
@@ -9,12 +9,16 @@
 class Lua_VM;
 class Style;
 
-class Styles : public Abstract_Loadable_Object {
+class Styles : public Abstract_Loadable_Tree {
  public:
 	Styles();
-	State process_intermediate_key(QString key, int level);
+	State process_key(QString key, int level);
 	void assign(QString end_key, QString value);
+
 	Style* find(QString key);
+	//
+	inline static const QStringList Keys_Object = {Keys[Child_Of_E], Keys[Layout_E],
+	                                               Keys[Inherits_E], Keys[Default_Child_Style_E]};
 
  private:
 	//

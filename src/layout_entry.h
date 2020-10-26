@@ -1,5 +1,5 @@
-#ifndef LAYOUT_NODE_H
-#define LAYOUT_NODE_H
+#ifndef LAYOUT_ENTRY_H
+#define LAYOUT_ENTRY_H
 
 class Style;
 
@@ -8,10 +8,10 @@ class Layout_Entry {
  public:
 	Layout_Entry(Style* the_style);
 	Style* style();
-	bool is_children_block();
+	bool is_children_entry();
 
  private:
 	Style* the_style;
 };
 
-#endif // LAYOUT_NODE_H
+#endif // LAYOUT_ENTRY_H

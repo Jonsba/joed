@@ -1,22 +1,18 @@
-#ifndef TEXT_WIDGET_H
-#define TEXT_WIDGET_H
+#ifndef TEXT_BLOCK_WIDGET_H
+#define TEXT_BLOCK_WIDGET_H
 
 #include <QTextEdit>
-#include <QWidget>
 
 class Text_Block;
-class Multi_Block_Widget;
-class QVBoxLayout;
 
 class Text_Block_Widget : public QTextEdit {
-	Q_OBJECT
  public:
-	explicit Text_Block_Widget(QVBoxLayout* widget_container, Text_Block* top_block);
+	Text_Block_Widget(QWidget* parent, Text_Block* text_block);
 
  private:
 	void text_changed();
 	//
-	Text_Block* block;
+	Text_Block* text_block;
 };
 
-#endif // TEXT_WIDGET_H
+#endif // TEXT_BLOCK_WIDGET_H

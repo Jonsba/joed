@@ -1,10 +1,13 @@
 #include "abstract_block.h"
-#include "style.h"
+#include "joed.h"
 
-Abstract_Block::Abstract_Block(Style* style) {
-	this->the_style = style;
+Abstract_Block::Abstract_Block(QString Identifier, Block_Type Type)
+    : Identifier(Identifier), Type(Type) {}
+
+QString Abstract_Block::identifier() {
+	return this->Identifier;
 }
 
-Style* Abstract_Block::style() {
-	return this->the_style;
+Block_Type Abstract_Block::type() {
+	return this->Type;
 }

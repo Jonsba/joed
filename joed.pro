@@ -17,20 +17,26 @@ SOURCES += \
     src/abstract_block.cpp \
     src/abstract_loadable_file.cpp \
     src/abstract_loadable_object.cpp \
+    src/abstract_loadable_tree.cpp \
+    src/abstract_multi_block.cpp \
+    src/abstract_non_layouted_block.cpp \
     src/backend.cpp \
-    src/children_blocks.cpp \
+    src/children_block.cpp \
     src/definitions_file.cpp \
     src/document.cpp \
+    src/frontend/children_widget_block.cpp \
     src/frontend/document_controller.cpp \
     src/frontend/multi_block_widget.cpp \
     src/frontend/text_block_widget.cpp \
+    src/i_styled_block.cpp \
     src/joed.cpp \
     src/joed_conf_file.cpp \
+    src/layout_block.cpp \
     src/layout_entry.cpp \
     src/lua_vm.cpp \
     src/main.cpp \
     src/frontend/editor.cpp \
-    src/multi_block.cpp \
+    src/raw_text_block.cpp \
     src/style.cpp \
     src/styles.cpp \
     src/text_block.cpp
@@ -39,19 +45,25 @@ HEADERS += \
 	src/abstract_block.h \
 	src/abstract_loadable_file.h \
 	src/abstract_loadable_object.h \
+	src/abstract_loadable_tree.h \
+	src/abstract_multi_block.h \
+	src/abstract_non_layouted_block.h \
 	src/backend.h \
-	src/children_blocks.h \
+	src/children_block.h \
 	src/definitions_file.h \
 	src/document.h \
+	src/frontend/children_widget_block.h \
 	src/frontend/document_controller.h \
     src/frontend/editor.h \ \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \
+	src/i_styled_block.h \
 	src/joed.h \
 	src/joed_conf_file.h \
+	src/layout_block.h \
 	src/layout_entry.h \
 	src/lua_vm.h \
-	src/multi_block.h \
+	src/raw_text_block.h \
 	src/style.h \
 	src/styles.h \
 	src/text_block.h

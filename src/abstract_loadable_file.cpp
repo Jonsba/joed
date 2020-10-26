@@ -4,8 +4,11 @@
 #include <QFile>
 #include <QTextStream>
 
-Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version) {
+Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version, QString file_path) {
 	this->Version = Version;
+	if (file_path != "") {
+		this->load(file_path);
+	}
 }
 
 void Abstract_Loadable_File::load(QString file_path) {
@@ -29,7 +32,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 			if (key == Version_Key) {
 				state = Parsing_Value;
 			} else {
-				state = this->process_intermediate_key(key, level);
+				state = this->process_key(key, level);
 			}
 			if (state == Parsing_Value && trimmed_line != "") {
 				// We will check for one-liner
@@ -65,7 +68,7 @@ void Abstract_Loadable_File::check_version_validity(QString version_string) {
 	int major_version = version_list.at(0).toInt();
 	int minor_version = version_list.at(1).toInt();
 	if (major_version != Version.Major || minor_version > Version.Minor) {
-		print("Unsupporter version: " + version_string);
+		echo("Unsupporter version: " + version_string);
 		error("Any version between " + QString::number(Version.Major) + ".0.0 and " +
 		      QString::number(Version.Major) + "." + QString::number(Version.Minor) +
 		      ".x are supported");
@@ -105,5 +108,5 @@ void Abstract_Loadable_File::print_indent(QString text, int level) {
 	for (int i = 0; i < level; i++) {
 		indentation += '\t';
 	}
-	print(indentation + text);
+	echo(indentation + text);
 }

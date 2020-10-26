@@ -1,12 +1,13 @@
 #ifndef JOED_H
 #define JOED_H
 
+#include <QHash>
 #include <QStandardPaths>
 #include <QString>
 
 void error(QString text);
-void print(QString text); // Debug
-void print(int number);   // Debug
+void echo(QString text);
+void echo(int number);
 
 namespace Joed {
 

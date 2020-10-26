@@ -4,8 +4,41 @@ backend: context
 
 document-class: article
 
-blocks:
-	children-blocks:
+content:
+	block:
+		style: header
+		content:
+			text: Header
+	children:
 		block:
-			style: paragraph
-			text: "My first paragraph"
+			style: section
+			content:
+				block:
+					style: section_title
+					content:
+						text: Section A
+				children:
+					block:
+						style: paragraph
+						content:
+							text: My first paragraph
+					block:
+						style: paragraph
+						content:
+							text: My second paragraph
+		block:
+			style: section
+			content:
+				block:
+					style: section_title
+					content:
+						text: Section B
+				children:
+					block:
+						style: paragraph
+						content:
+							text: My third paragraph
+	block:
+		style: footer
+		content:
+			text: Footer

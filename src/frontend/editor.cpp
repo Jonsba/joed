@@ -27,7 +27,7 @@ Editor::Editor(QString document_path, QWidget* parent)
 	ui->Bookmark_View->setModel(bookmarkModel);
 
 	//	this->text_changed = true;
-	this->document_controller = new Document_Controller(ui->Document_Layout, document_path);
+	this->document_controller = new Document_Controller(this->ui->Document_Area, document_path);
 	this->compile_process = this->document_controller->compile_process();
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Editor::Compile);

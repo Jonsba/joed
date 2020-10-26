@@ -1,5 +1,5 @@
-#ifndef DEFINITION_FILE_H
-#define DEFINITION_FILE_H
+#ifndef DEFINITIONS_FILE_H
+#define DEFINITIONS_FILE_H
 
 #include "abstract_loadable_file.h"
 #include "joed.h"
@@ -13,21 +13,18 @@ class Backend;
 
 class Definitions_File : public Abstract_Loadable_File {
  public:
-	Definitions_File();
-	State process_intermediate_key(QString key, int level);
+	Definitions_File(QString backend_name);
+	State process_key(QString key, int level);
 	void assign(QString end_key, QString value);
 	Styles* styles();
 	Backend* backend();
 	//
 	inline static const File_Version Version = {1, 0, 0};
-	const QString Backend_Key = "backend";
-	const QString Styles_Key = "styles";
+	// inline static const QStringList Keys_Values = {Keys[Backend_E], Keys[Styles_E]};
 
  private:
-	QHash<QString, Abstract_Loadable_Object*> objects_table;
-	Abstract_Loadable_Object* current_object;
-	QString top_key;
-	QString current_key;
+	QHash<QString, Abstract_Loadable_Tree*> objects_table;
+	Abstract_Loadable_Tree* current_object;
 };
 
-#endif // DEFINITION_FILE_H
+#endif // DEFINITIONS_FILE_H

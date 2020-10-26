@@ -2,34 +2,31 @@
 #include "layout_entry.h"
 #include "style.h"
 
-Styles::Styles()
-    : Abstract_Loadable_Object({Style::Child_Of_Key, Style::Layout_Key, Style::Inherits_Key,
-                                Style::Default_Child_Style_Key}) {
+Styles::Styles() {
 	this->lua_vm = new Lua_VM();
 }
 
-State Styles::process_intermediate_key(QString key, int level) {
+State Styles::process_key(QString key, int level) {
 	if (level == 2) {
 		return Parsing_Value;
 	}
-	if (level == 1) {
-		// N level is 2, then level == 0 is the only possibility here
-		if (key == Style::Document_Key) {
-			this->new_style = this->add_style(Style::Document_Key);
-			this->new_style->assign(Style::Type_Key, Style::Multi_Block_Value);
-		} else if (key != Style::Style_Key) {
-			error(key + " is an unknown style");
-		}
+	if (key == Keys[Document_E]) {
+		this->new_style = this->add_style(Keys[Document_E]);
+		this->new_style->assign(Keys[Type_E], Abstract_Block::Layout_Block_Value);
 	}
 	return Parsing_Key;
 }
 
 void Styles::assign(QString key, QString value) {
-	if (key == Style::Name_Key) {
+	if (this->Keys_Object.contains(key)) {
+		Style* style_object = nullptr;
+		if (key != Keys[Layout_E] || value != Abstract_Block::Children_Block_Id) {
+			style_object = this->add_style_if_nil(value);
+		}
+		this->new_style->assign(key, style_object);
+	} else if (key == Keys[Name_E]) {
 		// Style may be already created (e.g. it was referenced by a default-child-style entry)
 		this->new_style = add_style_if_nil(value);
-	} else if (this->is_key_object(key)) {
-		this->new_style->assign(key, this->add_style_if_nil(value));
 	} else {
 		this->new_style->assign(key, value);
 	}
@@ -41,7 +38,7 @@ Style* Styles::find(QString key) {
 
 Style* Styles::add_style(QString name) {
 	Style* style = new Style(name, this->lua_vm);
-	style->assign(Style::Name_Key, name);
+	style->assign(Keys[Name_E], name);
 	this->list[name] = style;
 	return style;
 }

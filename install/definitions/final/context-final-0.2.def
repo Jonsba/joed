@@ -1,0 +1,145 @@
+format-version: 1.0.0
+
+backend:
+	name: context
+	file-extension: .tex
+	environment-file-extension: .tex
+	compile-command: /opt/context/tex/texmf-linux-64/bin/context _document_backend_name_
+	viewer:
+		type: pdf
+		opens: _document_name_
+
+-- TODO:
+--   properties (space-before/after, formatting)
+--   _text_ vs _formatted_text_ in text blocks
+
+styles:
+
+	-- TODO: merge concepts with context-article.def
+	document:
+		layout:
+			header OR _None_
+			document.title OR page_title OR _None_
+			_children_
+			footer OR _None_
+		declare:
+			header_setup = ""
+			if (header)
+				header = (...)
+			(...)
+		output:
+			header_setup
+			footer_setup
+			"\\setupinteraction[state=start]"
+			"\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]"
+			"\\starttext"
+			_children_
+			"\\stoptext"
+		default-child-style: paragraph
+		styles:
+			style:
+				name: document.title
+				type: text_block
+				output:
+					_text_
+
+	style:
+		name: section
+		child-of: document
+		type: multi_block
+		layout:
+			section.title
+			_children_
+		declare:
+			start_command = "\\startsection"
+			stop_command = "\\stopsection"
+		output:
+			start_command .. "[title={" .. section-title._output_ .. "}]"
+			_children_
+			stop_command
+		default-child-style: paragraph
+		styles:
+			style:
+				name: section.title
+				type: text_block
+				output:
+					_text_
+
+	style:
+		name: subsection
+		child-of: section
+		inherits: section
+		layout:
+			subsection.title
+			_children_
+		declare:
+			start_command = "\\startsubsection"
+			stop_command = "\\stopsubsection"
+		styles:
+			style:
+				name: subsection.title
+				type: text_block
+				output:
+					_text_
+
+	style:
+		name: paragraph
+		type: multiline_text_block
+		output:
+			"{\\par" .. _text_ .. "}"
+
+	style:
+		name: image
+		code:
+			"\externalfigure[" .. _image_path_ .. "]"
+		layout:
+			image
+
+	style:
+		name: floating_image:
+		layout:
+			floating_image.label
+			label
+		code:
+			"\placefigure{" .. floating_image_label._output_ .. "} {\externalfigure[" .. _image_path_ .. "]}"
+		styles:
+			style:
+				name: floating_image.label:
+				type: text_block
+				output:
+					-- Numbering ???
+					"Figure: " .. _text_
+
+inline-styles:
+
+	inline-style:
+		name: _bold_
+		output: '{\\bf ' .. _text_ .. ' }'
+
+	-- alternative: (provides more flexibility for custom inline styles)
+		name: bold
+		output: '{\\bf ' .. _text_ .. ' }'
+		link-type: icon
+		icon: (inline-styles/)bold.png
+	--
+
+	inline-style:
+		name: _font_size_
+		output:
+			<lua code>
+
+	-- alternative:
+		name: font_size
+		link-type: editable_multichoice
+		values: 4,6,8,10,12, ...
+		-- units???
+		output:
+			<lua code>
+	--
+
+	inline-style:
+		name: my_custom_inline_style
+		output:
+			(...)
+		link-type: icon
+		icon: my_custom_inline_style.png

@@ -41,7 +41,7 @@
             <property name="widgetResizable">
              <bool>true</bool>
             </property>
-            <widget class="QWidget" name="scrollAreaWidgetContents">
+            <widget class="QWidget" name="Document_Area">
              <property name="geometry">
               <rect>
                <x>0</x>
@@ -50,11 +50,7 @@
                <height>484</height>
               </rect>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <layout class="QVBoxLayout" name="Document_Layout"/>
-              </item>
-             </layout>
+             <layout class="QVBoxLayout" name="verticalLayout_2"/>
             </widget>
            </widget>
           </item>

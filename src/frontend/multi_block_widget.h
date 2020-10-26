@@ -1,23 +1,18 @@
-#ifndef BLOCK_WIDGET_H
-#define BLOCK_WIDGET_H
+#ifndef MULTI_BLOCK_WIDGET_H
+#define MULTI_BLOCK_WIDGET_H
 
 #include <QWidget>
 
-class Multi_Block;
+class Abstract_Multi_Block;
 class QVBoxLayout;
 
 class Multi_Block_Widget : public QWidget {
-	Q_OBJECT
  public:
-	explicit Multi_Block_Widget(QVBoxLayout* widget_container, Multi_Block* top_block);
+	Multi_Block_Widget(QWidget* parent, Abstract_Multi_Block* multi_block);
 
- private:
-	void create_layout();
-	//
-	Multi_Block* top_block;
-	QVBoxLayout* child_widget_container;
-
- signals:
+ protected:
+	Abstract_Multi_Block* multi_block;
+	QVBoxLayout* block_widgets_container;
 };
 
-#endif // BLOCK_WIDGET_H
+#endif // MULTI_BLOCK_WIDGET_H

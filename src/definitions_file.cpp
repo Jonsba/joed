@@ -3,31 +3,29 @@
 #include "style.h"
 #include "styles.h"
 
-Definitions_File::Definitions_File() : Abstract_Loadable_File(Version) {
-	this->objects_table[Styles_Key] = new Styles();
-	this->objects_table[Backend_Key] = new Backend();
+Definitions_File::Definitions_File(QString backend_name) : Abstract_Loadable_File(Version) {
+	this->objects_table[Keys[Styles_E]] = new Styles();
+	this->objects_table[Keys[Backend_E]] = new Backend();
+	this->load(Joed::Base_Definitions_Directory + backend_name + Joed::Definitions_File_Extension);
 }
 
-State Definitions_File::process_intermediate_key(QString key, int level) {
+State Definitions_File::process_key(QString key, int level) {
 	if (level == 0) {
 		this->current_object = this->objects_table[key];
-		if (this->current_object == nullptr) {
-			error("Unknown top level key: " + key);
-		}
 		return Parsing_Key;
 	} else {
-		return this->current_object->process_intermediate_key(key, level);
+		return this->current_object->process_key(key, level);
 	}
 }
 
-void Definitions_File::assign(QString key, QString value) {
-	this->current_object->assign(key, value);
+void Definitions_File::assign(QString end_key, QString value) {
+	this->current_object->assign(end_key, value);
 }
 
 Styles* Definitions_File::styles() {
-	return (Styles*)this->objects_table[Styles_Key];
+	return (Styles*)this->objects_table[Keys[Styles_E]];
 }
 Backend* Definitions_File::backend() {
 
-	return (Backend*)this->objects_table[Backend_Key];
+	return (Backend*)this->objects_table[Keys[Backend_E]];
 }
