@@ -14,9 +14,9 @@ void Style::assign(QString key, QString value) {
 		this->the_name = value;
 	} else if (key == Keys[Type_E]) {
 		if (value == Abstract_Block::Layout_Block_Value) {
-			this->the_block_type = Layout_Block_E;
+			this->block_type = Block_Type::Layout_Block_E;
 		} else if (value == Abstract_Block::Text_Block_Value) {
-			this->the_block_type = Text_Block_E;
+			this->block_type = Block_Type::Text_Block_E;
 		} else {
 			error("Unknown type: " + value);
 		}
@@ -48,7 +48,7 @@ QString Style::name() {
 }
 
 Block_Type Style::type() {
-	return this->the_block_type;
+	return this->block_type;
 }
 
 Style* Style::default_child_style() {

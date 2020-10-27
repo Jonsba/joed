@@ -31,10 +31,10 @@ void Layout_Block::initialize_from_style_layout() {
 Abstract_Block* Layout_Block::create_sub_block(Style* style) {
 	Abstract_Block* new_block;
 	switch (style->type()) {
-	case Layout_Block_E:
+	case Block_Type::Layout_Block_E:
 		new_block = new Layout_Block(style);
 		break;
-	case Text_Block_E: {
+	case Block_Type::Text_Block_E: {
 		Text_Block* text_block = new Text_Block(style);
 		text_block->add_block(new Raw_Text_Block());
 		new_block = (Abstract_Block*)text_block;

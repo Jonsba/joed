@@ -12,7 +12,7 @@ Backend::Backend() {
 }
 
 State Backend::process_key(QString key, int level) {
-	return Parsing_Value;
+	return State::Parsing_Value;
 }
 
 void Backend::assign(QString end_key, QString value) {

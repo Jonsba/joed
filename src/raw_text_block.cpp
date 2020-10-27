@@ -1,6 +1,7 @@
 #include "raw_text_block.h"
 
-Raw_Text_Block::Raw_Text_Block(QString text) : Abstract_Block(Raw_Text_Block_Id, Raw_Text_Block_E) {
+Raw_Text_Block::Raw_Text_Block(QString text)
+    : Abstract_Block(Raw_Text_Block_Id, Block_Type::Raw_Text_Block_E) {
 	this->the_text = text;
 }
 

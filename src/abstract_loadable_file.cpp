@@ -20,35 +20,35 @@ void Abstract_Loadable_File::load(QString file_path) {
 	QString line, trimmed_line;
 	QString key;
 	int level;
-	State state = Starting;
+	State state = State::Starting;
 	while (true) {
 		switch (state) {
-		case Parsing_Key:
+		case State::Parsing_Key:
 			if (! read_key(trimmed_line, key)) {
 				// It was the next line of a multiple lines value, which we need to parse as value
-				state = Parsing_Value;
+				state = State::Parsing_Value;
 				continue;
 			}
-			if (key == Version_Key) {
-				state = Parsing_Value;
+			if (key == Keys[Version_E]) {
+				state = State::Parsing_Value;
 			} else {
 				state = this->process_key(key, level);
 			}
-			if (state == Parsing_Value && trimmed_line != "") {
+			if (state == State::Parsing_Value && trimmed_line != "") {
 				// We will check for one-liner
 				continue;
 			}
 			break;
-		case Parsing_Value:
-			if (key == Version_Key) {
+		case State::Parsing_Value:
+			if (key == Keys[Version_E]) {
 				this->check_version_validity(trimmed_line);
 			} else {
 				this->assign(key, trimmed_line);
 			}
-			state = Parsing_Key;
+			state = State::Parsing_Key;
 			break;
-		case Starting:
-			state = Parsing_Key;
+		case State::Starting:
+			state = State::Parsing_Key;
 			break;
 		}
 		do {

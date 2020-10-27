@@ -13,7 +13,7 @@ Definitions_File::Definitions_File(QString backend_name, Lua_VM* lua_vm)
 State Definitions_File::process_key(QString key, int level) {
 	if (level == 0) {
 		this->current_object = this->objects_table[key];
-		return Parsing_Key;
+		return State::Parsing_Key;
 	} else {
 		return this->current_object->process_key(key, level);
 	}

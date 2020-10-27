@@ -14,7 +14,6 @@ class Abstract_Loadable_File : public Abstract_Loadable_Tree {
 	Abstract_Loadable_File(const File_Version Version, QString file_path = "");
 	void load(QString file_path);
 	//
-	const QString Version_Key = "format-version";
 
  private:
 	bool read_key(QString& trimmed_line, QString& key);

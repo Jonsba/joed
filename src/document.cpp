@@ -29,7 +29,7 @@ void Document::add_block(Abstract_Block* new_block) {
 State Document::process_key(QString key, int level) {
 	if (level == 0) {
 		if (key != Keys[Content_E]) {
-			return Parsing_Value;
+			return State::Parsing_Value;
 		}
 		this->the_root_block = new Layout_Block(this->styles->find(Keys[Document_E]));
 		this->current_blocks[0] = this->the_root_block;
@@ -40,11 +40,11 @@ State Document::process_key(QString key, int level) {
 		if (key == Keys[Children_E]) {
 			this->add_block(new Children_Block());
 		}
-		return Parsing_Key;
+		return State::Parsing_Key;
 	} else if (End_Keys.contains(key)) {
-		return Parsing_Value;
+		return State::Parsing_Value;
 	}
-	return Parsing_Key;
+	return State::Parsing_Key;
 }
 
 void Document::assign(QString end_key, QString value) {
@@ -55,11 +55,11 @@ void Document::assign(QString end_key, QString value) {
 	} else if (end_key == Keys[Style_E]) {
 		Style* style = this->styles->find(value);
 		switch (style->type()) {
-		case Layout_Block_E: {
+		case Block_Type::Layout_Block_E: {
 			this->add_block(new Layout_Block(style));
 			break;
 		}
-		case Text_Block_E:
+		case Block_Type::Text_Block_E:
 			this->add_block(new Text_Block(style));
 			break;
 		default:

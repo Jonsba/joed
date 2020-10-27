@@ -3,7 +3,7 @@
 
 #include <QString>
 
-enum Block_Type {
+enum class Block_Type {
 	Uninitialized_E,
 	Layout_Block_E,
 	Children_Block_E,
@@ -13,7 +13,7 @@ enum Block_Type {
 
 class Abstract_Block {
  public:
-	Abstract_Block(QString Identifier, Block_Type Type);
+	Abstract_Block(QString Identifier, Block_Type Block_Type);
 	QString identifier();
 	Block_Type type();
 	virtual QString to_backend_code() = 0;

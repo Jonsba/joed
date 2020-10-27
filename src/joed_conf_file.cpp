@@ -4,9 +4,9 @@ Joed_Conf_File::Joed_Conf_File() : Abstract_Loadable_File(Version) {}
 
 State Joed_Conf_File::process_key(QString key, int level) {
 	if (key == Keys[Defaults_E]) {
-		return Parsing_Key;
+		return State::Parsing_Key;
 	}
-	return Parsing_Value;
+	return State::Parsing_Value;
 }
 
 void Joed_Conf_File::assign(QString end_key, QString value) {

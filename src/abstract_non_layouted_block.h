@@ -7,7 +7,7 @@ class Style;
 
 class Abstract_Non_Layouted_Block : public Abstract_Multi_Block {
  public:
-	Abstract_Non_Layouted_Block(QString Identifier, Block_Type Type);
+	Abstract_Non_Layouted_Block(QString Identifier, Block_Type Block_Type);
 	virtual QString to_backend_code();
 };
 

@@ -8,13 +8,13 @@ Styles::Styles(Lua_VM* lua_vm) {
 
 State Styles::process_key(QString key, int level) {
 	if (level == 2) {
-		return Parsing_Value;
+		return State::Parsing_Value;
 	}
 	if (key == Keys[Document_E]) {
 		this->new_style = this->add_style(Keys[Document_E]);
 		this->new_style->assign(Keys[Type_E], Abstract_Block::Layout_Block_Value);
 	}
-	return Parsing_Key;
+	return State::Parsing_Key;
 }
 
 void Styles::assign(QString key, QString value) {

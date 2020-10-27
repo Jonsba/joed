@@ -17,7 +17,7 @@ Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block) : 
 	//
 	for (auto block : text_block->blocks()) {
 		switch (block->type()) {
-		case Raw_Text_Block_E:
+		case Block_Type::Raw_Text_Block_E:
 			this->setPlainText(((Raw_Text_Block*)block)->text());
 			break;
 		default:
