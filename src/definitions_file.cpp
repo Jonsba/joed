@@ -6,7 +6,7 @@
 Definitions_File::Definitions_File(QString backend_name, Lua_VM* lua_vm)
     : Abstract_Loadable_File(Version) {
 	this->objects_table[Keys[Styles_E]] = new Styles(lua_vm);
-	this->objects_table[Keys[Backend_E]] = new Backend();
+	this->objects_table[Keys[Backend_E]] = new Backend(lua_vm);
 	this->load(Joed::Base_Definitions_Directory + backend_name + Joed::Definitions_File_Extension);
 }
 

@@ -71,6 +71,10 @@ void Document::assign(QString end_key, QString value) {
 	}
 }
 
+Backend* Document::backend() {
+	return this->the_backend;
+}
+
 void Document::create(QString backend_name) {
 	if (backend_name == "") {
 		this->joed_conf_file = new Joed_Conf_File();
@@ -78,7 +82,7 @@ void Document::create(QString backend_name) {
 		backend_name = this->joed_conf_file->backend_name();
 	}
 	this->definition_file = new Definitions_File(backend_name, this->lua_vm);
-	this->backend = this->definition_file->backend();
+	this->the_backend = this->definition_file->backend();
 	this->styles = this->definition_file->styles();
 }
 
@@ -91,9 +95,9 @@ Layout_Block* Document::root_block() {
 }
 
 QProcess* Document::compile_process() {
-	return this->backend->compile_process();
+	return this->the_backend->compile_process();
 }
 
 void Document::compile() {
-	this->backend->compile(this->the_root_block->to_backend_code());
+	this->the_backend->compile(this->the_root_block->to_backend_code());
 }

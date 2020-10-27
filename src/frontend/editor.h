@@ -12,7 +12,7 @@ class QPdfView;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class Editor;
+   class Editor;
 }
 QT_END_NAMESPACE
 
@@ -29,7 +29,6 @@ class Editor : public QMainWindow {
 
 	Ui::Editor* ui;
 	QProcess* compile_process;
-	//	bool text_changed;
 	QPdfView* pdf_view;
 	QPdfDocument* pdf_document;
 	Document_Controller* document_controller;

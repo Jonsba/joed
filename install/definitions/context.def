@@ -2,11 +2,10 @@ format-version: 1.0.0
 
 backend:
 	name: context
-	-- file-extension: .tex
+	file-extension: .tex
 	-- -- environment-file-extension: .tex
-	exec: /opt/context/tex/texmf-linux-64/bin/context
-		-- '/opt/context/tex/texmf-linux-64/bin/context ' .. _document_backend_name_
-	-- viewer: pdf
+	command: 'context ' .. _translated_document_
+	viewer: pdf
 
 -- TODO:
 --   properties (space-before/after, formatting)

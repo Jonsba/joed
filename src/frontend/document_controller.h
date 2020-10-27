@@ -4,25 +4,21 @@
 #include <QString>
 
 class Backend;
-class Joed_Conf_File;
-class Definitions_File;
 class Document;
-class Layout_Block;
-class Styles;
 class Multi_Block_Widget;
-class QProcess;
 class QWidget;
+class QProcess;
 
 class Document_Controller {
  public:
 	Document_Controller(QWidget* parent, QString document_path);
-	QProcess* compile_process();
 	void compile();
+	QProcess* compile_process();
+	Document* document();
 
  private:
-	void load_config();
-	Backend* backend;
-	Document* document;
+	void Compilation_Completed();
+	Document* the_document;
 	Multi_Block_Widget* top_widget_block;
 };
 

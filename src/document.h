@@ -19,6 +19,7 @@ class Document : public Abstract_Loadable_File {
 	Document(QString document_path = "");
 	State process_key(QString key, int level);
 	void assign(QString end_key, QString value);
+	Backend* backend();
 	void create(QString backend_name = "");
 	void open(QString document_path);
 	Layout_Block* root_block();
@@ -33,7 +34,7 @@ class Document : public Abstract_Loadable_File {
 	void add_block(Abstract_Block* new_block);
 	//
 	Lua_VM* lua_vm;
-	Backend* backend;
+	Backend* the_backend;
 	Joed_Conf_File* joed_conf_file;
 	Definitions_File* definition_file;
 	Styles* styles;

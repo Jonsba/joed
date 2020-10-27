@@ -1,6 +1,7 @@
 #include "editor.h"
 #include "document_controller.h"
 #include "src/backend.h"
+#include "src/document.h"
 #include "ui_editor.h"
 
 #include <QLabel>
@@ -15,7 +16,6 @@
 Editor::Editor(QString document_path, QWidget* parent)
     : QMainWindow(parent), ui(new Ui::Editor), pdf_document(new QPdfDocument(this)) {
 	ui->setupUi(this);
-	// ui->Backend_Code_Block->setFocus();
 
 	this->pdf_view = new QPdfView(ui->View_Mode_Tab);
 	this->pdf_view->setDocument(this->pdf_document);
@@ -45,15 +45,12 @@ void Editor::Compile(int tab_index) {
 	if (tab_index != 1) {
 		return;
 	}
-	//	if (! this->text_changed) {
-	//		return;
-	//	}
-	//	this->text_changed = false;
 	this->document_controller->compile();
 }
 
 void Editor::Compilation_Completed() {
-	this->pdf_document->load(PDF_DOCUMENT_PATH);
+	this->pdf_document->load(
+	    this->document_controller->document()->backend()->compiled_document_path());
 }
 
 Editor::~Editor() {
