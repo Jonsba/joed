@@ -4,12 +4,14 @@
 #include "definitions_file.h"
 #include "joed_conf_file.h"
 #include "layout_block.h"
+#include "lua_vm.h"
 #include "raw_text_block.h"
 #include "style.h"
 #include "styles.h"
 #include "text_block.h"
 
 Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
+	this->lua_vm = new Lua_VM();
 	if (document_path == "") {
 		this->create();
 		this->the_root_block = new Layout_Block(this->styles->find(Keys[Document_E]), false);
@@ -75,7 +77,7 @@ void Document::create(QString backend_name) {
 		this->joed_conf_file->load(Joed::Joed_Conf_File);
 		backend_name = this->joed_conf_file->backend_name();
 	}
-	this->definition_file = new Definitions_File(backend_name);
+	this->definition_file = new Definitions_File(backend_name, this->lua_vm);
 	this->backend = this->definition_file->backend();
 	this->styles = this->definition_file->styles();
 }

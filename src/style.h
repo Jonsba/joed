@@ -4,12 +4,12 @@
 #include "abstract_block.h"
 #include "abstract_loadable_object.h"
 #include "joed.h"
-#include "lua_vm.h"
 
 #include <QLinkedList>
 #include <QString>
 
 class Lua_VM;
+class Lua_Client;
 class Layout_Entry;
 
 class Style : Abstract_Loadable_Object {
@@ -23,7 +23,7 @@ class Style : Abstract_Loadable_Object {
 	QLinkedList<Layout_Entry*> layout_entries();
 	Style* default_child_style();
 	bool is_multiblock();
-	QString compile(Global_Dict key_value);
+	QString compile(QHash<QString, QString> key_value);
 
  private:
 	//
@@ -34,8 +34,7 @@ class Style : Abstract_Loadable_Object {
 	Style* parent = nullptr;
 	QLinkedList<Layout_Entry*> the_layout_entries;
 	Style* the_default_child_style = nullptr;
-	Lua_VM* lua_vm;
-	int lua_cookie;
+	Lua_Client* lua_client;
 	Block_Type the_block_type;
 };
 

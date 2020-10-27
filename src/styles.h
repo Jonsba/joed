@@ -11,7 +11,7 @@ class Style;
 
 class Styles : public Abstract_Loadable_Tree {
  public:
-	Styles();
+	Styles(Lua_VM* lua_vm);
 	State process_key(QString key, int level);
 	void assign(QString end_key, QString value);
 

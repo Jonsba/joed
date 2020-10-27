@@ -2,8 +2,8 @@
 #include "layout_entry.h"
 #include "style.h"
 
-Styles::Styles() {
-	this->lua_vm = new Lua_VM();
+Styles::Styles(Lua_VM* lua_vm) {
+	this->lua_vm = lua_vm;
 }
 
 State Styles::process_key(QString key, int level) {

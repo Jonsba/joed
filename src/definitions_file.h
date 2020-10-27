@@ -7,13 +7,14 @@
 #include <QString>
 #include <QVector>
 
+class Lua_VM;
 class Joed_Conf_File;
 class Styles;
 class Backend;
 
 class Definitions_File : public Abstract_Loadable_File {
  public:
-	Definitions_File(QString backend_name);
+	Definitions_File(QString backend_name, Lua_VM* lua_vm);
 	State process_key(QString key, int level);
 	void assign(QString end_key, QString value);
 	Styles* styles();

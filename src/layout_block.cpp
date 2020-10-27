@@ -2,7 +2,6 @@
 #include "abstract_block.h"
 #include "children_block.h"
 #include "layout_entry.h"
-#include "lua_vm.h"
 #include "raw_text_block.h"
 #include "style.h"
 #include "text_block.h"
@@ -48,7 +47,7 @@ Abstract_Block* Layout_Block::create_sub_block(Style* style) {
 }
 
 QString Layout_Block::to_backend_code() {
-	Global_Dict global_dict;
+	QHash<QString, QString> global_dict;
 	for (Abstract_Block* child_block : this->the_blocks) {
 		global_dict[child_block->identifier()] = child_block->to_backend_code();
 	}

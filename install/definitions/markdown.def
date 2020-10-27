@@ -2,12 +2,10 @@ format-version: 1.0.0
 
 backend:
 	file-extension: .md
-	environment-file-extension: .css
-	compile:
-		'pandoc ' .. _document_backend_name_ .. ' > ' .. _document_backend_basename_ .. '.html'
-	viewer:
-		type: html
-		open: _document_backend_basename_ .. ".html"
+	-- environment-file-extension: .css
+	exec:
+		'pandoc ' .. _document_backend_name_ .. ' > ' .. _document_output_name_
+	viewer: html
 	
 
 -- TODO:

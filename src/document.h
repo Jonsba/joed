@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QString>
 
+class Lua_VM;
 class Backend;
 class Definitions_File;
 class Joed_Conf_File;
@@ -31,6 +32,7 @@ class Document : public Abstract_Loadable_File {
  private:
 	void add_block(Abstract_Block* new_block);
 	//
+	Lua_VM* lua_vm;
 	Backend* backend;
 	Joed_Conf_File* joed_conf_file;
 	Definitions_File* definition_file;

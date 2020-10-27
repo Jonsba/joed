@@ -38,7 +38,7 @@ void Lua_VM::set_global_variable(QString key, QString value) {
 	lua_setglobal(this->L, To_Chars(key));
 }
 
-void Lua_VM::set_global_variables(Global_Dict global_dict) {
+void Lua_VM::set_global_variables(QHash<QString, QString> global_dict) {
 	for (auto i = global_dict.begin(); i != global_dict.end(); i++) {
 		this->set_global_variable(i.key(), i.value());
 	}

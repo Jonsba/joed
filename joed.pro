@@ -33,6 +33,7 @@ SOURCES += \
     src/joed_conf_file.cpp \
     src/layout_block.cpp \
     src/layout_entry.cpp \
+    src/lua_client.cpp \
     src/lua_vm.cpp \
     src/main.cpp \
     src/frontend/editor.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
 	src/joed_conf_file.h \
 	src/layout_block.h \
 	src/layout_entry.h \
+	src/lua_client.h \
 	src/lua_vm.h \
 	src/raw_text_block.h \
 	src/style.h \

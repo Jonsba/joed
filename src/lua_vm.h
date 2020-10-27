@@ -4,8 +4,6 @@
 #include <QHash>
 #include <QString>
 
-typedef QHash<QString, QString> Global_Dict;
-
 char* To_Chars(QString text);
 
 class lua_State;
@@ -16,7 +14,7 @@ class Lua_VM {
 	int expr_init(QString expr);
 	QString expr_exec(int cookie);
 	void set_global_variable(QString key, QString value);
-	void set_global_variables(Global_Dict global_dict);
+	void set_global_variables(QHash<QString, QString> global_dict);
 
  private:
 	//

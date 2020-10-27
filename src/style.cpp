@@ -2,14 +2,11 @@
 #include "abstract_loadable_tree.h"
 #include "joed.h"
 #include "layout_entry.h"
-#include "lua_vm.h"
-
-#include <lua.hpp>
+#include "lua_client.h"
 
 Style::Style(QString name, Lua_VM* lua_vm) {
 	this->the_name = name;
-	this->lua_vm = lua_vm;
-	this->lua_cookie = LUA_NOREF;
+	this->lua_client = new Lua_Client(lua_vm);
 }
 
 void Style::assign(QString key, QString value) {
@@ -62,10 +59,6 @@ QLinkedList<Layout_Entry*> Style::layout_entries() {
 	return this->the_layout_entries;
 }
 
-QString Style::compile(Global_Dict global_dict) {
-	if (this->lua_cookie == LUA_NOREF) {
-		this->lua_cookie = this->lua_vm->expr_init(this->output);
-	}
-	this->lua_vm->set_global_variables(global_dict);
-	return this->lua_vm->expr_exec(this->lua_cookie);
+QString Style::compile(QHash<QString, QString> global_dict) {
+	return this->lua_client->eval(this->output, global_dict);
 }
