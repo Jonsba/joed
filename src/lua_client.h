@@ -10,6 +10,8 @@ class Lua_Client {
 	Lua_Client(Lua_VM* lua_vm);
 	QString eval(QString expr);
 	QString eval(QString expr, QHash<QString, QString> global_dict);
+	//
+	static inline const QString Newline = "'\\n\\n'";
 
  private:
 	Lua_VM* lua_vm;

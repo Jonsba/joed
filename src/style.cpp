@@ -26,7 +26,7 @@ void Style::assign(QString key, QString value) {
 		if (this->output == "") {
 			this->output = value;
 		} else {
-			this->output += " .. string.char(10) .. " + value;
+			this->output += " .. " + Lua_Client::Newline + "  .. " + value;
 		}
 	}
 }

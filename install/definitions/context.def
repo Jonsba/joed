@@ -14,14 +14,13 @@ backend:
 styles:
 
 	document:
-		type: layout_block
 		layout:
-			header
+			-- header
 			_children_
-			footer
+			-- footer
 		output:
-			header
-			footer
+			-- header
+			-- footer
 			'\\setupinteraction[state=start]'
 			'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
 			'\\starttext'
@@ -33,7 +32,7 @@ styles:
 		name: paragraph
 		type: text_block
 		output:
-			'{\\par ' .. _text_content_ .. ' }'
+			'{\\par ' .. _text_content_ .. '}'
 
 	style:
 		name: header

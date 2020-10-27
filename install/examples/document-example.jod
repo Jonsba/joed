@@ -2,13 +2,7 @@ format-version: 1.0.0
 
 backend: context
 
-document-class: article
-
 content:
-	block:
-		style: header
-		content:
-			text: Header
 	children:
 		block:
 			style: section
@@ -38,7 +32,3 @@ content:
 						style: paragraph
 						content:
 							text: My third paragraph
-	block:
-		style: footer
-		content:
-			text: Footer

@@ -3,8 +3,7 @@ format-version: 1.0.0
 backend:
 	file-extension: .md
 	-- environment-file-extension: .css
-	exec:
-		'pandoc ' .. _document_backend_name_ .. ' > ' .. _document_output_name_
+	command: 'pandoc ' .. _translated_document_ .. ' -o ' .. _compiled_document_
 	viewer: html
 	
 
@@ -14,8 +13,33 @@ backend:
 
 styles:
 
-	new-style:
-		name: paragraph
-		type: multiline_text_block
+	document:
+		layout:
+			_children_
 		output:
-			_text_
+			_children_
+		default-child-style: paragraph
+
+	style:
+		name: paragraph
+		type: text_block
+		output:
+			_text_content_
+
+	style:
+		name: section
+		child-of: document
+		type: layout_block
+		layout:
+			section_title
+			_children_
+		output:
+			'# ' .. section_title
+			_children_
+		default-child-style: paragraph
+
+	style:
+		name: section_title
+		type: text_block
+		output:
+			_text_content_

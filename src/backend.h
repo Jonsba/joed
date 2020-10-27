@@ -7,7 +7,7 @@
 #include <QVector>
 
 #define DOCUMENT_NAME "document"
-#define TEX_WORKING_DIRECTORY "/home/jonas-travail/Documents/github/joed/build/tex/"
+#define BACKEND_WORKING_DIRECTORY "/home/jonas-travail/Documents/github/joed/build/document/"
 
 class Lua_VM;
 class Lua_Client;

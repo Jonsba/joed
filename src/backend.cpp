@@ -24,10 +24,10 @@ void Backend::assign(QString end_key, QString value) {
 		this->exec = value;
 	} else if (end_key == Keys[File_Extension_E]) {
 		this->translated_file_extension = value;
-		this->translated_document_path = TEX_WORKING_DIRECTORY DOCUMENT_NAME + value;
+		this->translated_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_NAME + value;
 	} else if (end_key == Keys[Viewer_E]) {
 		this->compiled_file_extension = value;
-		this->the_compiled_document_path = TEX_WORKING_DIRECTORY DOCUMENT_NAME "." + value;
+		this->the_compiled_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_NAME "." + value;
 	}
 }
 
@@ -40,8 +40,9 @@ void Backend::compile(QString code) {
 	file.close();
 	QHash<QString, QString> global_dict;
 	global_dict[Translated_Document_Id] = this->translated_document_path;
+	global_dict[Compiled_Document_Id] = this->the_compiled_document_path;
 	QString exec_command = this->lua_client->eval(this->exec, global_dict);
-	this->the_compile_process->setWorkingDirectory(TEX_WORKING_DIRECTORY);
+	this->the_compile_process->setWorkingDirectory(BACKEND_WORKING_DIRECTORY);
 	this->the_compile_process->start(exec_command);
 }
 
