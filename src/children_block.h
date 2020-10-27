@@ -6,7 +6,7 @@
 class Children_Block : public Abstract_Non_Layouted_Block {
  public:
 	Children_Block();
-	QString to_backend_code();
+	QString translate();
 };
 
 #endif // CHILDREN_BLOCK_H

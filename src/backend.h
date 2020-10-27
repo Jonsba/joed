@@ -23,6 +23,7 @@ class Backend : public Abstract_Loadable_Tree {
 	QString compiled_document_path();
 	//
 	inline static const QString Translated_Document_Id = "_translated_document_";
+	inline static const QString Compiled_Document_Id = "_compiled_document_";
 
  private:
 	Lua_Client* lua_client;

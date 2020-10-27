@@ -21,7 +21,6 @@ class Definitions_File : public Abstract_Loadable_File {
 	Backend* backend();
 	//
 	inline static const File_Version Version = {1, 0, 0};
-	// inline static const QStringList Keys_Values = {Keys[Backend_E], Keys[Styles_E]};
 
  private:
 	QHash<QString, Abstract_Loadable_Tree*> objects_table;

@@ -46,6 +46,9 @@ Thumbs.db
 # Vim temporary files
 .*.swp
 
+# Kate temporary files
+*.kate-swp
+
 # Visual Studio generated files
 *.ib_pdb_index
 *.idb

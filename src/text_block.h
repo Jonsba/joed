@@ -7,7 +7,7 @@
 class Text_Block : public Abstract_Non_Layouted_Block, I_Styled_Block {
  public:
 	Text_Block(Style* style);
-	QString to_backend_code();
+	QString translate();
 };
 
 #endif // TEXT_BLOCK_H

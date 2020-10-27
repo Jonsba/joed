@@ -23,7 +23,7 @@ class Style : Abstract_Loadable_Object {
 	QLinkedList<Layout_Entry*> layout_entries();
 	Style* default_child_style();
 	bool is_multiblock();
-	QString compile(QHash<QString, QString> key_value);
+	QString translate(QHash<QString, QString> key_value);
 
  private:
 	//

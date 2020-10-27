@@ -13,6 +13,6 @@ QString Raw_Text_Block::text() {
 	return this->the_text;
 }
 
-QString Raw_Text_Block::to_backend_code() {
+QString Raw_Text_Block::translate() {
 	return this->the_text;
 }

@@ -16,7 +16,7 @@ class Abstract_Block {
 	Abstract_Block(QString Identifier, Block_Type Block_Type);
 	QString identifier();
 	Block_Type type();
-	virtual QString to_backend_code() = 0;
+	virtual QString translate() = 0;
 	//
 	inline static const QString Layout_Block_Value = "layout_block";
 	inline static const QString Text_Block_Value = "text_block";

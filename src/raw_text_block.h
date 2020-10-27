@@ -8,7 +8,7 @@ class Raw_Text_Block : public Abstract_Block {
 	Raw_Text_Block(QString text = "");
 	void set_text(QString text);
 	QString text();
-	QString to_backend_code();
+	QString translate();
 
  private:
 	QString the_text;

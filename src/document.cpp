@@ -99,5 +99,5 @@ QProcess* Document::compile_process() {
 }
 
 void Document::compile() {
-	this->the_backend->compile(this->the_root_block->to_backend_code());
+	this->the_backend->compile(this->the_root_block->translate());
 }

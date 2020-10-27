@@ -59,6 +59,6 @@ QLinkedList<Layout_Entry*> Style::layout_entries() {
 	return this->the_layout_entries;
 }
 
-QString Style::compile(QHash<QString, QString> global_dict) {
+QString Style::translate(QHash<QString, QString> global_dict) {
 	return this->lua_client->eval(this->output, global_dict);
 }

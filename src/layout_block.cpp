@@ -46,10 +46,10 @@ Abstract_Block* Layout_Block::create_sub_block(Style* style) {
 	return new_block;
 }
 
-QString Layout_Block::to_backend_code() {
+QString Layout_Block::translate() {
 	QHash<QString, QString> global_dict;
 	for (Abstract_Block* child_block : this->the_blocks) {
-		global_dict[child_block->identifier()] = child_block->to_backend_code();
+		global_dict[child_block->identifier()] = child_block->translate();
 	}
-	return this->the_style->compile(global_dict);
+	return this->the_style->translate(global_dict);
 }

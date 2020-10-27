@@ -11,7 +11,7 @@ class Style;
 class Layout_Block : public Abstract_Multi_Block, I_Styled_Block {
  public:
 	Layout_Block(Style* style, bool loaded_from_document_file = true);
-	QString to_backend_code();
+	QString translate();
 
  private:
 	void initialize_from_style_layout();
