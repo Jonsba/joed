@@ -1,6 +1,7 @@
-#ifndef DOCUMENT_VIEWER_H
-#define DOCUMENT_VIEWER_H
+#ifndef PDF_VIEWER_H
+#define PDF_VIEWER_H
 
+#include "abstract_document_viewer.h"
 #include <QWidget>
 
 class QPdfDocument;
@@ -9,18 +10,16 @@ class QHBoxLayout;
 class QTreeView;
 class Backend;
 
-class Document_Viewer : public QWidget {
+class PDF_Viewer : public Abstract_Document_Viewer {
  public:
-	Document_Viewer(QWidget* parent, Backend* backend);
+	PDF_Viewer(QWidget* parent, Backend* backend);
 	void refresh();
 
  private:
 	void bookmark_selected(const QModelIndex& index);
-	Backend* backend;
-	QHBoxLayout* layout;
 	QPdfView* pdf_view;
 	QPdfDocument* pdf_document;
 	QTreeView* bookmark_view;
 };
 
-#endif // DOCUMENT_VIEWER_H
+#endif // PDF_VIEWER_H

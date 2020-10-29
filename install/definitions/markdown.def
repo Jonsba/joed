@@ -3,7 +3,7 @@ format-version: 1.0.0
 backend:
 	file-extension: .md
 	-- environment-file-extension: .css
-	command: 'pandoc ' .. _translated_document_ .. ' -o ' .. _compiled_document_
+	command: 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
 	viewer: html
 	
 

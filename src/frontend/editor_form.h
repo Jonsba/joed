@@ -1,5 +1,5 @@
-#ifndef EDITOR_H
-#define EDITOR_H
+#ifndef EDITOR_FORM_H
+#define EDITOR_FORM_H
 
 #include <QMainWindow>
 
@@ -22,4 +22,4 @@ class Editor_Form : public QMainWindow {
 	Document_Form* document_form;
 };
 
-#endif // EDITOR_H
+#endif // EDITOR_FORM_H

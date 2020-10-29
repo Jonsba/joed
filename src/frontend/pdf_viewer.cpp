@@ -1,4 +1,4 @@
-#include "document_viewer.h"
+#include "pdf_viewer.h"
 #include "src/backend.h"
 
 #include <QHBoxLayout>
@@ -8,7 +8,8 @@
 #include <QPdfView>
 #include <QTreeView>
 
-Document_Viewer::Document_Viewer(QWidget* parent, Backend* backend) : QWidget(parent) {
+PDF_Viewer::PDF_Viewer(QWidget* parent, Backend* backend)
+    : Abstract_Document_Viewer(parent, backend) {
 	this->backend = backend;
 
 	this->bookmark_view = new QTreeView(this);
@@ -19,22 +20,22 @@ Document_Viewer::Document_Viewer(QWidget* parent, Backend* backend) : QWidget(pa
 	QPdfBookmarkModel* bookmark_model = new QPdfBookmarkModel(this);
 	bookmark_model->setDocument(this->pdf_document);
 	this->bookmark_view->setModel(bookmark_model);
-	this->layout = new QHBoxLayout(this);
-	this->layout->addWidget(this->bookmark_view);
-	this->layout->addWidget(this->pdf_view);
-	this->layout->setStretch(1, 7);
-	this->setLayout(this->layout);
+	QHBoxLayout* layout = new QHBoxLayout(this);
+	layout->addWidget(this->bookmark_view);
+	layout->addWidget(this->pdf_view);
+	layout->setStretch(1, 7);
+	this->setLayout(layout);
 	parent->layout()->addWidget(this);
 
 	QObject::connect(this->bookmark_view, &QTreeView::activated, this,
-	                 &Document_Viewer::bookmark_selected);
+	                 &PDF_Viewer::bookmark_selected);
 }
 
-void Document_Viewer::refresh() {
+void PDF_Viewer::refresh() {
 	this->pdf_document->load(this->backend->compiled_document_path());
 }
 
-void Document_Viewer::bookmark_selected(const QModelIndex& index) {
+void PDF_Viewer::bookmark_selected(const QModelIndex& index) {
 	const int page = index.data(QPdfBookmarkModel::PageNumberRole).toInt();
 	this->pdf_view->pageNavigation()->setCurrentPage(page);
 }

@@ -21,9 +21,12 @@ class Backend : public Abstract_Loadable_Tree {
 	QProcess* compile_process();
 	void compile(QString code);
 	QString compiled_document_path();
+	QString viewer_type();
 	//
 	inline static const QString Translated_Document_Id = "_translated_document_";
 	inline static const QString Compiled_Document_Id = "_compiled_document_";
+	inline static const QString PDF_Viewer_Id = "pdf";
+	inline static const QString HTML_Viewer_Id = "html";
 
  private:
 	Lua_Client* lua_client;

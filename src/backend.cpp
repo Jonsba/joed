@@ -53,3 +53,7 @@ QProcess* Backend::compile_process() {
 QString Backend::compiled_document_path() {
 	return this->the_compiled_document_path;
 }
+
+QString Backend::viewer_type() {
+	return this->compiled_file_extension;
+}

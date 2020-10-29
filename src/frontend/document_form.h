@@ -1,5 +1,5 @@
-#ifndef DOCUMENT_CONTROLLER_H
-#define DOCUMENT_CONTROLLER_H
+#ifndef DOCUMENT_FORM_H
+#define DOCUMENT_FORM_H
 
 #include <QWidget>
 
@@ -8,7 +8,7 @@ class Document;
 class Multi_Block_Widget;
 class QWidget;
 class QProcess;
-class Document_Viewer;
+class Abstract_Document_Viewer;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,9 +26,9 @@ class Document_Form : public QWidget {
 	void compilation_completed();
 
 	Ui::Document_Form* ui;
-	Document_Viewer* document_viewer;
+	Abstract_Document_Viewer* document_viewer;
 	Multi_Block_Widget* top_widget_block;
 	Document* document;
 };
 
-#endif // DOCUMENT_CONTROLLER_H
+#endif // DOCUMENT_FORM_H

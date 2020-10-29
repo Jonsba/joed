@@ -1,6 +1,8 @@
 #include "document_form.h"
-#include "document_viewer.h"
+#include "abstract_document_viewer.h"
+#include "html_viewer.h"
 #include "multi_block_widget.h"
+#include "pdf_viewer.h"
 #include "src/abstract_multi_block.h"
 #include "src/backend.h"
 #include "src/document.h"
@@ -18,7 +20,11 @@ void Document_Form::create_ui(QWidget* parent) {
 	this->ui = new Ui::Document_Form();
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
-	this->document_viewer = new Document_Viewer(this->ui->View_Mode_Tab, this->document->backend());
+	if (this->document->backend()->viewer_type() == Backend::PDF_Viewer_Id) {
+		this->document_viewer = new PDF_Viewer(this->ui->View_Mode_Tab, this->document->backend());
+	} else {
+		this->document_viewer = new HTML_Viewer(this->ui->View_Mode_Tab, this->document->backend());
+	}
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
