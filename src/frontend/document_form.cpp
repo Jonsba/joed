@@ -1,0 +1,41 @@
+#include "document_form.h"
+#include "document_viewer.h"
+#include "multi_block_widget.h"
+#include "src/abstract_multi_block.h"
+#include "src/backend.h"
+#include "src/document.h"
+#include "ui_document_form.h"
+
+#include <QProcess>
+#include <QTextEdit>
+
+Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(parent) {
+	this->document = new Document(document_path);
+	this->create_ui(parent);
+}
+
+void Document_Form::create_ui(QWidget* parent) {
+	this->ui = new Ui::Document_Form();
+	this->ui->setupUi(this);
+	parent->layout()->addWidget(this);
+	this->document_viewer = new Document_Viewer(this->ui->View_Mode_Tab, this->document->backend());
+
+	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
+	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
+	                 &Document_Form::compilation_completed);
+
+	this->top_widget_block = new Multi_Block_Widget(
+	    this->ui->Document_Area, (Abstract_Multi_Block*)this->document->root_block());
+	this->ui->Document_Area->layout()->addWidget(this->top_widget_block);
+}
+
+void Document_Form::compile(int tab_index) {
+	if (tab_index != 1) {
+		return;
+	}
+	this->document->compile();
+}
+
+void Document_Form::compilation_completed() {
+	this->document_viewer->refresh();
+}

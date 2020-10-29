@@ -14,33 +14,34 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/abstract_block.cpp \
-    src/abstract_loadable_file.cpp \
-    src/abstract_loadable_object.cpp \
-    src/abstract_loadable_tree.cpp \
-    src/abstract_multi_block.cpp \
-    src/abstract_non_layouted_block.cpp \
-    src/backend.cpp \
-    src/children_block.cpp \
-    src/definitions_file.cpp \
-    src/document.cpp \
-    src/frontend/children_widget_block.cpp \
-    src/frontend/document_controller.cpp \
-    src/frontend/multi_block_widget.cpp \
-    src/frontend/text_block_widget.cpp \
-    src/i_styled_block.cpp \
-    src/joed.cpp \
-    src/joed_conf_file.cpp \
-    src/layout_block.cpp \
-    src/layout_entry.cpp \
-    src/lua_client.cpp \
-    src/lua_vm.cpp \
-    src/main.cpp \
-    src/frontend/editor.cpp \
-    src/raw_text_block.cpp \
-    src/style.cpp \
-    src/styles.cpp \
-    src/text_block.cpp
+	src/abstract_block.cpp \
+	src/abstract_loadable_file.cpp \
+	src/abstract_loadable_object.cpp \
+	src/abstract_loadable_tree.cpp \
+	src/abstract_multi_block.cpp \
+	src/abstract_non_layouted_block.cpp \
+	src/backend.cpp \
+	src/children_block.cpp \
+	src/definitions_file.cpp \
+	src/document.cpp \
+	src/frontend/children_widget_block.cpp \
+	src/frontend/document_viewer.cpp \
+	src/frontend/document_form.cpp \
+	src/frontend/editor_form.cpp \
+	src/frontend/multi_block_widget.cpp \
+	src/frontend/text_block_widget.cpp \
+	src/i_styled_block.cpp \
+	src/joed.cpp \
+	src/joed_conf_file.cpp \
+	src/layout_block.cpp \
+	src/layout_entry.cpp \
+	src/lua_client.cpp \
+	src/lua_vm.cpp \
+	src/main.cpp \
+	src/raw_text_block.cpp \
+	src/style.cpp \
+	src/styles.cpp \
+	src/text_block.cpp
 
 HEADERS += \
 	src/abstract_block.h \
@@ -54,8 +55,9 @@ HEADERS += \
 	src/definitions_file.h \
 	src/document.h \
 	src/frontend/children_widget_block.h \
-	src/frontend/document_controller.h \
-    src/frontend/editor.h \ \
+	src/frontend/document_viewer.h \
+	src/frontend/document_form.h \
+	src/frontend/editor_form.h \
 	src/frontend/multi_block_widget.h \
 	src/frontend/text_block_widget.h \
 	src/i_styled_block.h \
@@ -71,12 +73,13 @@ HEADERS += \
 	src/text_block.h
 
 FORMS += \
-    src/frontend/ui/editor.ui
+	src/frontend/ui/document_form.ui \
+	src/frontend/ui/editor_form.ui
 
 INCLUDEPATH += \
-    /usr/include/lua5.3
+	/usr/include/lua5.3
 LIBS += \
-    -llua5.3-c++
+	-llua5.3-c++
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

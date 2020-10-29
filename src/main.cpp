@@ -1,4 +1,4 @@
-#include "src/frontend/editor.h"
+#include "src/frontend/editor_form.h"
 
 #include "joed.h"
 #include <QApplication>
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 	document_path =
 	    "/home/jonas-travail/Documents/github/joed/install/examples/document-example.jod";
 	//
-	Editor e(document_path);
+	Editor_Form e(document_path);
 	e.show();
 	return a.exec();
 }
