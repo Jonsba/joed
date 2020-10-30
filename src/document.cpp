@@ -3,18 +3,18 @@
 #include "children_block.h"
 #include "definitions_file.h"
 #include "joed_conf_file.h"
-#include "layout_block.h"
 #include "lua_vm.h"
 #include "raw_text_block.h"
 #include "style.h"
 #include "styles.h"
 #include "text_block.h"
+#include "top_block.h"
 
 Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->lua_vm = new Lua_VM();
 	if (document_path == "") {
 		this->create();
-		this->the_root_block = new Layout_Block(this->styles->find(Keys[Document_E]), false);
+		this->the_root_block = new Top_Block(this->styles->find(Keys[Document_E]), false);
 	} else {
 		this->open(document_path);
 	}
@@ -31,7 +31,7 @@ State Document::process_key(QString key, int level) {
 		if (key != Keys[Content_E]) {
 			return State::Parsing_Value;
 		}
-		this->the_root_block = new Layout_Block(this->styles->find(Keys[Document_E]));
+		this->the_root_block = new Top_Block(this->styles->find(Keys[Document_E]));
 		this->current_blocks[0] = this->the_root_block;
 	}
 	if (Blocks_Keys.contains(key)) {
@@ -90,7 +90,7 @@ void Document::open(QString document_path) {
 	this->load(document_path);
 }
 
-Layout_Block* Document::root_block() {
+Top_Block* Document::root_block() {
 	return this->the_root_block;
 }
 

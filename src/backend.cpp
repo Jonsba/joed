@@ -38,7 +38,7 @@ void Backend::compile(QString code) {
 		stream << code.toUtf8() << endl;
 	}
 	file.close();
-	QHash<QString, QString> global_dict;
+	QHash<QString, QString> global_dict = {};
 	global_dict[Translated_Document_Id] = this->translated_document_path;
 	global_dict[Compiled_Document_Id] = this->the_compiled_document_path;
 	QString exec_command = this->lua_client->eval(this->exec, global_dict);

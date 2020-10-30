@@ -9,7 +9,7 @@ class Lua_VM;
 class Backend;
 class Definitions_File;
 class Joed_Conf_File;
-class Layout_Block;
+class Top_Block;
 class Abstract_Block;
 class QProcess;
 class Styles;
@@ -22,7 +22,7 @@ class Document : public Abstract_Loadable_File {
 	Backend* backend();
 	void create(QString backend_name = "");
 	void open(QString document_path);
-	Layout_Block* root_block();
+	Top_Block* root_block();
 	QProcess* compile_process();
 	void compile();
 	//
@@ -38,7 +38,7 @@ class Document : public Abstract_Loadable_File {
 	Joed_Conf_File* joed_conf_file;
 	Definitions_File* definition_file;
 	Styles* styles;
-	Layout_Block* the_root_block;
+	Top_Block* the_root_block;
 	QHash<int, Abstract_Block*> current_blocks;
 	int block_level;
 };

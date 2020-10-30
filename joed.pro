@@ -32,7 +32,6 @@ SOURCES += \
 	src/frontend/multi_block_widget.cpp \
 	src/frontend/pdf_viewer.cpp \
 	src/frontend/text_block_widget.cpp \
-	src/i_styled_block.cpp \
 	src/joed.cpp \
 	src/joed_conf_file.cpp \
 	src/layout_block.cpp \
@@ -43,7 +42,8 @@ SOURCES += \
 	src/raw_text_block.cpp \
 	src/style.cpp \
 	src/styles.cpp \
-	src/text_block.cpp
+	src/text_block.cpp \
+	src/top_block.cpp
 
 HEADERS += \
 	src/abstract_block.h \
@@ -64,7 +64,6 @@ HEADERS += \
 	src/frontend/multi_block_widget.h \
 	src/frontend/pdf_viewer.h \
 	src/frontend/text_block_widget.h \
-	src/i_styled_block.h \
 	src/joed.h \
 	src/joed_conf_file.h \
 	src/layout_block.h \
@@ -74,7 +73,8 @@ HEADERS += \
 	src/raw_text_block.h \
 	src/style.h \
 	src/styles.h \
-	src/text_block.h
+	src/text_block.h \
+	src/top_block.h
 
 FORMS += \
 	src/frontend/ui/document_form.ui \

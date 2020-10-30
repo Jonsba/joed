@@ -2,12 +2,16 @@
 #define TEXT_BLOCK_H
 
 #include "abstract_non_layouted_block.h"
-#include "i_styled_block.h"
 
-class Text_Block : public Abstract_Non_Layouted_Block, I_Styled_Block {
+class Style;
+
+class Text_Block : public Abstract_Non_Layouted_Block {
  public:
 	Text_Block(Style* style);
 	QString translate();
+
+ private:
+	Style* style;
 };
 
 #endif // TEXT_BLOCK_H

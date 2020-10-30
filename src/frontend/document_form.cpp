@@ -12,7 +12,7 @@
 #include <QTextEdit>
 
 Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(parent) {
-	this->document = new Document(document_path);
+	this->document = new Document("");
 	this->create_ui(parent);
 }
 

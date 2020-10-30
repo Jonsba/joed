@@ -15,12 +15,12 @@ styles:
 
 	document:
 		layout:
-			-- header
+			header
 			_children_
-			-- footer
+			footer
 		output:
-			-- header
-			-- footer
+			header
+			footer
 			'\\setupinteraction[state=start]'
 			'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
 			'\\starttext'
