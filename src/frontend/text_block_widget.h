@@ -10,7 +10,9 @@ class Text_Block_Widget : public QTextEdit {
 	Text_Block_Widget(QWidget* parent, Text_Block* text_block);
 
  private:
-	void text_changed();
+	void on_text_changed();
+	void resize_to_fit_contents();
+	void resizeEvent(QResizeEvent* event);
 	//
 	Text_Block* text_block;
 };
