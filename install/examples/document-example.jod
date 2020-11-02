@@ -12,7 +12,7 @@ content:
 			style: section
 			content:
 				block:
-					style: section_title
+					style: section.title
 					content:
 						text: What is a design proposal?
 				children:
@@ -24,7 +24,7 @@ content:
 			style: section
 			content:
 				block:
-					style: section_title
+					style: section.title
 					content:
 						text: Why do clients ask for proposals?
 				children:
@@ -36,7 +36,7 @@ content:
 			style: section
 			content:
 				block:
-					style: section_title
+					style: section.title
 					content:
 						text: When to send a proposal?
 				children:
@@ -48,7 +48,7 @@ content:
 			style: section
 			content:
 				block:
-					style: section_title
+					style: section.title
 					content:
 						text: What language should I use?
 				children:
@@ -60,7 +60,7 @@ content:
 			style: section
 			content:
 				block:
-					style: section_title
+					style: section.title
 					content:
 						text: Last Section
 				children:

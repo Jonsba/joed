@@ -15,6 +15,6 @@ QString Lua_Client::eval(QString expr) {
 }
 
 QString Lua_Client::eval(QString expr, QHash<QString, QString> global_dict) {
-	this->lua_vm->set_global_variables(global_dict);
+	this->lua_vm->push_variables(global_dict);
 	return this->eval(expr);
 }

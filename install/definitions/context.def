@@ -51,16 +51,16 @@ styles:
 		child-of: document
 		type: layout_block
 		layout:
-			section_title
+			section.title
 			_children_
 		output:
-			'\\startsection[title={' .. section_title .. '}]'
+			'\\startsection[title={' .. section.title .. '}]'
 			_children_
 			'\\stopsection'
 		default-child-style: paragraph
-
-	style:
-		name: section_title
-		type: text_block
-		output:
-			_text_content_
+		styles:
+			style:
+				name: title
+				type: text_block
+				output:
+					_text_content_

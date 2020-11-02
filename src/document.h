@@ -13,6 +13,7 @@ class Top_Block;
 class Abstract_Block;
 class QProcess;
 class Styles;
+class Style;
 
 class Document : public Abstract_Loadable_File {
  public:

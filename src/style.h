@@ -35,7 +35,7 @@ class Style : Abstract_Loadable_Object {
 	QLinkedList<Layout_Entry*> the_layout_entries;
 	Style* the_default_child_style = nullptr;
 	Lua_Client* lua_client;
-	Block_Type block_type;
+	Block_Type block_type = Block_Type::Uninitialized_E;
 };
 
 #endif // STYLE_H
