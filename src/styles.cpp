@@ -24,12 +24,9 @@ State Styles::process_key(QString key, int level) {
 void Styles::assign(QString key, QString value) {
 	if (this->Keys_Object.contains(key)) {
 		Style* style_object = nullptr;
-		if (key == Keys[Layout_E]) {
-			if (value == Abstract_Block::Children_Block_Id) {
-				return;
-			}
+		if (value != Abstract_Block::Children_Block_Id) { // when key: layout
+			style_object = this->make_style_if_nil(value);
 		}
-		style_object = this->make_style_if_nil(value);
 		this->new_style->assign(key, style_object);
 	} else if (key == Keys[Name_E]) {
 		// Style may be already created (e.g. it was referenced by a default-child-style entry)
