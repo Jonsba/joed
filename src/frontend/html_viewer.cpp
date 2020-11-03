@@ -17,6 +17,9 @@ HTML_Viewer::HTML_Viewer(QWidget* parent, Backend* backend)
 void HTML_Viewer::refresh() {
 	QFile html_file(this->backend->compiled_document_path());
 	html_file.open(QIODevice::ReadOnly | QIODevice::Text);
-	QString html_text = html_file.readAll();
+	QFile css_file(this->backend->environment_path());
+	css_file.open(QIODevice::ReadOnly | QIODevice::Text);
+	QString html_text =
+	    html_file.readAll().replace("<head>", "<head><style>" + css_file.readAll() + "</style>");
 	this->html_view->setHtml(html_text);
 }

@@ -1,7 +1,8 @@
 format-version: 1.0.0
 
 backend:
-	file-extension: .tex
+	doc-file-ext: .tex
+	env-file-ext: .tex
 	output: 'context ' .. _translated_document_
 	viewer: pdf
 

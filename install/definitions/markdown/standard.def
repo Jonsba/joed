@@ -1,21 +1,49 @@
 format-version: 1.0.0
 
--- TODO: correct that
 environment:
-	name: standard
 	output:
-		'\\startenvironment ' .. _name_
-		'	\\setupinteraction[state=start]'
-		'	\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
-		'\\stopenvironment'
+		'body{'
+		'	padding-top: 60px;'
+		'	padding-bottom: 80px;'
+		'}'
+		'.fixed-header, .fixed-footer{'
+		'	width: 100%;'
+		'	position: fixed;'
+		'	background: #333;'
+		'	padding: 10px 0;'
+		'	color: #fff;'
+		'}'
+		'.fixed-header{'
+		'	top: 0;'
+		'}'
+		'.fixed-footer{'
+		'	bottom: 0;'
+		'}'
 
 styles:
 	document:
 		layout:
-			_children_block_
+			header
+			_children_
+			footer
 		output:
-			'\\environment {' _environment_name_ '}'
-			'\\starttext'
-			_children_block_
-			'\\stoptext'
-		default-child-style: paragraph
+			'<link rel="stylesheet" href="document-environment.css">'
+			header
+			_children_
+			footer
+
+	style:
+		name: header
+		type: text_block
+		output:
+			'<div class="fixed-header">'
+			'<p>' .. _text_content_ .. '</p>'
+			'</div>'
+
+	style:
+		name: footer
+		type: text_block
+		output:
+			'<div class="fixed-footer">'
+			'<p>' .. _text_content_ .. '</p>'
+			'</div>'

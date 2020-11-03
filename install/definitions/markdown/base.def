@@ -1,11 +1,10 @@
 format-version: 1.0.0
 
 backend:
-	file-extension: .md
-	-- environment-file-extension: .css
-	command: 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
+	doc-file-ext: .md
+	env-file-ext: .css
+	output: 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
 	viewer: html
-	
 
 -- TODO:
 --   properties (space-before/after, formatting)
@@ -31,15 +30,15 @@ styles:
 		child-of: document
 		type: layout_block
 		layout:
-			section_title
+			section.title
 			_children_
 		output:
-			'# ' .. section_title
+			'# ' .. section.title
 			_children_
 		default-child-style: paragraph
-
-	style:
-		name: section_title
-		type: text_block
-		output:
-			_text_content_
+		styles:
+			style:
+				name: title
+				type: text_block
+				output:
+					_text_content_

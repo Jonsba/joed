@@ -92,7 +92,13 @@ bool Abstract_Loadable_File::read_key(QString& trimmed_line, QString& key) {
 	if (delimiter < 0) {
 		return false;
 	}
-	key = trimmed_line.left(delimiter);
+	QString potential_key = trimmed_line.left(delimiter);
+	for (int i = 0; i < potential_key.length(); i++) {
+		if (! potential_key[i].isLetter() && potential_key[i] != '-') {
+			return false;
+		}
+	}
+	key = potential_key;
 	trimmed_line = trimmed_line.mid(delimiter + 1).trimmed();
 	return true;
 }

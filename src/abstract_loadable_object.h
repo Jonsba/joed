@@ -15,7 +15,8 @@ class Abstract_Loadable_Object {
 		Backend_E,
 		Styles_E,
 		Name_E,
-		File_Extension_E,
+		Doc_File_Ext_E,
+		Env_File_Ext_E,
 		Viewer_E,
 		Document_Class_E,
 		Content_E,
@@ -34,15 +35,18 @@ class Abstract_Loadable_Object {
 		Default_Child_Style_E,
 		Environment_E
 	};
-	inline static const QStringList Keys = {
-	    "format-version", "backend",        "styles",
-	    "name",           "file-extension", "viewer",
-	    "document-class", "content",        "children",
-	    "block",          "text",           "style",
-	    "defaults",       "document",       "child-of",
-	    "type",           "layout",         "declare",
-	    "output",         "inherits",       "default-child-style",
-	    "environment"};
+	inline static const QStringList Keys = {"format-version", "backend",
+	                                        "styles",         "name",
+	                                        "doc-file-ext",   "env-file-ext",
+	                                        "viewer",         "document-class",
+	                                        "content",        "children",
+	                                        "block",          "text",
+	                                        "style",          "defaults",
+	                                        "document",       "child-of",
+	                                        "type",           "layout",
+	                                        "declare",        "output",
+	                                        "inherits",       "default-child-style",
+	                                        "environment"};
 };
 
 #endif // ABSTRACT_LOADABLE_OBJECT_H

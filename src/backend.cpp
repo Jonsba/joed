@@ -21,10 +21,11 @@ State Backend::process_key(QString key, int level) {
 void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Keys[Output_E]) {
 		this->lua_client->add_output_line(value, is_first_value_line);
-	} else if (end_key == Keys[File_Extension_E]) {
-		this->translated_file_extension = value;
+	} else if (end_key == Keys[Doc_File_Ext_E]) {
 		this->translated_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_BASENAME + value;
-		this->translated_environment_path = BACKEND_WORKING_DIRECTORY ENVIRONMENT_BASENAME + value;
+	} else if (end_key == Keys[Env_File_Ext_E]) {
+		this->translated_environment_path =
+		    BACKEND_WORKING_DIRECTORY + Environment::Basename_Id + value;
 	} else if (end_key == Keys[Viewer_E]) {
 		this->compiled_file_extension = value;
 		this->the_compiled_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_BASENAME "." + value;
@@ -58,6 +59,10 @@ QProcess* Backend::compile_process() {
 
 QString Backend::compiled_document_path() {
 	return this->the_compiled_document_path;
+}
+
+QString Backend::environment_path() {
+	return this->translated_environment_path;
 }
 
 QString Backend::viewer_type() {

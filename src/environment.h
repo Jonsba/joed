@@ -4,8 +4,6 @@
 #include "abstract_loadable_tree.h"
 #include <QString>
 
-#define ENVIRONMENT_BASENAME "document-environment"
-
 class Lua_VM;
 class Lua_Client;
 

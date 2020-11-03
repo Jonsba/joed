@@ -19,7 +19,6 @@ styles:
 			'\\starttext'
 			_children_
 			'\\stoptext'
-		default-child-style: paragraph
 
 	style:
 		name: header
