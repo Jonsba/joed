@@ -13,7 +13,7 @@ class Styles : public Abstract_Loadable_Tree {
  public:
 	Styles(Lua_VM* lua_vm);
 	State process_key(QString key, int level);
-	void assign(QString end_key, QString value);
+	void assign(QString end_key, QString value, bool is_first_value_line);
 
 	Style* find(QString name);
 	//

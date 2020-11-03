@@ -9,7 +9,7 @@ State Joed_Conf_File::process_key(QString key, int level) {
 	return State::Parsing_Value;
 }
 
-void Joed_Conf_File::assign(QString end_key, QString value) {
+void Joed_Conf_File::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Keys[Backend_E]) {
 		this->the_backend_name = value;
 	} else if (end_key == Keys[Document_Class_E]) {

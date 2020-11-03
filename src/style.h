@@ -16,8 +16,8 @@ class Style : Abstract_Loadable_Object {
 
  public:
 	Style(QString the_name, Lua_VM* lua_vm);
-	void assign(QString key, QString value);
-	void assign(QString key, Style* object);
+	void assign(QString key, QString value, bool is_first_value_line);
+	void assign(QString key, Style* object, bool is_first_value_line);
 	QString name();
 	Block_Type type();
 	QLinkedList<Layout_Entry*> layout_entries();
@@ -30,7 +30,6 @@ class Style : Abstract_Loadable_Object {
 	QString the_name;
 	Style* base_style = nullptr;
 	QString declare;
-	QString output;
 	Style* parent = nullptr;
 	QLinkedList<Layout_Entry*> the_layout_entries;
 	Style* the_default_child_style = nullptr;

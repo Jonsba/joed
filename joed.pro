@@ -22,8 +22,9 @@ SOURCES += \
 	src/abstract_non_layouted_block.cpp \
 	src/backend.cpp \
 	src/children_block.cpp \
-	src/definitions_file.cpp \
+	src/definitions_loader.cpp \
 	src/document.cpp \
+	src/environment.cpp \
 	src/frontend/abstract_document_viewer.cpp \
 	src/frontend/children_widget_block.cpp \
 	src/frontend/document_form.cpp \
@@ -54,8 +55,9 @@ HEADERS += \
 	src/abstract_non_layouted_block.h \
 	src/backend.h \
 	src/children_block.h \
-	src/definitions_file.h \
+	src/definitions_loader.h \
 	src/document.h \
+	src/environment.h \
 	src/frontend/abstract_document_viewer.h \
 	src/frontend/children_widget_block.h \
 	src/frontend/document_form.h \

@@ -1,7 +1,8 @@
 #include "document.h"
 #include "backend.h"
 #include "children_block.h"
-#include "definitions_file.h"
+#include "definitions_loader.h"
+#include "environment.h"
 #include "joed_conf_file.h"
 #include "lua_vm.h"
 #include "raw_text_block.h"
@@ -47,11 +48,12 @@ State Document::process_key(QString key, int level) {
 	return State::Parsing_Key;
 }
 
-void Document::assign(QString end_key, QString value) {
+void Document::assign(QString end_key, QString value, bool is_first_value_line) {
+	static QString backend_name = "";
 	if (end_key == Keys[Backend_E]) {
-		this->create(value);
+		backend_name = value;
 	} else if (end_key == Keys[Document_Class_E]) {
-		// Not implemented
+		this->create(backend_name, value);
 	} else if (end_key == Keys[Style_E]) {
 		Style* style = this->styles->find(value);
 		switch (style->type()) {
@@ -75,15 +77,18 @@ Backend* Document::backend() {
 	return this->the_backend;
 }
 
-void Document::create(QString backend_name) {
-	if (backend_name == "") {
-		this->joed_conf_file = new Joed_Conf_File();
-		this->joed_conf_file->load(Joed::Joed_Conf_File);
-		backend_name = this->joed_conf_file->backend_name();
-	}
-	this->definition_file = new Definitions_File(backend_name, this->lua_vm);
-	this->the_backend = this->definition_file->backend();
-	this->styles = this->definition_file->styles();
+void Document::create() {
+	Joed_Conf_File* joed_conf_file = new Joed_Conf_File();
+	joed_conf_file->load(Joed::Joed_Conf_File);
+	this->create(joed_conf_file->backend_name(), joed_conf_file->document_class());
+}
+
+void Document::create(QString backend_name, QString document_class) {
+	Definitions_Loader* definition_file =
+	    new Definitions_Loader(this->lua_vm, backend_name, document_class);
+	this->the_backend = definition_file->backend();
+	this->styles = definition_file->styles();
+	this->environment = definition_file->environment();
 }
 
 void Document::open(QString document_path) {
@@ -99,5 +104,5 @@ QProcess* Document::compile_process() {
 }
 
 void Document::compile() {
-	this->the_backend->compile(this->the_root_block->translate());
+	this->the_backend->compile(this->the_root_block->translate(), this->environment->translate());
 }

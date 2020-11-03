@@ -9,7 +9,7 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 	this->lua_client = new Lua_Client(lua_vm);
 }
 
-void Style::assign(QString key, QString value) {
+void Style::assign(QString key, QString value, bool is_first_value_line) {
 	if (key == Keys[Name_E]) {
 		this->the_name = value;
 	} else if (key == Keys[Type_E]) {
@@ -23,18 +23,17 @@ void Style::assign(QString key, QString value) {
 	} else if (key == Keys[Declare_E]) {
 		this->declare += value + '\n';
 	} else if (key == Keys[Output_E]) {
-		if (this->output == "") {
-			this->output = value;
-		} else {
-			this->output += " .. " + Lua_Client::Newline + "  .. " + value;
-		}
+		this->lua_client->add_output_line(value, is_first_value_line);
 	}
 }
 
-void Style::assign(QString key, Style* object) {
+void Style::assign(QString key, Style* object, bool is_first_value_line) {
 	if (key == Keys[Child_Of_E]) {
 		this->parent = object;
 	} else if (key == Keys[Layout_E]) {
+		if (is_first_value_line) {
+			this->the_layout_entries.clear();
+		}
 		this->the_layout_entries.append(new Layout_Entry(object));
 	} else if (key == Keys[Inherits_E]) {
 		this->base_style = object;
@@ -60,5 +59,5 @@ QLinkedList<Layout_Entry*> Style::layout_entries() {
 }
 
 QString Style::translate(QHash<QString, QString> global_dict) {
-	return this->lua_client->eval(this->output, global_dict);
+	return this->lua_client->eval(global_dict);
 }

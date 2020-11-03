@@ -8,7 +8,7 @@ enum class State { Starting, Parsing_Key, Parsing_Value };
 class Abstract_Loadable_Object {
  public:
 	Abstract_Loadable_Object();
-	virtual void assign(QString end_key, QString value) = 0;
+	virtual void assign(QString end_key, QString value, bool is_first_value_line) = 0;
 	//
 	enum Key_Index {
 		Version_E = 0,
@@ -16,7 +16,6 @@ class Abstract_Loadable_Object {
 		Styles_E,
 		Name_E,
 		File_Extension_E,
-		Command_E,
 		Viewer_E,
 		Document_Class_E,
 		Content_E,
@@ -32,19 +31,18 @@ class Abstract_Loadable_Object {
 		Declare_E,
 		Output_E,
 		Inherits_E,
-		Default_Child_Style_E
+		Default_Child_Style_E,
+		Environment_E
 	};
-	inline static const QStringList Keys = {"format-version", "backend",
-	                                        "styles",         "name",
-	                                        "file-extension", "command",
-	                                        "viewer",         "document-class",
-	                                        "content",        "children",
-	                                        "block",          "text",
-	                                        "style",          "defaults",
-	                                        "document",       "child-of",
-	                                        "type",           "layout",
-	                                        "declare",        "output",
-	                                        "inherits",       "default-child-style"};
+	inline static const QStringList Keys = {
+	    "format-version", "backend",        "styles",
+	    "name",           "file-extension", "viewer",
+	    "document-class", "content",        "children",
+	    "block",          "text",           "style",
+	    "defaults",       "document",       "child-of",
+	    "type",           "layout",         "declare",
+	    "output",         "inherits",       "default-child-style",
+	    "environment"};
 };
 
 #endif // ABSTRACT_LOADABLE_OBJECT_H

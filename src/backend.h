@@ -6,7 +6,7 @@
 #include <QString>
 #include <QVector>
 
-#define DOCUMENT_NAME "document"
+#define DOCUMENT_BASENAME "document"
 #define BACKEND_WORKING_DIRECTORY "/home/jonas-travail/Documents/github/joed/build/document/"
 
 class Lua_VM;
@@ -17,9 +17,9 @@ class Backend : public Abstract_Loadable_Tree {
  public:
 	Backend(Lua_VM* lua_vm);
 	State process_key(QString key, int level);
-	void assign(QString end_key, QString value);
+	void assign(QString end_key, QString value, bool is_first_value_line);
 	QProcess* compile_process();
-	void compile(QString code);
+	void compile(QString document_code, QString environment_code);
 	QString compiled_document_path();
 	QString viewer_type();
 	//
@@ -29,12 +29,13 @@ class Backend : public Abstract_Loadable_Tree {
 	inline static const QString HTML_Viewer_Id = "html";
 
  private:
+	void write_to_file(QString code, QString file_path);
+	//
 	Lua_Client* lua_client;
-	QString name;
-	QString exec;
 	QString translated_file_extension;
-	QString compiled_file_extension;
 	QString translated_document_path;
+	QString translated_environment_path;
+	QString compiled_file_extension;
 	QString the_compiled_document_path;
 	QProcess* the_compile_process;
 };

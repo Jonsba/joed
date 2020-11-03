@@ -33,19 +33,23 @@ QString Lua_VM::expr_exec(int cookie) {
 	return QString::fromLatin1(result);
 }
 
-void Lua_VM::push_variable(QString key, QString value) {
-	lua_pushstring(this->L, to_chars(value));
-	lua_setglobal(this->L, to_chars(key));
-}
-
 void Lua_VM::push_variables(QHash<QString, QString> global_dict) {
 	for (auto i = global_dict.begin(); i != global_dict.end(); i++) {
-		if (i.key().contains(".")) {
-			this->push_table(i.key(), i.value());
-		} else {
-			this->push_variable(i.key(), i.value());
-		}
+		this->push_variable(i.key(), i.value());
 	}
+}
+
+void Lua_VM::push_variable(QString variable, QString value) {
+	if (variable.contains(".")) {
+		this->push_table(variable, value);
+	} else {
+		this->push_scalar(variable, value);
+	}
+}
+
+void Lua_VM::push_scalar(QString key, QString value) {
+	lua_pushstring(this->L, to_chars(value));
+	lua_setglobal(this->L, to_chars(key));
 }
 
 void Lua_VM::push_table(QString key, QString value) {

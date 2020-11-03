@@ -20,6 +20,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 	QString line, trimmed_line;
 	QString key;
 	int level;
+	bool is_first_value_line;
 	State state = State::Starting;
 	while (true) {
 		switch (state) {
@@ -29,6 +30,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 				state = State::Parsing_Value;
 				continue;
 			}
+			is_first_value_line = true;
 			if (key == Keys[Version_E]) {
 				state = State::Parsing_Value;
 			} else {
@@ -43,8 +45,11 @@ void Abstract_Loadable_File::load(QString file_path) {
 			if (key == Keys[Version_E]) {
 				this->check_version_validity(trimmed_line);
 			} else {
-				this->assign(key, trimmed_line);
+				this->assign(key, trimmed_line, is_first_value_line);
 			}
+			is_first_value_line = false;
+			// We assume that the next line will be a key, and when it fails, we would be dealing with
+			// a multiline value
 			state = State::Parsing_Key;
 			break;
 		case State::Starting:

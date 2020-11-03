@@ -1,10 +1,8 @@
 format-version: 1.0.0
 
 backend:
-	name: context
 	file-extension: .tex
-	-- -- environment-file-extension: .tex
-	command: 'context ' .. _translated_document_
+	output: 'context ' .. _translated_document_
 	viewer: pdf
 
 -- TODO:
@@ -15,14 +13,8 @@ styles:
 
 	document:
 		layout:
-			header
 			_children_
-			footer
 		output:
-			header
-			footer
-			'\\setupinteraction[state=start]'
-			'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
 			'\\starttext'
 			_children_
 			'\\stoptext'
@@ -33,18 +25,6 @@ styles:
 		type: text_block
 		output:
 			'{\\par ' .. _text_content_ .. '}'
-
-	style:
-		name: header
-		type: text_block
-		output:
-			'\\setupheadertexts[' .. _text_content_ .. ']'
-
-	style:
-		name: footer
-		type: text_block
-		output:
-			'\\setupfootertexts[' .. _text_content_ .. ']'
 
 	style:
 		name: section

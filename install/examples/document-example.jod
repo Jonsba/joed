@@ -1,6 +1,7 @@
 format-version: 1.0.0
 
 backend: context
+document-class: article
 
 content:
 	children:

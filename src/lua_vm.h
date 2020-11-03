@@ -13,10 +13,11 @@ class Lua_VM {
 	Lua_VM();
 	int expr_init(QString expr);
 	QString expr_exec(int cookie);
+	void push_variable(QString variable, QString value);
 	void push_variables(QHash<QString, QString> global_dict);
 
  private:
-	void push_variable(QString key, QString value);
+	void push_scalar(QString key, QString value);
 	void push_table(QString key, QString value);
 	//
 	lua_State* L;
