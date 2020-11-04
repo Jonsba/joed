@@ -16,26 +16,26 @@ char* to_chars(QString text) {
 }
 
 Lua_VM::Lua_VM() {
-	this->L = luaL_newstate();
-	luaL_openlibs(L);
+	this->the_L = luaL_newstate();
+	luaL_openlibs(the_L);
 }
 
-int Lua_VM::expr_init(QString expr) {
-	luaL_loadstring(this->L, to_chars("return " + expr));
-	return luaL_ref(this->L, LUA_REGISTRYINDEX);
+int Lua_VM::load_expr(QString expr) {
+	luaL_loadstring(this->the_L, to_chars("return " + expr));
+	return luaL_ref(this->the_L, LUA_REGISTRYINDEX);
 }
 
-QString Lua_VM::expr_exec(int cookie) {
-	lua_rawgeti(this->L, LUA_REGISTRYINDEX, cookie);
-	lua_call(this->L, 0, 1);
-	const char* result = lua_tostring(this->L, -1);
-	lua_pop(this->L, 1);
+QString Lua_VM::eval_expr(int cookie) {
+	lua_rawgeti(this->the_L, LUA_REGISTRYINDEX, cookie);
+	lua_call(this->the_L, 0, 1);
+	const char* result = lua_tostring(this->the_L, -1);
+	lua_pop(this->the_L, 1);
 	return QString::fromLatin1(result);
 }
 
 void Lua_VM::push_variables(QHash<QString, QString> global_dict) {
-	for (auto i = global_dict.begin(); i != global_dict.end(); i++) {
-		this->push_variable(i.key(), i.value());
+	for (auto pair = global_dict.begin(); pair != global_dict.end(); pair++) {
+		this->push_variable(pair.key(), pair.value());
 	}
 }
 
@@ -48,19 +48,23 @@ void Lua_VM::push_variable(QString variable, QString value) {
 }
 
 void Lua_VM::push_scalar(QString key, QString value) {
-	lua_pushstring(this->L, to_chars(value));
-	lua_setglobal(this->L, to_chars(key));
+	lua_pushstring(this->the_L, to_chars(value));
+	lua_setglobal(this->the_L, to_chars(key));
 }
 
 void Lua_VM::push_table(QString key, QString value) {
 	QStringList splitted_key = key.split(".");
 	for (int i = 1; i < splitted_key.length(); i++) {
-		lua_newtable(L);
-		lua_pushstring(L, to_chars(splitted_key[i]));
+		lua_newtable(the_L);
+		lua_pushstring(the_L, to_chars(splitted_key[i]));
 	}
-	lua_pushstring(L, to_chars(value));
+	lua_pushstring(the_L, to_chars(value));
 	for (int i = 1; i < splitted_key.length(); i++) {
-		lua_settable(L, -3);
+		lua_settable(the_L, -3);
 	}
-	lua_setglobal(L, to_chars(splitted_key[0]));
+	lua_setglobal(the_L, to_chars(splitted_key[0]));
+}
+
+lua_State* Lua_VM::L() {
+	return this->the_L;
 }

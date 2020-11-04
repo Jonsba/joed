@@ -1,5 +1,5 @@
-#ifndef DEFINITIONS_FILE_H
-#define DEFINITIONS_FILE_H
+#ifndef DEFINITIONS_LOADER_H
+#define DEFINITIONS_LOADER_H
 
 #include "abstract_loadable_file.h"
 #include "joed.h"
@@ -29,4 +29,4 @@ class Definitions_Loader : public Abstract_Loadable_File {
 	Abstract_Loadable_Tree* current_object;
 };
 
-#endif // DEFINITIONS_FILE_H
+#endif // DEFINITIONS_LOADER_H

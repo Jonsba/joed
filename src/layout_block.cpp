@@ -1,14 +1,16 @@
 #include "layout_block.h"
 #include "abstract_block.h"
 #include "children_block.h"
+#include "escaper.h"
 #include "layout_entry.h"
 #include "raw_text_block.h"
 #include "style.h"
 #include "text_block.h"
 
-Layout_Block::Layout_Block(Style* style, bool loaded_from_document_file)
+Layout_Block::Layout_Block(Style* style, Escaper* escaper, bool loaded_from_document_file)
     : Abstract_Multi_Block(style->name(), style->type()) {
 	this->style = style;
+	this->escaper = escaper;
 	if (! loaded_from_document_file) {
 		this->initialize_from_style_layout();
 	}
@@ -33,10 +35,10 @@ Abstract_Block* Layout_Block::create_sub_block(Style* style) {
 	Abstract_Block* new_block;
 	switch (style->type()) {
 	case Block_Type::Layout_Block_E:
-		new_block = new Layout_Block(style, false);
+		new_block = new Layout_Block(style, this->escaper, false);
 		break;
 	case Block_Type::Text_Block_E: {
-		Text_Block* text_block = new Text_Block(style);
+		Text_Block* text_block = new Text_Block(style, this->escaper);
 		text_block->add_block(new Raw_Text_Block());
 		new_block = (Abstract_Block*)text_block;
 		break;

@@ -1,9 +1,12 @@
 #include "top_block.h"
+#include "escaper.h"
 #include "layout_entry.h"
 #include "style.h"
 
-Top_Block::Top_Block(Style* style, bool loaded_from_document_file)
-    : Layout_Block(style, loaded_from_document_file) {}
+Top_Block::Top_Block(Style* style, Escaper* escaper, bool loaded_from_document_file)
+    : Layout_Block(style, escaper, loaded_from_document_file) {
+	this->escaper = escaper;
+}
 
 QString Top_Block::translate() {
 	// All layout entries of top level are optional (e.g. header, footer), except the children layout

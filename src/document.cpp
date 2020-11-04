@@ -15,7 +15,8 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->lua_vm = new Lua_VM();
 	if (document_path == "") {
 		this->create();
-		this->the_root_block = new Top_Block(this->styles->find(Keys[Document_E]), false);
+		this->the_root_block =
+		    new Top_Block(this->styles->find(Keys[Document_E]), this->the_backend->escaper(), false);
 	} else {
 		this->open(document_path);
 	}
@@ -32,7 +33,8 @@ State Document::process_key(QString key, int level) {
 		if (key != Keys[Content_E]) {
 			return State::Parsing_Value;
 		}
-		this->the_root_block = new Top_Block(this->styles->find(Keys[Document_E]));
+		this->the_root_block =
+		    new Top_Block(this->styles->find(Keys[Document_E]), this->the_backend->escaper());
 		this->current_blocks[0] = this->the_root_block;
 	}
 	if (Blocks_Keys.contains(key)) {
@@ -58,11 +60,11 @@ void Document::assign(QString end_key, QString value, bool is_first_value_line) 
 		Style* style = this->styles->find(value);
 		switch (style->type()) {
 		case Block_Type::Layout_Block_E: {
-			this->add_block(new Layout_Block(style));
+			this->add_block(new Layout_Block(style, this->the_backend->escaper()));
 			break;
 		}
 		case Block_Type::Text_Block_E:
-			this->add_block(new Text_Block(style));
+			this->add_block(new Text_Block(style, this->the_backend->escaper()));
 			break;
 		default:
 			error("Not implemented");

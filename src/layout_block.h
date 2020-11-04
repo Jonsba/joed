@@ -7,10 +7,11 @@
 #include <QString>
 
 class Style;
+class Escaper;
 
 class Layout_Block : public Abstract_Multi_Block {
  public:
-	Layout_Block(Style* style, bool loaded_from_document_file = true);
+	Layout_Block(Style* style, Escaper* escaper, bool loaded_from_document_file = true);
 	QString translate();
 
  protected:
@@ -20,6 +21,8 @@ class Layout_Block : public Abstract_Multi_Block {
  private:
 	void initialize_from_style_layout();
 	Abstract_Block* create_sub_block(Style* style);
+	//
+	Escaper* escaper;
 };
 
 #endif // LAYOUT_BLOCK_H

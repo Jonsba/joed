@@ -1,5 +1,6 @@
 #include "backend.h"
 #include "environment.h"
+#include "escaper.h"
 #include "joed.h"
 #include "layout_block.h"
 #include "lua_client.h"
@@ -11,6 +12,7 @@
 
 Backend::Backend(Lua_VM* lua_vm) {
 	this->lua_client = new Lua_Client(lua_vm);
+	this->the_escaper = new Escaper(lua_vm);
 	this->the_compile_process = new QProcess();
 }
 
@@ -20,7 +22,7 @@ State Backend::process_key(QString key, int level) {
 
 void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Keys[Output_E]) {
-		this->lua_client->add_output_line(value, is_first_value_line);
+		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else if (end_key == Keys[Doc_File_Ext_E]) {
 		this->translated_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_BASENAME + value;
 	} else if (end_key == Keys[Env_File_Ext_E]) {
@@ -29,6 +31,8 @@ void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	} else if (end_key == Keys[Viewer_E]) {
 		this->compiled_file_extension = value;
 		this->the_compiled_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_BASENAME "." + value;
+	} else if (end_key == Keys[Escape_Table_E]) {
+		this->the_escaper->parse(value);
 	}
 }
 
@@ -48,7 +52,7 @@ void Backend::compile(QString document_code, QString environment_code) {
 	QHash<QString, QString> global_dict = {};
 	global_dict[Translated_Document_Id] = this->translated_document_path;
 	global_dict[Compiled_Document_Id] = this->the_compiled_document_path;
-	QString exec_command = this->lua_client->eval(global_dict);
+	QString exec_command = this->lua_client->eval_expr(global_dict);
 	this->the_compile_process->setWorkingDirectory(BACKEND_WORKING_DIRECTORY);
 	this->the_compile_process->start(exec_command);
 }
@@ -67,4 +71,8 @@ QString Backend::environment_path() {
 
 QString Backend::viewer_type() {
 	return this->compiled_file_extension;
+}
+
+Escaper* Backend::escaper() {
+	return this->the_escaper;
 }

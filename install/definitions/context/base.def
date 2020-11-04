@@ -5,10 +5,17 @@ backend:
 	env-file-ext: .tex
 	output: 'context ' .. _translated_document_
 	viewer: pdf
-
--- TODO:
---   properties (space-before/after, formatting)
---   _text_ vs _formatted_text_ in text blocks
+	escape-table:
+		{'&', '\\&'}
+		{'%', '\\%'}
+		{'$', '\\$'}
+		{'#', '\\#'}
+		{'_', '\\_'}
+		{'{', '\\{'}
+		{'}', '\\}'}
+		{'~', '\\textasciitilde{}'}
+		{'^', '\\textasciicircum{}'}
+		{'\\', '\\textbackslash{}'}
 
 styles:
 

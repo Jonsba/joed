@@ -25,6 +25,7 @@ SOURCES += \
 	src/definitions_loader.cpp \
 	src/document.cpp \
 	src/environment.cpp \
+	src/escaper.cpp \
 	src/frontend/abstract_document_viewer.cpp \
 	src/frontend/children_widget_block.cpp \
 	src/frontend/document_form.cpp \
@@ -58,6 +59,7 @@ HEADERS += \
 	src/definitions_loader.h \
 	src/document.h \
 	src/environment.h \
+	src/escaper.h \
 	src/frontend/abstract_document_viewer.h \
 	src/frontend/children_widget_block.h \
 	src/frontend/document_form.h \

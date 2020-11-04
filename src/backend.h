@@ -4,13 +4,13 @@
 #include "abstract_loadable_tree.h"
 #include "joed.h"
 #include <QString>
-#include <QVector>
 
 #define DOCUMENT_BASENAME "document"
 #define BACKEND_WORKING_DIRECTORY "/home/jonas-travail/Documents/github/joed/build/document/"
 
-class Lua_VM;
 class Lua_Client;
+class Lua_VM;
+class Escaper;
 class QProcess;
 
 class Backend : public Abstract_Loadable_Tree {
@@ -23,6 +23,8 @@ class Backend : public Abstract_Loadable_Tree {
 	QString compiled_document_path();
 	QString environment_path();
 	QString viewer_type();
+	Escaper* escaper();
+
 	//
 	inline static const QString Translated_Document_Id = "_translated_document_";
 	inline static const QString Compiled_Document_Id = "_compiled_document_";
@@ -38,6 +40,7 @@ class Backend : public Abstract_Loadable_Tree {
 	QString compiled_file_extension;
 	QString the_compiled_document_path;
 	QProcess* the_compile_process;
+	Escaper* the_escaper;
 };
 
 #endif // BACKEND_H

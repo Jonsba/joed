@@ -23,7 +23,7 @@ void Style::assign(QString key, QString value, bool is_first_value_line) {
 	} else if (key == Keys[Declare_E]) {
 		this->declare += value + '\n';
 	} else if (key == Keys[Output_E]) {
-		this->lua_client->add_output_line(value, is_first_value_line);
+		this->lua_client->add_expr_line(value, is_first_value_line);
 	}
 }
 
@@ -59,5 +59,5 @@ QLinkedList<Layout_Entry*> Style::layout_entries() {
 }
 
 QString Style::translate(QHash<QString, QString> global_dict) {
-	return this->lua_client->eval(global_dict);
+	return this->lua_client->eval_expr(global_dict);
 }

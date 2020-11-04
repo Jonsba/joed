@@ -8,6 +8,18 @@ content:
 		block:
 			style: paragraph
 			content:
+				text: Some characters to escape:
+		block:
+			style: paragraph
+			content:
+				text: a&b%c$d#e_f{g}h~i^j\k
+		block:
+			style: paragraph
+			content:
+				text: a & b % c $ d # e _ f { g } h ~ i ^ j \ k
+		block:
+			style: paragraph
+			content:
 				text: Excerpts from: https://www.ebaqdesign.com/blog/design-proposal
 		block:
 			style: section

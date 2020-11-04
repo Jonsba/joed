@@ -19,6 +19,8 @@ void HTML_Viewer::refresh() {
 	html_file.open(QIODevice::ReadOnly | QIODevice::Text);
 	QFile css_file(this->backend->environment_path());
 	css_file.open(QIODevice::ReadOnly | QIODevice::Text);
+	// QTextBrowser doesn't support external CSS files, so we will copy paste the CSS content
+	// directly in the HTML content
 	QString html_text =
 	    html_file.readAll().replace("<head>", "<head><style>" + css_file.readAll() + "</style>");
 	this->html_view->setHtml(html_text);
