@@ -58,6 +58,7 @@ void Backend::compile(QString document_code, QString environment_code) {
 	//
 	QHash<QString, QString> global_dict = {};
 	global_dict[Translated_Document_Id] = this->translated_document_path;
+	global_dict[Translated_Environment_Id] = this->translated_environment_path;
 	global_dict[Compiled_Document_Id] = this->the_compiled_document_path;
 	QString exec_command = this->lua_client->eval_expr(global_dict);
 	this->the_compile_process->setWorkingDirectory(BACKEND_WORKING_DIRECTORY);

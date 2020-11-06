@@ -27,6 +27,7 @@ class Backend : public Abstract_Loadable_Tree {
 
 	//
 	inline static const QString Translated_Document_Id = "_translated_document_";
+	inline static const QString Translated_Environment_Id = "_translated_environment_";
 	inline static const QString Compiled_Document_Id = "_compiled_document_";
 	inline static const QString PDF_Viewer_Id = "pdf";
 	inline static const QString HTML_Viewer_Id = "html";
