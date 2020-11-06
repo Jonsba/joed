@@ -7,9 +7,10 @@
 // TODO: make it abstract
 class Abstract_Multi_Block : public Abstract_Block {
  public:
-	Abstract_Multi_Block(QString Identifier, Block_Type Type);
+	Abstract_Multi_Block(QString identifier, Block_Type type);
 	void add_block(Abstract_Block* block);
 	QLinkedList<Abstract_Block*> blocks();
+	void save(Writer* writer, int level) override;
 
  protected:
 	QLinkedList<Abstract_Block*> the_blocks;

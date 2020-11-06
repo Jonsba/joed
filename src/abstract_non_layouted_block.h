@@ -7,8 +7,8 @@ class Style;
 
 class Abstract_Non_Layouted_Block : public Abstract_Multi_Block {
  public:
-	Abstract_Non_Layouted_Block(QString Identifier, Block_Type Block_Type);
-	virtual QString translate();
+	Abstract_Non_Layouted_Block(QString identifier, Block_Type block_type);
+	virtual QString translate() override;
 };
 
 #endif // ABSTRACT_NON_LAYOUTED_BLOCK_H

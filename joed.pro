@@ -42,10 +42,11 @@ SOURCES += \
 	src/lua_vm.cpp \
 	src/main.cpp \
 	src/raw_text_block.cpp \
+	src/root_block.cpp \
 	src/style.cpp \
 	src/styles.cpp \
 	src/text_block.cpp \
-	src/top_block.cpp
+	src/writer.cpp
 
 HEADERS += \
 	src/abstract_block.h \
@@ -75,10 +76,11 @@ HEADERS += \
 	src/lua_client.h \
 	src/lua_vm.h \
 	src/raw_text_block.h \
+	src/root_block.h \
 	src/style.h \
 	src/styles.h \
 	src/text_block.h \
-	src/top_block.h
+	src/writer.h
 
 FORMS += \
 	src/frontend/ui/document_form.ui \

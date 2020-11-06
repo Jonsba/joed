@@ -16,7 +16,7 @@ class Joed_Conf_File : public Abstract_Loadable_File {
 	QString document_class();
 	//
 	inline static const File_Version Version = {1, 0, 0};
-	// inline static const QStringList End_Keys = {Keys[Backend_E], Keys[Document_Class_E]};
+	// inline static const QStringList End_Keys = {Joed::Keys[Backend_E], Joed::Keys[Document_Class_E]};
 
  private:
 	QString the_backend_name;

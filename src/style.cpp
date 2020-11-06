@@ -10,9 +10,9 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 }
 
 void Style::assign(QString key, QString value, bool is_first_value_line) {
-	if (key == Keys[Name_E]) {
+	if (key == Joed::Keys[Name_E]) {
 		this->the_name = value;
-	} else if (key == Keys[Type_E]) {
+	} else if (key == Joed::Keys[Type_E]) {
 		if (value == Abstract_Block::Layout_Block_Value) {
 			this->block_type = Block_Type::Layout_Block_E;
 		} else if (value == Abstract_Block::Text_Block_Value) {
@@ -20,24 +20,24 @@ void Style::assign(QString key, QString value, bool is_first_value_line) {
 		} else {
 			error("Unknown type: " + value);
 		}
-	} else if (key == Keys[Declare_E]) {
+	} else if (key == Joed::Keys[Declare_E]) {
 		this->declare += value + '\n';
-	} else if (key == Keys[Output_E]) {
+	} else if (key == Joed::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	}
 }
 
 void Style::assign(QString key, Style* object, bool is_first_value_line) {
-	if (key == Keys[Child_Of_E]) {
+	if (key == Joed::Keys[Child_Of_E]) {
 		this->parent = object;
-	} else if (key == Keys[Layout_E]) {
+	} else if (key == Joed::Keys[Layout_E]) {
 		if (is_first_value_line) {
 			this->the_layout_entries.clear();
 		}
 		this->the_layout_entries.append(new Layout_Entry(object));
-	} else if (key == Keys[Inherits_E]) {
+	} else if (key == Joed::Keys[Inherits_E]) {
 		this->base_style = object;
-	} else if (key == Keys[Default_Child_Style_E]) {
+	} else if (key == Joed::Keys[Default_Child_Style_E]) {
 		this->the_default_child_style = object;
 	}
 }

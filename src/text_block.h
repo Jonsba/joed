@@ -9,7 +9,8 @@ class Escaper;
 class Text_Block : public Abstract_Non_Layouted_Block {
  public:
 	Text_Block(Style* style, Escaper* escaper);
-	QString translate();
+	QString translate() override;
+	void save(Writer* writer, int level) override;
 
  private:
 	Style* style;

@@ -16,11 +16,13 @@ class Environment;
 class Definitions_Loader : public Abstract_Loadable_File {
  public:
 	Definitions_Loader(Lua_VM* lua_vm, QString backend_name, QString document_class);
-	State process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
 	Styles* styles();
 	Backend* backend();
 	Environment* environment();
+
+ protected:
+	State process_key(QString key, int level);
+	void assign(QString end_key, QString value, bool is_first_value_line);
 	//
 	inline static const File_Version Version = {1, 0, 0};
 

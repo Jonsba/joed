@@ -1,8 +1,8 @@
 #include "abstract_non_layouted_block.h"
 #include "style.h"
 
-Abstract_Non_Layouted_Block::Abstract_Non_Layouted_Block(QString Identifier, Block_Type Type)
-    : Abstract_Multi_Block(Identifier, Type) {}
+Abstract_Non_Layouted_Block::Abstract_Non_Layouted_Block(QString identifier, Block_Type type)
+    : Abstract_Multi_Block(identifier, type) {}
 
 QString Abstract_Non_Layouted_Block::translate() {
 	QStringList child_contents;

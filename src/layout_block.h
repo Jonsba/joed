@@ -12,7 +12,8 @@ class Escaper;
 class Layout_Block : public Abstract_Multi_Block {
  public:
 	Layout_Block(Style* style, Escaper* escaper, bool loaded_from_document_file = true);
-	QString translate();
+	QString translate() override;
+	void save(Writer* writer, int level) override;
 
  protected:
 	QString translate(QHash<QString, QString> global_dict);

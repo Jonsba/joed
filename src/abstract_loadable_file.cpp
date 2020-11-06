@@ -2,21 +2,16 @@
 #include "joed.h"
 
 #include <QFile>
-#include <QTextStream>
 
-Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version, QString file_path) {
+Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version) {
 	this->Version = Version;
-	if (file_path != "") {
-		this->load(file_path);
-	}
 }
 
 void Abstract_Loadable_File::load(QString file_path) {
-	QFile file(file_path);
-	if (! file.open(QIODevice::ReadOnly)) {
-		error("Cannot open file: " + file_path);
+	QFile file_descr(file_path);
+	if (! file_descr.open(QIODevice::ReadOnly)) {
+		error("Cannot load file: " + file_path);
 	}
-	QTextStream stream(&file);
 	QString line, trimmed_line;
 	QString key;
 	int level;
@@ -31,7 +26,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 				continue;
 			}
 			is_first_value_line = true;
-			if (key == Keys[Version_E]) {
+			if (key == Joed::Keys[Version_E]) {
 				state = State::Parsing_Value;
 			} else {
 				state = this->process_key(key, level);
@@ -42,7 +37,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 			}
 			break;
 		case State::Parsing_Value:
-			if (key == Keys[Version_E]) {
+			if (key == Joed::Keys[Version_E]) {
 				this->check_version_validity(trimmed_line);
 			} else {
 				this->assign(key, trimmed_line, is_first_value_line);
@@ -57,9 +52,9 @@ void Abstract_Loadable_File::load(QString file_path) {
 			break;
 		}
 		do {
-			line = stream.readLine();
+			line = file_descr.readLine();
 			if (line.isNull()) {
-				file.close();
+				file_descr.close();
 				return;
 			}
 			trimmed_line = line.trimmed();
@@ -68,10 +63,15 @@ void Abstract_Loadable_File::load(QString file_path) {
 	}
 }
 
+QString Abstract_Loadable_File::version_string() {
+	return QString::number(this->Version.Major) + "." + QString::number(this->Version.Minor) + "." +
+	       QString::number(this->Version.Revision);
+}
+
 void Abstract_Loadable_File::check_version_validity(QString version_string) {
 	QStringList version_list = version_string.split(".");
-	int major_version = version_list.at(0).toInt();
-	int minor_version = version_list.at(1).toInt();
+	int major_version = version_list[0].toInt();
+	int minor_version = version_list[1].toInt();
 	if (major_version != Version.Major || minor_version > Version.Minor) {
 		echo("Unsupporter version: " + version_string);
 		error("Any version between " + QString::number(Version.Major) + ".0.0 and " +

@@ -1,34 +1,34 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
-#include "abstract_loadable_file.h"
+#include "writer.h"
 #include <QHash>
-#include <QString>
 
-class Lua_VM;
+class Abstract_Block;
 class Backend;
 class Environment;
-class Joed_Conf_File;
-class Top_Block;
-class Abstract_Block;
-class QProcess;
+class Lua_VM;
 class Styles;
-class Style;
+class Root_Block;
+class Writer;
+class QProcess;
 
 class Document : public Abstract_Loadable_File {
  public:
 	Document(QString document_path = "");
-	State process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line = true);
 	Backend* backend();
-	void open(QString document_path);
-	Top_Block* root_block();
+	Root_Block* root_block();
 	QProcess* compile_process();
 	void compile();
+	void save_as(QString file_path);
 	//
 	inline static const File_Version Version = {1, 0, 0};
-	inline static const QStringList End_Keys = {Keys[Style_E], Keys[Text_E]};
-	inline static const QStringList Blocks_Keys = {Keys[Children_E], Keys[Block_E]};
+	inline static const QStringList End_Keys = {Joed::Keys[Style_E], Joed::Keys[Text_E]};
+	inline static const QStringList Blocks_Keys = {Joed::Keys[Children_E], Joed::Keys[Block_E]};
+
+ protected:
+	State process_key(QString key, int level);
+	void assign(QString end_key, QString value, bool is_first_value_line = true);
 
  private:
 	void create();
@@ -39,9 +39,10 @@ class Document : public Abstract_Loadable_File {
 	Backend* the_backend;
 	Styles* styles;
 	Environment* environment;
-	Top_Block* the_root_block;
+	Root_Block* the_root_block;
 	QHash<int, Abstract_Block*> current_blocks;
 	int block_level;
+	Writer* writer;
 };
 
 #endif // DOCUMENT_H

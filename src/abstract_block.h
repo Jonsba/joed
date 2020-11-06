@@ -3,6 +3,8 @@
 
 #include <QString>
 
+class Writer;
+
 enum class Block_Type {
 	Uninitialized_E,
 	Layout_Block_E,
@@ -13,10 +15,11 @@ enum class Block_Type {
 
 class Abstract_Block {
  public:
-	Abstract_Block(QString Identifier, Block_Type Block_Type);
+	Abstract_Block(QString identifier, Block_Type block_type);
 	QString identifier();
 	Block_Type type();
 	virtual QString translate() = 0;
+	virtual void save(Writer* writer, int level);
 	//
 	inline static const QString Layout_Block_Value = "layout_block";
 	inline static const QString Text_Block_Value = "text_block";

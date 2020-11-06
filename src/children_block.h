@@ -6,7 +6,8 @@
 class Children_Block : public Abstract_Non_Layouted_Block {
  public:
 	Children_Block();
-	QString translate();
+	QString translate() override;
+	void save(Writer* writer, int level) override;
 };
 
 #endif // CHILDREN_BLOCK_H

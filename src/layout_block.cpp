@@ -6,6 +6,7 @@
 #include "raw_text_block.h"
 #include "style.h"
 #include "text_block.h"
+#include "writer.h"
 
 Layout_Block::Layout_Block(Style* style, Escaper* escaper, bool loaded_from_document_file)
     : Abstract_Multi_Block(style->name(), style->type()) {
@@ -17,7 +18,6 @@ Layout_Block::Layout_Block(Style* style, Escaper* escaper, bool loaded_from_docu
 }
 
 void Layout_Block::initialize_from_style_layout() {
-
 	for (Layout_Entry* layout_entry : this->style->layout_entries()) {
 		Abstract_Block* new_block;
 		if (layout_entry->is_children_entry()) {
@@ -58,4 +58,10 @@ QString Layout_Block::translate(QHash<QString, QString> global_dict) {
 		global_dict[child_block->identifier()] = child_block->translate();
 	}
 	return this->style->translate(global_dict);
+}
+
+void Layout_Block::save(Writer* writer, int level) {
+	this->Abstract_Block::save(writer, level);
+	writer->write_pair(Joed::Keys[Style_E], this->style->name(), level + 1);
+	this->Abstract_Multi_Block::save(writer, level + 1);
 }

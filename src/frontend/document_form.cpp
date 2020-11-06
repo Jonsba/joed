@@ -9,7 +9,6 @@
 #include "ui_document_form.h"
 
 #include <QProcess>
-#include <QTextEdit>
 
 Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(parent) {
 	this->document = new Document(document_path);

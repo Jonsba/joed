@@ -15,9 +15,9 @@ class QProcess;
 
 class Backend : public Abstract_Loadable_Tree {
  public:
-	Backend(Lua_VM* lua_vm);
-	State process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	Backend(Lua_VM* lua_vm, QString name, QString document_class);
+	QString name();
+	QString document_class();
 	QProcess* compile_process();
 	void compile(QString document_code, QString environment_code);
 	QString compiled_document_path();
@@ -32,9 +32,13 @@ class Backend : public Abstract_Loadable_Tree {
 	inline static const QString HTML_Viewer_Id = "html";
 
  private:
+	State process_key(QString key, int level);
+	void assign(QString end_key, QString value, bool is_first_value_line);
 	void write_to_file(QString code, QString file_path);
 	//
 	Lua_Client* lua_client;
+	QString the_name;
+	QString the_document_class;
 	QString translated_document_path;
 	QString translated_environment_path;
 	QString compiled_file_extension;

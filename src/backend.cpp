@@ -8,12 +8,21 @@
 
 #include <QFile>
 #include <QProcess>
-#include <QTextStream>
 
-Backend::Backend(Lua_VM* lua_vm) {
+Backend::Backend(Lua_VM* lua_vm, QString name, QString document_class) {
 	this->lua_client = new Lua_Client(lua_vm);
 	this->the_escaper = new Escaper(lua_vm);
+	this->the_name = name;
+	this->the_document_class = document_class;
 	this->the_compile_process = new QProcess();
+}
+
+QString Backend::name() {
+	return this->the_name;
+}
+
+QString Backend::document_class() {
+	return this->the_document_class;
 }
 
 State Backend::process_key(QString key, int level) {
@@ -21,27 +30,25 @@ State Backend::process_key(QString key, int level) {
 }
 
 void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Keys[Output_E]) {
+	if (end_key == Joed::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
-	} else if (end_key == Keys[Doc_File_Ext_E]) {
+	} else if (end_key == Joed::Keys[Doc_File_Ext_E]) {
 		this->translated_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_BASENAME + value;
-	} else if (end_key == Keys[Env_File_Ext_E]) {
+	} else if (end_key == Joed::Keys[Env_File_Ext_E]) {
 		this->translated_environment_path =
 		    BACKEND_WORKING_DIRECTORY + Environment::Basename_Id + value;
-	} else if (end_key == Keys[Viewer_E]) {
+	} else if (end_key == Joed::Keys[Viewer_E]) {
 		this->compiled_file_extension = value;
 		this->the_compiled_document_path = BACKEND_WORKING_DIRECTORY DOCUMENT_BASENAME "." + value;
-	} else if (end_key == Keys[Escape_Table_E]) {
+	} else if (end_key == Joed::Keys[Escape_Table_E]) {
 		this->the_escaper->parse(value);
 	}
 }
 
 void Backend::write_to_file(QString code, QString file_path) {
 	QFile file(file_path);
-	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QTextStream stream(&file);
-		stream << code.toUtf8() << endl;
-	}
+	file.open(QIODevice::WriteOnly | QIODevice::Text);
+	file.write(code.toUtf8());
 	file.close();
 }
 

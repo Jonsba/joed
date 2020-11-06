@@ -1,8 +1,8 @@
 #include "abstract_block.h"
-#include "joed.h"
+#include "writer.h"
 
-Abstract_Block::Abstract_Block(QString Identifier, Block_Type Type)
-    : Identifier(Identifier), Type(Type) {}
+Abstract_Block::Abstract_Block(QString identifier, Block_Type type)
+    : Identifier(identifier), Type(type) {}
 
 QString Abstract_Block::identifier() {
 	return this->Identifier;
@@ -10,4 +10,8 @@ QString Abstract_Block::identifier() {
 
 Block_Type Abstract_Block::type() {
 	return this->Type;
+}
+
+void Abstract_Block::save(Writer* writer, int level) {
+	writer->write_key(Joed::Keys[Block_E], level);
 }

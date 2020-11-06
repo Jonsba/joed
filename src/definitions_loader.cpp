@@ -6,11 +6,11 @@
 
 Definitions_Loader::Definitions_Loader(Lua_VM* lua_vm, QString backend_name, QString document_class)
     : Abstract_Loadable_File(Version) {
-	this->objects_table[Keys[Styles_E]] = new Styles(lua_vm);
-	this->objects_table[Keys[Backend_E]] = new Backend(lua_vm);
+	this->objects_table[Joed::Keys[Styles_E]] = new Styles(lua_vm);
+	this->objects_table[Joed::Keys[Backend_E]] = new Backend(lua_vm, backend_name, document_class);
 	this->load(Joed::Base_Definitions_Directory + backend_name + "/base" +
 	           Joed::Definitions_File_Extension);
-	this->objects_table[Keys[Environment_E]] = new Environment(lua_vm);
+	this->objects_table[Joed::Keys[Environment_E]] = new Environment(lua_vm);
 	this->load(Joed::Base_Definitions_Directory + backend_name + "/" + document_class +
 	           Joed::Definitions_File_Extension);
 }
@@ -29,13 +29,13 @@ void Definitions_Loader::assign(QString end_key, QString value, bool is_first_va
 }
 
 Backend* Definitions_Loader::backend() {
-	return (Backend*)this->objects_table[Keys[Backend_E]];
+	return (Backend*)this->objects_table[Joed::Keys[Backend_E]];
 }
 
 Styles* Definitions_Loader::styles() {
-	return (Styles*)this->objects_table[Keys[Styles_E]];
+	return (Styles*)this->objects_table[Joed::Keys[Styles_E]];
 }
 
 Environment* Definitions_Loader::environment() {
-	return (Environment*)this->objects_table[Keys[Environment_E]];
+	return (Environment*)this->objects_table[Joed::Keys[Environment_E]];
 }

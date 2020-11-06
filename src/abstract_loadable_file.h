@@ -11,9 +11,9 @@ struct File_Version {
 
 class Abstract_Loadable_File : public Abstract_Loadable_Tree {
  public:
-	Abstract_Loadable_File(const File_Version Version, QString file_path = "");
+	Abstract_Loadable_File(const File_Version Version);
 	void load(QString file_path);
-	//
+	QString version_string();
 
  private:
 	bool read_key(QString& trimmed_line, QString& key);
