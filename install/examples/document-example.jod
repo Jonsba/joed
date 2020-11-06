@@ -1,7 +1,7 @@
 format-version: 1.0.0
 
-backend: context
-document-class: article
+backend: markdown
+document-class: colored
 
 content:
 	children:
@@ -12,11 +12,11 @@ content:
 		block:
 			style: paragraph
 			content:
-				text: a&b%c$d#e_f{g}h~i^j\k
+				text: Context: &b%c$d#e_f{g}h~i^j\k
 		block:
 			style: paragraph
 			content:
-				text: a & b % c $ d # e _ f { g } h ~ i ^ j \ k
+				text: Markdown: a\b`c*d_e{f}g[h]i(j)k#l+m-n.o!p
 		block:
 			style: paragraph
 			content:

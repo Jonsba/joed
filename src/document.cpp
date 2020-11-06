@@ -21,7 +21,6 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	} else {
 		this->load(document_path);
 	}
-	this->save_as("/home/jonas-travail/Documents/github/joed/build/document/saved.joed");
 }
 
 void Document::add_block(Abstract_Block* new_block) {

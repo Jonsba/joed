@@ -5,10 +5,22 @@ backend:
 	env-file-ext: .css
 	output: 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
 	viewer: html
-
--- TODO:
---   properties (space-before/after, formatting)
---   _text_ vs _formatted_text_ in text blocks
+	escape-table:
+		{'\\', '\\\\'}
+		{'`', '\\`'}
+		{'*', '\\*'}
+		{'_', '\\_'}
+		{'{', '\\{'}
+		{'}', '\\}'}
+		{'[', '\\['}
+		{']', '\\]'}
+		{'(', '\\('}
+		{')', '\\)'}
+		{'#', '\\#'}
+		{'+', '\\+'}
+		{'-', '\\-'}
+		{'.', '\\.'}
+		{'!', '\\!'}
 
 styles:
 
