@@ -19,6 +19,7 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 		this->the_root_block = new Root_Block(this->styles->find(Joed::Keys[Document_E]),
 		                                      this->the_backend->escaper(), false);
 	} else {
+		this->document_path = document_path;
 		this->load(document_path);
 	}
 }
@@ -36,6 +37,7 @@ Backend* Document::backend() {
 void Document::create() {
 	Joed_Conf_File* joed_conf_file = new Joed_Conf_File();
 	joed_conf_file->load(Joed::Joed_Conf_File);
+	this->document_path = Joed::Default_Document_Path + Joed::New_Document_Name;
 	this->create(joed_conf_file->backend_name(), joed_conf_file->document_class());
 }
 
@@ -43,6 +45,7 @@ void Document::create(QString backend_name, QString document_class) {
 	Definitions_Loader* definition_file =
 	    new Definitions_Loader(this->lua_vm, backend_name, document_class);
 	this->the_backend = definition_file->backend();
+	this->the_backend->set_document_path(this->document_path);
 	this->styles = definition_file->styles();
 	this->environment = definition_file->environment();
 }

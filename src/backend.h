@@ -5,9 +5,6 @@
 #include "joed.h"
 #include <QString>
 
-#define DOCUMENT_BASENAME "document"
-#define BACKEND_WORKING_DIRECTORY "/home/jonas-travail/Documents/github/joed/build/document/"
-
 class Lua_Client;
 class Lua_VM;
 class Escaper;
@@ -16,10 +13,11 @@ class QProcess;
 class Backend : public Abstract_Loadable_Tree {
  public:
 	Backend(Lua_VM* lua_vm, QString name, QString document_class);
+	void set_document_path(QString document_path);
+	void compile(QString document_code, QString environment_code);
 	QString name();
 	QString document_class();
 	QProcess* compile_process();
-	void compile(QString document_code, QString environment_code);
 	QString compiled_document_path();
 	QString environment_path();
 	QString viewer_type();
@@ -40,9 +38,12 @@ class Backend : public Abstract_Loadable_Tree {
 	Lua_Client* lua_client;
 	QString the_name;
 	QString the_document_class;
+	QString folder;
+	QString translated_document_file_extension;
+	QString translated_environment_file_extension;
+	QString the_viewer_type;
 	QString translated_document_path;
 	QString translated_environment_path;
-	QString compiled_file_extension;
 	QString the_compiled_document_path;
 	QProcess* the_compile_process;
 	Escaper* the_escaper;

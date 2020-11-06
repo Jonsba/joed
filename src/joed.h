@@ -1,6 +1,7 @@
 #ifndef JOED_H
 #define JOED_H
 
+#include <QDir>
 #include <QHash>
 #include <QStandardPaths>
 #include <QString>
@@ -38,8 +39,8 @@ enum Key_Index {
 
 class Joed {
 
-public:
-   inline static const QStringList Keys = {"format-version",
+ public:
+	inline static const QStringList Keys = {"format-version",
 	                                        "backend",
 	                                        "styles",
 	                                        "name",
@@ -64,15 +65,20 @@ public:
 	                                        "default-child-style",
 	                                        "environment"};
 
+	inline static const QString Sep = QDir::separator();
 	inline static const QString Local_Data_Path =
-	    QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation)[0] + "/joed/";
+	    QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation)[0] + Sep + "joed" +
+	    Sep;
 	inline static const QString System_Data_Path =
-	    QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation)[1] + "/joed/";
-	inline static const QString Base_Joed_Directory = "/home/jonas-travail/Documents/github/joed/install/";
-	inline static const QString Joed_Conf_File = Base_Joed_Directory + "joed.conf";
-	inline static const QString Base_Definitions_Directory = Base_Joed_Directory + "definitions/";
+	    QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation)[1] + Sep + "joed" +
+	    Sep;
+	inline static const QString Joed_Conf_File = System_Data_Path + "joed.conf";
+	inline static const QString Base_Definitions_Directory = System_Data_Path;
 	inline static const QString Definitions_File_Extension = ".def";
-
+	inline static const QString Default_Document_Path =
+	    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + Sep + "joed-docs" +
+	    Sep;
+	inline static const QString New_Document_Name = "new-document.jod";
 };
 
 #endif // JOED_H

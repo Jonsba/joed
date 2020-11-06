@@ -35,6 +35,7 @@ class Document : public Abstract_Loadable_File {
 	void create(QString backend_name, QString document_class);
 	void add_block(Abstract_Block* new_block);
 	//
+	QString document_path;
 	Lua_VM* lua_vm;
 	Backend* the_backend;
 	Styles* styles;
