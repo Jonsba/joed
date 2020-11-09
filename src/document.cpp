@@ -14,12 +14,12 @@
 Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->lua_vm = new Lua_VM();
 	this->writer = new Writer();
+	this->document_path = document_path;
 	if (document_path == "") {
 		this->create();
 		this->the_root_block = new Root_Block(this->styles->find(Joed::Keys[Document_E]),
 		                                      this->the_backend->escaper(), false);
 	} else {
-		this->document_path = document_path;
 		this->load(document_path);
 	}
 }
@@ -37,7 +37,6 @@ Backend* Document::backend() {
 void Document::create() {
 	Joed_Conf_File* joed_conf_file = new Joed_Conf_File();
 	joed_conf_file->load(Joed::Joed_Conf_File);
-	this->document_path = Joed::Default_Document_Path + Joed::New_Document_Name;
 	this->create(joed_conf_file->backend_name(), joed_conf_file->document_class());
 }
 

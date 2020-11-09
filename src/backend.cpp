@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QProcess>
+#include <QTemporaryDir>
 
 Backend::Backend(Lua_VM* lua_vm, QString name, QString document_class) {
 	this->lua_client = new Lua_Client(lua_vm);
@@ -19,9 +20,17 @@ Backend::Backend(Lua_VM* lua_vm, QString name, QString document_class) {
 }
 
 void Backend::set_document_path(QString document_path) {
-	QFileInfo document_file(document_path);
-	QString document_base_name = document_file.baseName();
+	QFileInfo document_file;
+	QString document_base_name;
+	if (document_path != "") {
+		document_file.setFile(document_path);
+	} else {
+		QTemporaryDir temp_dir;
+		document_file.setFile(temp_dir.path());
+	}
+	document_base_name = document_file.baseName();
 	this->folder = document_file.path() + Joed::Sep + document_base_name + Joed::Sep;
+
 	QDir dir(this->folder);
 	if (! dir.exists()) {
 		dir.mkdir(this->folder);
