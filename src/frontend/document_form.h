@@ -1,6 +1,7 @@
 #ifndef DOCUMENT_FORM_H
 #define DOCUMENT_FORM_H
 
+#include "src/joed.h"
 #include <QWidget>
 
 class Backend;
@@ -20,8 +21,14 @@ class Document_Form : public QWidget {
  public:
 	Document_Form(QWidget* parent, QString document_path);
 
+ public slots:
+	void open();
+	void save();
+	void save_as();
+
  private:
-	void create_ui(QWidget* parent);
+	void create_ui(QString document_path);
+	void load_document(QString document_path);
 	void compile(int tab_index);
 	void compilation_completed();
 

@@ -8,30 +8,51 @@
 #include "src/document.h"
 #include "ui_document_form.h"
 
+#include <QFileDialog>
 #include <QProcess>
 
 Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(parent) {
-	this->document = new Document(document_path);
-	this->create_ui(parent);
-}
-
-void Document_Form::create_ui(QWidget* parent) {
 	this->ui = new Ui::Document_Form();
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
+
+	this->create_ui(document_path);
+
+	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
+}
+
+void Document_Form::create_ui(QString document_path) {
+	this->document = new Document(document_path);
+
 	if (this->document->backend()->viewer_type() == Backend::PDF_Viewer_Id) {
 		this->document_viewer = new PDF_Viewer(this->ui->View_Mode_Tab, this->document->backend());
 	} else {
 		this->document_viewer = new HTML_Viewer(this->ui->View_Mode_Tab, this->document->backend());
 	}
 
-	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
-	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
-	                 &Document_Form::compilation_completed);
-
 	this->top_widget_block = new Multi_Block_Widget(
 	    this->ui->Document_Area, (Abstract_Multi_Block*)this->document->root_block());
 	this->ui->Document_Area->layout()->addWidget(this->top_widget_block);
+
+	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
+	                 &Document_Form::compilation_completed);
+}
+
+void Document_Form::load_document(QString document_path) {}
+
+void Document_Form::open() {
+	QString document_path = QFileDialog::getOpenFileName(
+	    this, tr("Open Document"), Joed::Default_Document_Path, tr("Document Files (*.jod)"));
+	qDeleteAll(this->ui->Document_Area->children());
+	this->ui->Document_Area->setLayout(new QVBoxLayout());
+	delete this->document_viewer;
+	this->create_ui(document_path);
+}
+void Document_Form::save() {
+	echo("save");
+}
+void Document_Form::save_as() {
+	echo("save as");
 }
 
 void Document_Form::compile(int tab_index) {
