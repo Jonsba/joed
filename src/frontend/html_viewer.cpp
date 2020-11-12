@@ -8,16 +8,16 @@
 HTML_Viewer::HTML_Viewer(QWidget* parent, Backend* backend)
     : Abstract_Document_Viewer(parent, backend) {
 	parent->layout()->addWidget(this);
-	this->html_view = new QTextBrowser();
+	this->html_view = new QTextBrowser(parent);
 	QHBoxLayout* layout = new QHBoxLayout(this);
 	layout->addWidget(this->html_view);
 	this->setLayout(layout);
 }
 
 void HTML_Viewer::refresh() {
-	QFile html_file(this->backend->compiled_document_path());
+	QFile html_file(this->backend->compiled_document()->path);
 	html_file.open(QIODevice::ReadOnly | QIODevice::Text);
-	QFile css_file(this->backend->environment_path());
+	QFile css_file(this->backend->translated_environment()->path);
 	css_file.open(QIODevice::ReadOnly | QIODevice::Text);
 	// QTextBrowser doesn't support external CSS files, so we will copy paste the CSS content
 	// directly in the HTML content

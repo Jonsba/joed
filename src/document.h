@@ -1,21 +1,27 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
-#include "writer.h"
+#include "abstract_loadable_file.h"
+
 #include <QHash>
+#include <QScopedPointer>
 
 class Abstract_Block;
 class Backend;
+class Definitions_File;
 class Environment;
+class Layout_Block;
 class Lua_VM;
-class Styles;
 class Root_Block;
+class Styles;
 class Writer;
+
 class QProcess;
 
 class Document : public Abstract_Loadable_File {
  public:
 	Document(QString document_path = "");
+	~Document();
 	Backend* backend();
 	Root_Block* root_block();
 	QProcess* compile_process();
@@ -32,18 +38,18 @@ class Document : public Abstract_Loadable_File {
 
  private:
 	void create();
-	void create(QString backend_name, QString document_class);
-	void add_block(Abstract_Block* new_block);
 	//
-	QString document_path;
-	Lua_VM* lua_vm;
-	Backend* the_backend;
-	Styles* styles;
-	Environment* environment;
-	Root_Block* the_root_block;
+	QScopedPointer<Lua_VM> lua_vm;
+	QScopedPointer<Definitions_File> backend_definitions_file;
+	QScopedPointer<Definitions_File> document_class_definitions_file;
+	QScopedPointer<Backend> the_backend;
+	QScopedPointer<Environment> environment;
+	QScopedPointer<Styles> styles;
+	QScopedPointer<Root_Block> the_root_block;
 	QHash<int, Abstract_Block*> current_blocks;
+	Layout_Block* current_parent_block;
+	QScopedPointer<Writer> writer;
 	int block_level;
-	Writer* writer;
 };
 
 #endif // DOCUMENT_H

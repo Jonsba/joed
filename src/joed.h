@@ -73,8 +73,6 @@ class Joed {
 	    QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation)[1] + Sep + "joed" +
 	    Sep;
 	inline static const QString Joed_Conf_File = System_Data_Path + "joed.conf";
-	inline static const QString Base_Definitions_Directory = System_Data_Path;
-	inline static const QString Definitions_File_Extension = ".def";
 	inline static const QString Default_Document_Path =
 	    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + Sep;
 	inline static const QString New_Document_Name = "new-document.jod";

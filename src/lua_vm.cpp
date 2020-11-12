@@ -5,14 +5,14 @@
 #include <lua.hpp>
 
 char* to_chars(QString text) {
-	// Needs a pointer to a QByteArray to be explicitely created, so that it will persist after the
-	// function returns. The earlier version of To_Chars caused random issues because the lambda
-	// QByteArray created by the expression 'return text.toLatin1().data()' didn't persist, which
-	// means that its 'char *' data returned by the function didn't persist as well.
-	QByteArray* ba = new QByteArray();
+	// The QByteArray needs to persist after the function returns. The earlier version of To_Chars
+	// caused random issues because the lambda QByteArray created by the expression 'return
+	// text.toLatin1().data()' didn't persist, which means that its 'char *' data returned by the
+	// function didn't persist as well.
+	static QByteArray ba;
 	// Needs latin1 encoding for Lua
-	*ba = text.toLatin1();
-	return ba->data();
+	ba = text.toLatin1();
+	return ba.data();
 }
 
 Lua_VM::Lua_VM() {

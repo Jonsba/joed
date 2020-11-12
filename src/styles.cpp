@@ -3,7 +3,6 @@
 #include "style.h"
 
 Styles::Styles(Lua_VM* lua_vm) {
-
 	this->lua_vm = lua_vm;
 }
 
@@ -19,8 +18,6 @@ State Styles::process_key(QString key, int level) {
 			this->style_name_prefix += this->new_style->name() + ".";
 		} else if (key != Joed::Keys[Style_E]) {
 			return State::Parsing_Value;
-			//} else if (key == Joed::Keys[Output_E]) {
-			//	this->new_style->assign()
 		}
 	}
 	return State::Parsing_Key;
@@ -46,10 +43,9 @@ Style* Styles::find(QString name) {
 }
 
 Style* Styles::make_style(QString name) {
-	Style* style = new Style(name, this->lua_vm);
-	style->assign(Joed::Keys[Name_E], name, true);
-	this->list[name] = style;
-	return style;
+	this->list[name] = new Style(name, this->lua_vm);
+	this->list[name]->assign(Joed::Keys[Name_E], name, true);
+	return this->list[name];
 }
 
 Style* Styles::make_style_if_nil(QString name) {
@@ -57,5 +53,11 @@ Style* Styles::make_style_if_nil(QString name) {
 		return this->list[name];
 	} else {
 		return this->make_style(name);
+	}
+}
+
+Styles::~Styles() {
+	for (Style* style : list) {
+		delete style;
 	}
 }

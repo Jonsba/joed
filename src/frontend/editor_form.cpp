@@ -19,6 +19,7 @@ Editor_Form::Editor_Form(QString document_path, QWidget* parent) : QMainWindow(p
 	QObject::connect(this->ui->action_save_as, &QAction::triggered, this->document_form,
 	                 &Document_Form::save_as);
 }
+
 Editor_Form::~Editor_Form() {
 	delete ui;
 }

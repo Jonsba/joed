@@ -1,5 +1,6 @@
 #include "backend.h"
 #include "environment.h"
+
 #include "escaper.h"
 #include "joed.h"
 #include "layout_block.h"
@@ -11,44 +12,34 @@
 #include <QProcess>
 #include <QTemporaryDir>
 
-Backend::Backend(Lua_VM* lua_vm, QString name, QString document_class) {
-	this->lua_client = new Lua_Client(lua_vm);
-	this->the_escaper = new Escaper(lua_vm);
-	this->the_name = name;
-	this->the_document_class = document_class;
-	this->the_compile_process = new QProcess();
+Backend::Backend(Lua_VM* lua_vm) {
+	this->the_compile_process.reset(new QProcess());
+	this->the_escaper.reset(new Escaper(lua_vm));
+	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
-void Backend::set_document_path(QString document_path) {
+void Backend::initialize_files_info(QString document_path) {
 	QFileInfo document_file;
-	QString document_base_name;
 	if (document_path != "") {
 		document_file.setFile(document_path);
 	} else {
 		QTemporaryDir temp_dir;
 		document_file.setFile(temp_dir.path());
 	}
-	document_base_name = document_file.baseName();
-	this->folder = document_file.path() + Joed::Sep + document_base_name + Joed::Sep;
+	QString document_base_name = document_file.baseName();
+	QString working_directory = document_file.path() + Joed::Sep + document_base_name + Joed::Sep;
 
-	QDir dir(this->folder);
+	QDir dir(working_directory);
 	if (! dir.exists()) {
-		dir.mkdir(this->folder);
+		dir.mkdir(working_directory);
 	}
-	this->translated_document_path =
-	    this->folder + document_base_name + this->translated_document_file_extension;
-	this->translated_environment_path =
-	    this->folder + Environment::Basename_Id + this->translated_environment_file_extension;
-	this->the_compiled_document_path =
-	    this->folder + document_base_name + "." + this->the_viewer_type;
-}
-
-QString Backend::name() {
-	return this->the_name;
-}
-
-QString Backend::document_class() {
-	return this->the_document_class;
+	this->the_translated_document.path =
+	    working_directory + document_base_name + this->the_translated_document.type;
+	this->the_translated_environment.path =
+	    working_directory + Environment::Basename_Id + this->the_translated_environment.type;
+	this->the_compiled_document.path =
+	    working_directory + document_base_name + "." + this->the_compiled_document.type;
+	this->the_compile_process->setWorkingDirectory(working_directory);
 }
 
 State Backend::process_key(QString key, int level) {
@@ -59,26 +50,25 @@ void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Joed::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else if (end_key == Joed::Keys[Doc_File_Ext_E]) {
-		this->translated_document_file_extension = value;
+		this->the_translated_document.type = value;
 	} else if (end_key == Joed::Keys[Env_File_Ext_E]) {
-		this->translated_environment_file_extension = value;
+		this->the_translated_environment.type = value;
 	} else if (end_key == Joed::Keys[Viewer_E]) {
-		this->the_viewer_type = value;
+		this->the_compiled_document.type = value;
 	} else if (end_key == Joed::Keys[Escape_Table_E]) {
 		this->the_escaper->parse(value);
 	}
 }
 
 void Backend::compile(QString document_code, QString environment_code) {
-	this->write_to_file(document_code, this->translated_document_path);
-	this->write_to_file(environment_code, this->translated_environment_path);
+	this->write_to_file(document_code, this->the_translated_document.path);
+	this->write_to_file(environment_code, this->the_translated_environment.path);
 	//
 	QHash<QString, QString> global_dict = {};
-	global_dict[Translated_Document_Id] = this->translated_document_path;
-	global_dict[Translated_Environment_Id] = this->translated_environment_path;
-	global_dict[Compiled_Document_Id] = this->the_compiled_document_path;
+	global_dict[Translated_Document_Id] = this->the_translated_document.path;
+	global_dict[Translated_Environment_Id] = this->the_translated_environment.path;
+	global_dict[Compiled_Document_Id] = this->the_compiled_document.path;
 	QString exec_command = this->lua_client->eval_expr(global_dict);
-	this->the_compile_process->setWorkingDirectory(this->folder);
 	this->the_compile_process->start(exec_command);
 }
 
@@ -90,21 +80,21 @@ void Backend::write_to_file(QString code, QString file_path) {
 }
 
 QProcess* Backend::compile_process() {
-	return this->the_compile_process;
+	return this->the_compile_process.get();
 }
 
-QString Backend::compiled_document_path() {
-	return this->the_compiled_document_path;
+File_Info* Backend::translated_document() {
+	return &this->the_translated_document;
 }
-
-QString Backend::environment_path() {
-	return this->translated_environment_path;
+File_Info* Backend::translated_environment() {
+	return &this->the_translated_environment;
 }
-
-QString Backend::viewer_type() {
-	return this->the_viewer_type;
+File_Info* Backend::compiled_document() {
+	return &this->the_compiled_document;
 }
 
 Escaper* Backend::escaper() {
-	return this->the_escaper;
+	return this->the_escaper.get();
 }
+
+Backend::~Backend() = default;

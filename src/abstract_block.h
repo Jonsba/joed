@@ -16,6 +16,7 @@ enum class Block_Type {
 class Abstract_Block {
  public:
 	Abstract_Block(QString identifier, Block_Type block_type);
+	virtual ~Abstract_Block();
 	QString identifier();
 	Block_Type type();
 	virtual QString translate() = 0;

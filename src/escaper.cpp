@@ -3,7 +3,7 @@
 #include "lua_client.h"
 
 Escaper::Escaper(Lua_VM* lua_vm) {
-	this->lua_client = new Lua_Client(lua_vm);
+	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
 void Escaper::parse(QString escape_spec_line) {
@@ -19,15 +19,17 @@ QString Escaper::escape(QString text) {
 	// then replace each token by the corresponding destination
 	const int UTF16_First_Private_Use_Character = 0xE000;
 	int current_token = UTF16_First_Private_Use_Character;
-	QString ret = text;
+	QString corrected_text = text;
 	for (QStringList escape_pair : this->escape_table) {
-		ret = ret.replace(escape_pair[0], QChar(current_token));
+		corrected_text = corrected_text.replace(escape_pair[0], QChar(current_token));
 		current_token++;
 	}
 	current_token = UTF16_First_Private_Use_Character;
 	for (QStringList escape_pair : this->escape_table) {
-		ret = ret.replace(QChar(current_token), escape_pair[1]);
+		corrected_text = corrected_text.replace(QChar(current_token), escape_pair[1]);
 		current_token++;
 	}
-	return ret;
+	return corrected_text;
 }
+
+Escaper::~Escaper() = default;

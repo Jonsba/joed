@@ -11,19 +11,19 @@ class Escaper;
 
 class Layout_Block : public Abstract_Multi_Block {
  public:
-	Layout_Block(Style* style, Escaper* escaper, bool loaded_from_document_file = true);
+	Layout_Block(Style* style);
 	QString translate() override;
 	void save(Writer* writer, int level) override;
+	// Undoes method shadowing
+	using Abstract_Multi_Block::create_block;
 
  protected:
 	QString translate(QHash<QString, QString> global_dict);
 	Style* style;
 
  private:
-	void initialize_from_style_layout();
-	Abstract_Block* create_sub_block(Style* style);
+	Abstract_Block* create_block(Block_Type type, Style* style, Escaper* escaper) override;
 	//
-	Escaper* escaper;
 };
 
 #endif // LAYOUT_BLOCK_H

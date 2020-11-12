@@ -3,7 +3,7 @@
 #include "lua_client.h"
 
 Environment::Environment(Lua_VM* lua_vm) {
-	this->lua_client = new Lua_Client(lua_vm);
+	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
 State Environment::process_key(QString key, int level) {
@@ -21,3 +21,5 @@ void Environment::assign(QString end_key, QString value, bool is_first_value_lin
 QString Environment::translate() {
 	return this->lua_client->eval_expr();
 }
+
+Environment::~Environment() = default;

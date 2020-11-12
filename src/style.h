@@ -6,16 +6,20 @@
 #include "joed.h"
 
 #include <QLinkedList>
+#include <QScopedPointer>
 #include <QString>
 
-class Lua_VM;
 class Lua_Client;
+class Lua_VM;
 class Layout_Entry;
 
-class Style : Abstract_Loadable_Object {
+// The final keyword suppresses a warning when destructing object in styles.cpp
+// Another option would be to make the destructor virtual
+class Style final : Abstract_Loadable_Object {
 
  public:
 	Style(QString the_name, Lua_VM* lua_vm);
+	~Style();
 	void assign(QString key, QString value, bool is_first_value_line);
 	void assign(QString key, Style* object, bool is_first_value_line);
 	QString name();
@@ -28,12 +32,12 @@ class Style : Abstract_Loadable_Object {
  private:
 	//
 	QString the_name;
-	Style* base_style = nullptr;
 	QString declare;
-	Style* parent = nullptr;
 	QLinkedList<Layout_Entry*> the_layout_entries;
+	Style* base_style = nullptr;
+	Style* parent = nullptr;
 	Style* the_default_child_style = nullptr;
-	Lua_Client* lua_client;
+	QScopedPointer<Lua_Client> lua_client;
 	Block_Type block_type = Block_Type::Uninitialized_E;
 };
 

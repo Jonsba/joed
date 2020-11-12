@@ -6,7 +6,7 @@
 
 Style::Style(QString name, Lua_VM* lua_vm) {
 	this->the_name = name;
-	this->lua_client = new Lua_Client(lua_vm);
+	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
 void Style::assign(QString key, QString value, bool is_first_value_line) {
@@ -60,4 +60,10 @@ QLinkedList<Layout_Entry*> Style::layout_entries() {
 
 QString Style::translate(QHash<QString, QString> global_dict) {
 	return this->lua_client->eval_expr(global_dict);
+}
+
+Style::~Style() {
+	for (Layout_Entry* layout_entry : this->the_layout_entries) {
+		delete layout_entry;
+	}
 }

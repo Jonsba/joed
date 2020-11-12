@@ -2,16 +2,20 @@
 #define STYLES_H
 
 #include "abstract_loadable_tree.h"
+#include "lua_vm.h"
 
 #include <QHash>
 #include <QString>
+#include <functional>
+#include <iostream>
+#include <string>
 
-class Lua_VM;
 class Style;
 
 class Styles : public Abstract_Loadable_Tree {
  public:
 	Styles(Lua_VM* lua_vm);
+	~Styles();
 	State process_key(QString key, int level);
 
 	void assign(QString end_key, QString value, bool is_first_value_line);

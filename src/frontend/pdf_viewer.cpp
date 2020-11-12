@@ -32,7 +32,7 @@ PDF_Viewer::PDF_Viewer(QWidget* parent, Backend* backend)
 }
 
 void PDF_Viewer::refresh() {
-	this->pdf_document->load(this->backend->compiled_document_path());
+	this->pdf_document->load(this->backend->compiled_document()->path);
 }
 
 void PDF_Viewer::bookmark_selected(const QModelIndex& index) {

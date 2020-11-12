@@ -6,8 +6,13 @@
 class Children_Block : public Abstract_Non_Layouted_Block {
  public:
 	Children_Block();
-	QString translate() override;
 	void save(Writer* writer, int level) override;
+	QString translate() override;
+	// Undoes method shadowing
+	using Abstract_Multi_Block::create_block;
+
+ private:
+	Abstract_Block* create_block(Block_Type type, Style* style, Escaper* escaper) override;
 };
 
 #endif // CHILDREN_BLOCK_H

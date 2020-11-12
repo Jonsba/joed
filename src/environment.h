@@ -2,6 +2,8 @@
 #define ENVIRONMENT_H
 
 #include "abstract_loadable_tree.h"
+
+#include <QScopedPointer>
 #include <QString>
 
 class Lua_VM;
@@ -10,6 +12,7 @@ class Lua_Client;
 class Environment : public Abstract_Loadable_Tree {
  public:
 	Environment(Lua_VM* lua_vm);
+	~Environment();
 	State process_key(QString key, int level);
 	void assign(QString end_key, QString value, bool is_first_value_line);
 	QString translate();
@@ -18,7 +21,7 @@ class Environment : public Abstract_Loadable_Tree {
 	inline static const QString Basename_Id = "document-environment";
 
  private:
-	Lua_Client* lua_client;
+	QScopedPointer<Lua_Client> lua_client;
 	QString name;
 };
 

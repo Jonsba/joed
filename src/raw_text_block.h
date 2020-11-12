@@ -5,7 +5,7 @@
 
 class Raw_Text_Block : public Abstract_Block {
  public:
-	Raw_Text_Block(QString text = "");
+	Raw_Text_Block();
 	void set_text(QString text);
 	QString text();
 	QString translate() override;

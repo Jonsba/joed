@@ -22,7 +22,7 @@ SOURCES += \
 	src/abstract_non_layouted_block.cpp \
 	src/backend.cpp \
 	src/children_block.cpp \
-	src/definitions_loader.cpp \
+	src/definitions_file.cpp \
 	src/document.cpp \
 	src/environment.cpp \
 	src/escaper.cpp \
@@ -57,7 +57,7 @@ HEADERS += \
 	src/abstract_non_layouted_block.h \
 	src/backend.h \
 	src/children_block.h \
-	src/definitions_loader.h \
+	src/definitions_file.h \
 	src/document.h \
 	src/environment.h \
 	src/escaper.h \

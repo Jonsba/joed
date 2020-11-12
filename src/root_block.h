@@ -4,7 +4,6 @@
 #include "layout_block.h"
 
 class Style;
-class Escaper;
 class Writer;
 
 class Root_Block : public Layout_Block {
@@ -12,6 +11,9 @@ class Root_Block : public Layout_Block {
 	Root_Block(Style* style, Escaper* escaper, bool loaded_from_document_file = true);
 	void save(Writer* writer);
 	QString translate();
+
+ private:
+	void initialize_from_style_layout(Escaper* escaper);
 };
 
 #endif // ROOT_BLOCK_H
