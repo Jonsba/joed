@@ -18,7 +18,7 @@ struct File_Info {
 	QString path;
 };
 
-class Backend : public Abstract_Loadable_Tree {
+class Backend final : public Abstract_Loadable_Tree {
  public:
 	Backend(Lua_VM* lua_vm);
 	~Backend();

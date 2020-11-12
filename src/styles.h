@@ -12,7 +12,7 @@
 
 class Style;
 
-class Styles : public Abstract_Loadable_Tree {
+class Styles final : public Abstract_Loadable_Tree {
  public:
 	Styles(Lua_VM* lua_vm);
 	~Styles();

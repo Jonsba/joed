@@ -23,7 +23,7 @@ struct Definitions_Info {
 	QString path;
 };
 
-class Definitions_File : public Abstract_Loadable_File {
+class Definitions_File final : public Abstract_Loadable_File {
  public:
 	Definitions_File(QString name, Definitions_Objects definitions_object,
 	                 Definitions_File* parent = nullptr);

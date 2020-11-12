@@ -9,7 +9,7 @@
 class Lua_VM;
 class Lua_Client;
 
-class Environment : public Abstract_Loadable_Tree {
+class Environment final : public Abstract_Loadable_Tree {
  public:
 	Environment(Lua_VM* lua_vm);
 	~Environment();

@@ -18,7 +18,7 @@ class Writer;
 
 class QProcess;
 
-class Document : public Abstract_Loadable_File {
+class Document final : public Abstract_Loadable_File {
  public:
 	Document(QString document_path = "");
 	~Document();
