@@ -12,12 +12,25 @@ Editor_Form::Editor_Form(QString document_path, QWidget* parent) : QMainWindow(p
 	this->ui = new Ui::Editor_Form();
 	ui->setupUi(this);
 	this->document_form = new Document_Form(this->ui->document_widget, document_path);
-	QObject::connect(this->ui->action_open, &QAction::triggered, this->document_form,
-	                 &Document_Form::open);
-	QObject::connect(this->ui->action_save, &QAction::triggered, this->document_form,
-	                 &Document_Form::save);
-	QObject::connect(this->ui->action_save_as, &QAction::triggered, this->document_form,
-	                 &Document_Form::save_as);
+	this->setWindowTitle("<New Document>");
+	if (document_path != "") {
+		this->setWindowTitle(document_path);
+	}
+	QObject::connect(this->ui->action_open, &QAction::triggered, this, &Editor_Form::open);
+	QObject::connect(this->ui->action_save, &QAction::triggered, this, &Editor_Form::save);
+	QObject::connect(this->ui->action_save_as, &QAction::triggered, this, &Editor_Form::save_as);
+}
+
+void Editor_Form::open() {
+	this->setWindowTitle(this->document_form->open());
+}
+
+void Editor_Form::save() {
+	this->setWindowTitle(this->document_form->save());
+}
+
+void Editor_Form::save_as() {
+	this->setWindowTitle(this->document_form->save_as());
 }
 
 Editor_Form::~Editor_Form() {

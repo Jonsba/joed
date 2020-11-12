@@ -16,7 +16,6 @@ Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(p
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
 	this->reset_ui(document_path);
-
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
 }
 
@@ -39,29 +38,32 @@ void Document_Form::reset_ui(QString document_path) {
 	                 &Document_Form::compilation_completed);
 }
 
-void Document_Form::open() {
+QString Document_Form::open() {
 	QString document_path = this->launch_dialog("Open Document", QFileDialog::AcceptOpen);
 	if (document_path == "") {
-		return;
+		return this->document->path();
 	}
 	this->reset_ui(document_path);
 	this->ui->Mode_Tab->setCurrentIndex(0);
+	return document_path;
 }
 
-void Document_Form::save() {
+QString Document_Form::save() {
 	if (this->document->path() == "") {
-		this->save_as();
+		return this->save_as();
 	} else {
 		this->document->save();
 	}
+	return this->document->path();
 }
 
-void Document_Form::save_as() {
+QString Document_Form::save_as() {
 	QString document_path = this->launch_dialog("Save Document As", QFileDialog::AcceptSave);
 	if (document_path == "") {
-		return;
+		return this->document->path();
 	}
 	this->document->save_as(document_path);
+	return document_path;
 }
 
 QString Document_Form::launch_dialog(QString title, QFileDialog::AcceptMode mode) {

@@ -23,11 +23,9 @@ class Document_Form : public QWidget {
  public:
 	Document_Form(QWidget* parent, QString document_path);
 	~Document_Form();
-
- public slots:
-	void open();
-	void save();
-	void save_as();
+	QString open();
+	QString save();
+	QString save_as();
 
  private:
 	void reset_ui(QString document_path);
