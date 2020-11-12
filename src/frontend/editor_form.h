@@ -18,6 +18,7 @@ class Editor_Form : public QMainWindow {
 	~Editor_Form();
 
  public slots:
+	void create();
 	void open();
 	void save();
 	void save_as();

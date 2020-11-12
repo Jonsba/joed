@@ -21,8 +21,9 @@ QT_END_NAMESPACE
 
 class Document_Form : public QWidget {
  public:
-	Document_Form(QWidget* parent, QString document_path);
+	Document_Form(QWidget* parent);
 	~Document_Form();
+	QString reset(QString document_path = "");
 	QString open();
 	QString save();
 	QString save_as();

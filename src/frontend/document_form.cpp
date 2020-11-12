@@ -11,11 +11,10 @@
 #include <QFileDialog>
 #include <QProcess>
 
-Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(parent) {
+Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
 	this->ui = new Ui::Document_Form();
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
-	this->reset_ui(document_path);
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
 }
 
@@ -36,6 +35,15 @@ void Document_Form::reset_ui(QString document_path) {
 
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
 	                 &Document_Form::compilation_completed);
+}
+
+QString Document_Form::reset(QString document_path) {
+	this->reset_ui(document_path);
+	this->ui->Mode_Tab->setCurrentIndex(0);
+	if (document_path == "") {
+		return "<New Document>";
+	}
+	return document_path;
 }
 
 QString Document_Form::open() {
