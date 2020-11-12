@@ -20,13 +20,15 @@ class QProcess;
 
 class Document final : public Abstract_Loadable_File {
  public:
-	Document(QString document_path = "");
+	Document(QString the_path = "");
 	~Document();
 	Backend* backend();
 	Root_Block* root_block();
+	QString path();
+	void save();
+	void save_as(QString file_path);
 	QProcess* compile_process();
 	void compile();
-	void save_as(QString file_path);
 	//
 	inline static const File_Version Version = {1, 0, 0};
 	inline static const QStringList End_Keys = {Joed::Keys[Style_E], Joed::Keys[Text_E]};
@@ -39,6 +41,7 @@ class Document final : public Abstract_Loadable_File {
  private:
 	void create();
 	//
+	QString the_path;
 	QScopedPointer<Lua_VM> lua_vm;
 	QScopedPointer<Definitions_File> backend_definitions_file;
 	QScopedPointer<Definitions_File> document_class_definitions_file;

@@ -2,6 +2,7 @@
 #define DOCUMENT_FORM_H
 
 #include "src/joed.h"
+#include <QFileDialog>
 #include <QScopedPointer>
 #include <QWidget>
 
@@ -29,7 +30,8 @@ class Document_Form : public QWidget {
 	void save_as();
 
  private:
-	void create_ui(QString document_path);
+	void reset_ui(QString document_path);
+	QString launch_dialog(QString title, QFileDialog::AcceptMode mode);
 	void compile(int tab_index);
 	void compilation_completed();
 

@@ -18,10 +18,12 @@
 #include <QProcess>
 
 Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
+	this->the_path = document_path;
 	this->lua_vm.reset(new Lua_VM());
 	this->styles.reset(new Styles(this->lua_vm.get()));
 	this->the_backend.reset(new Backend(this->lua_vm.get()));
 	this->environment.reset(new Environment(this->lua_vm.get()));
+	this->writer.reset(new Writer());
 	if (document_path == "") {
 		this->create();
 		this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
@@ -67,14 +69,24 @@ void Document::compile() {
 	this->backend()->compile();
 }
 
+QString Document::path() {
+	return this->the_path;
+}
+
 void Document::save_as(QString file_path) {
-	this->writer->open(file_path);
+	this->the_path = file_path;
+	this->save();
+}
+
+void Document::save() {
+	this->writer->open(this->the_path);
 	this->writer->write_pair(Joed::Keys[Version_E], this->version_string() + "\n", 0);
 	this->writer->write_pair(Joed::Keys[Backend_E], this->backend_definitions_file->info()->name, 0);
 	this->writer->write_pair(Joed::Keys[Document_Class_E],
 	                         this->document_class_definitions_file->info()->name + "\n", 0);
 	this->root_block()->save(this->writer.get());
 	this->writer->close();
+	this->the_backend->initialize_files_info(this->the_path);
 }
 
 State Document::process_key(QString key, int level) {

@@ -15,13 +15,12 @@ Document_Form::Document_Form(QWidget* parent, QString document_path) : QWidget(p
 	this->ui = new Ui::Document_Form();
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
-
-	this->create_ui(document_path);
+	this->reset_ui(document_path);
 
 	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
 }
 
-void Document_Form::create_ui(QString document_path) {
+void Document_Form::reset_ui(QString document_path) {
 	this->document.reset(new Document(document_path));
 
 	if (this->document->backend()->compiled_document()->type == Backend::PDF_Viewer_Id) {
@@ -41,15 +40,42 @@ void Document_Form::create_ui(QString document_path) {
 }
 
 void Document_Form::open() {
-	QString document_path = QFileDialog::getOpenFileName(
-	    this, tr("Open Document"), Joed::Default_Document_Path, tr("Document Files (*.jod)"));
-	this->create_ui(document_path);
+	QString document_path = this->launch_dialog("Open Document", QFileDialog::AcceptOpen);
+	if (document_path == "") {
+		return;
+	}
+	this->reset_ui(document_path);
 }
+
 void Document_Form::save() {
-	echo("save");
+	if (this->document->path() == "") {
+		this->save_as();
+	} else {
+		this->document->save();
+	}
 }
+
 void Document_Form::save_as() {
-	echo("save as");
+	QString document_path = this->launch_dialog("Save Document As", QFileDialog::AcceptSave);
+	if (document_path == "") {
+		return;
+	}
+	this->document->save_as(document_path);
+}
+
+QString Document_Form::launch_dialog(QString title, QFileDialog::AcceptMode mode) {
+	QFileDialog dialog(this, title);
+	dialog.setDirectory(Joed::Default_Document_Path);
+	if (this->document->path() != "") {
+		dialog.setDirectory(QFileInfo(this->document->path()).dir().path());
+	}
+	dialog.setAcceptMode(mode);
+	dialog.setNameFilter("Document Files (*.jod)");
+	dialog.setDefaultSuffix("jod");
+	if (dialog.exec() != QDialog::Accepted) {
+		return "";
+	}
+	return dialog.selectedFiles().first();
 }
 
 void Document_Form::compile(int tab_index) {
