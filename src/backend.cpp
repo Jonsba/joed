@@ -60,10 +60,7 @@ void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	}
 }
 
-void Backend::compile(QString document_code, QString environment_code) {
-	this->write_to_file(document_code, this->the_translated_document.path);
-	this->write_to_file(environment_code, this->the_translated_environment.path);
-	//
+void Backend::compile() {
 	QHash<QString, QString> global_dict = {};
 	global_dict[Translated_Document_Id] = this->the_translated_document.path;
 	global_dict[Translated_Environment_Id] = this->the_translated_environment.path;

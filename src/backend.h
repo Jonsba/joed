@@ -23,7 +23,8 @@ class Backend : public Abstract_Loadable_Tree {
 	Backend(Lua_VM* lua_vm);
 	~Backend();
 	void initialize_files_info(QString document_path);
-	void compile(QString document_code, QString environment_code);
+	void write_to_file(QString code, QString file_path);
+	void compile();
 	File_Info* translated_document();
 	File_Info* translated_environment();
 	File_Info* compiled_document();
@@ -39,7 +40,6 @@ class Backend : public Abstract_Loadable_Tree {
  private:
 	State process_key(QString key, int level);
 	void assign(QString end_key, QString value, bool is_first_value_line);
-	void write_to_file(QString code, QString file_path);
 	//
 	File_Info the_translated_document;
 	File_Info the_translated_environment;

@@ -58,7 +58,13 @@ QProcess* Document::compile_process() {
 }
 
 void Document::compile() {
-	this->the_backend->compile(this->the_root_block->translate(), this->environment->translate());
+	// Order is important because the environment might need to use variables that are set in the
+	// blocks (e.g. header and footer)
+	this->backend()->write_to_file(this->the_root_block->translate(),
+	                               this->the_backend->translated_document()->path);
+	this->backend()->write_to_file(this->environment->translate(),
+	                               this->the_backend->translated_environment()->path);
+	this->backend()->compile();
 }
 
 void Document::save_as(QString file_path) {
