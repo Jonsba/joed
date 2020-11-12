@@ -18,7 +18,7 @@ Backend::Backend(Lua_VM* lua_vm) {
 	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
-void Backend::initialize_files_info(QString document_path) {
+void Backend::reset_files_info(QString document_path) {
 	QFileInfo document_file;
 	if (document_path != "") {
 		document_file.setFile(document_path);
@@ -69,7 +69,7 @@ void Backend::compile() {
 	this->the_compile_process->start(exec_command);
 }
 
-void Backend::write_to_file(QString code, QString file_path) {
+void Backend::write(QString code, QString file_path) {
 	QFile file(file_path);
 	file.open(QIODevice::WriteOnly | QIODevice::Text);
 	file.write(code.toUtf8());

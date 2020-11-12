@@ -31,7 +31,7 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	} else {
 		this->load(document_path);
 	}
-	this->the_backend->initialize_files_info(document_path);
+	this->the_backend->reset_files_info(document_path);
 }
 
 Backend* Document::backend() {
@@ -62,9 +62,9 @@ QProcess* Document::compile_process() {
 void Document::compile() {
 	// Order is important because the environment might need to use variables that are set in the
 	// blocks (e.g. header and footer)
-	this->backend()->write_to_file(this->the_root_block->translate(),
+	this->backend()->write(this->the_root_block->translate(),
 	                               this->the_backend->translated_document()->path);
-	this->backend()->write_to_file(this->environment->translate(),
+	this->backend()->write(this->environment->translate(),
 	                               this->the_backend->translated_environment()->path);
 	this->backend()->compile();
 }
@@ -86,7 +86,7 @@ void Document::save() {
 	                         this->document_class_definitions_file->info()->name + "\n", 0);
 	this->root_block()->save(this->writer.get());
 	this->writer->close();
-	this->the_backend->initialize_files_info(this->the_path);
+	this->the_backend->reset_files_info(this->the_path);
 }
 
 State Document::process_key(QString key, int level) {

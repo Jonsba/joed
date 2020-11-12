@@ -22,8 +22,8 @@ class Backend final : public Abstract_Loadable_Tree {
  public:
 	Backend(Lua_VM* lua_vm);
 	~Backend();
-	void initialize_files_info(QString document_path);
-	void write_to_file(QString code, QString file_path);
+	void reset_files_info(QString document_path);
+	void write(QString code, QString file_path);
 	void compile();
 	File_Info* translated_document();
 	File_Info* translated_environment();
