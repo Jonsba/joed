@@ -45,6 +45,7 @@ void Document_Form::open() {
 		return;
 	}
 	this->reset_ui(document_path);
+	this->ui->Mode_Tab->setCurrentIndex(0);
 }
 
 void Document_Form::save() {
