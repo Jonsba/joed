@@ -3,7 +3,7 @@
 
 #include "joed.h"
 
-enum class State { Starting, Parsing_Key, Parsing_Value };
+enum class State { Starting, Parsing_Key, Parsing_Value, Checking_If_Blank_Value };
 
 class Abstract_Loadable_Object {
  public:

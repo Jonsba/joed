@@ -114,7 +114,6 @@ State Document::process_key(QString key, int level) {
 }
 
 void Document::assign(QString end_key, QString value, bool is_first_value_line) {
-	static QString backend_name = "";
 	if (end_key == Joed::Keys[Backend_E]) {
 		this->backend_definitions_file.reset(new Definitions_File(
 		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()}));

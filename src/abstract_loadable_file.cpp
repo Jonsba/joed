@@ -14,7 +14,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 	}
 	QString line, trimmed_line;
 	QString key;
-	int level;
+	int level = 0, previous_level;
 	bool is_first_value_line;
 	State state = State::Starting;
 	while (true) {
@@ -25,15 +25,20 @@ void Abstract_Loadable_File::load(QString file_path) {
 				state = State::Parsing_Value;
 				continue;
 			}
-			is_first_value_line = true;
 			if (key == Joed::Keys[Version_E]) {
 				state = State::Parsing_Value;
 			} else {
 				state = this->process_key(key, level);
 			}
-			if (state == State::Parsing_Value && trimmed_line != "") {
-				// We will check for one-liner
-				continue;
+			if (state == State::Parsing_Value) {
+				is_first_value_line = true;
+				if (trimmed_line != "") {
+					// We will check for one-liner
+					continue;
+				} else {
+					// Some fields like text fields may be blank
+					state = State::Checking_If_Blank_Value;
+				}
 			}
 			break;
 		case State::Parsing_Value:
@@ -47,6 +52,13 @@ void Abstract_Loadable_File::load(QString file_path) {
 			// a multiline value
 			state = State::Parsing_Key;
 			break;
+		case State::Checking_If_Blank_Value:
+			if (level <= previous_level) {
+				// It is then a field with a black value
+				this->assign(key, "", true);
+			}
+			state = State::Parsing_Key;
+			continue;
 		case State::Starting:
 			state = State::Parsing_Key;
 			break;
@@ -59,6 +71,8 @@ void Abstract_Loadable_File::load(QString file_path) {
 			}
 			trimmed_line = line.trimmed();
 		} while (trimmed_line == "" || is_comment(trimmed_line));
+
+		previous_level = level;
 		level = count_levels(line);
 	}
 }
