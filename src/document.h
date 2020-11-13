@@ -30,12 +30,11 @@ class Document final : public Abstract_Loadable_File {
 	QProcess* compile_process();
 	void compile();
 	//
-	inline static const File_Version Version = {1, 0, 0};
-	inline static const QStringList End_Keys = {Joed::Keys[Style_E], Joed::Keys[Text_E]};
+	inline static const File_Version Version = {0, 0, 0};
 	inline static const QStringList Blocks_Keys = {Joed::Keys[Children_E], Joed::Keys[Block_E]};
 
  protected:
-	State process_key(QString key, int level);
+	void process_key(QString key, int level);
 	void assign(QString end_key, QString value, bool is_first_value_line = true);
 
  private:

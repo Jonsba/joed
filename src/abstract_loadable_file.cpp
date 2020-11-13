@@ -14,55 +14,11 @@ void Abstract_Loadable_File::load(QString file_path) {
 	}
 	QString line, trimmed_line;
 	QString key;
-	int level = 0, previous_level;
+	int level = 0, last_key_level;
 	bool is_first_value_line;
-	State state = State::Starting;
+	State state = State::Parsing_Version;
 	while (true) {
-		switch (state) {
-		case State::Parsing_Key:
-			if (! read_key(trimmed_line, key)) {
-				// It was the next line of a multiple lines value, which we need to parse as value
-				state = State::Parsing_Value;
-				continue;
-			}
-			if (key == Joed::Keys[Version_E]) {
-				state = State::Parsing_Value;
-			} else {
-				state = this->process_key(key, level);
-			}
-			if (state == State::Parsing_Value) {
-				is_first_value_line = true;
-				if (trimmed_line != "") {
-					// We will check for one-liner
-					continue;
-				} else {
-					// Some fields like text fields may be blank
-					state = State::Checking_If_Blank_Value;
-				}
-			}
-			break;
-		case State::Parsing_Value:
-			if (key == Joed::Keys[Version_E]) {
-				this->check_version_validity(trimmed_line);
-			} else {
-				this->assign(key, trimmed_line, is_first_value_line);
-			}
-			is_first_value_line = false;
-			// We assume that the next line will be a key, and when it fails, we would be dealing with
-			// a multiline value
-			state = State::Parsing_Key;
-			break;
-		case State::Checking_If_Blank_Value:
-			if (level <= previous_level) {
-				// It is then a field with a black value
-				this->assign(key, "", true);
-			}
-			state = State::Parsing_Key;
-			continue;
-		case State::Starting:
-			state = State::Parsing_Key;
-			break;
-		}
+		// A) We read the next line and interpret it
 		do {
 			line = file_descr.readLine();
 			if (line.isNull()) {
@@ -70,10 +26,49 @@ void Abstract_Loadable_File::load(QString file_path) {
 				return;
 			}
 			trimmed_line = line.trimmed();
-		} while (trimmed_line == "" || is_comment(trimmed_line));
-
-		previous_level = level;
+		} while (trimmed_line == "" || is_comment(line));
 		level = count_levels(line);
+		switch (state) {
+		case State::Parsing_Version:
+			this->read_key(trimmed_line, key);
+			break;
+		case State::Parsing_Key:
+			state = this->read_key(trimmed_line, key);
+			break;
+		default:
+			state = State::Parsing_Value;
+			// Does the counted level imply that we are reading a new key?
+			if (level <= last_key_level) {
+				state = this->read_key(trimmed_line, key);
+			}
+		}
+		// B) We finalize line processing and send the processed data to the client that needs it
+		while (true) {
+			switch (state) {
+			case State::Parsing_Version:
+				this->check_version_validity(trimmed_line);
+				state = State::Parsing_Key;
+				break;
+			case State::Parsing_Key:
+				last_key_level = level;
+				this->process_key(key, level);
+				break;
+			case State::Parsing_End_Key:
+				last_key_level = level;
+				state = State::Parsing_Value;
+				is_first_value_line = true;
+				if (trimmed_line != "") {
+					// We first check for one-liner before reading the next line
+					continue;
+				}
+				break;
+			case State::Parsing_Value:
+				this->assign(key, trimmed_line, is_first_value_line);
+				is_first_value_line = false;
+				break;
+			}
+			break;
+		}
 	}
 }
 
@@ -95,26 +90,29 @@ void Abstract_Loadable_File::check_version_validity(QString version_string) {
 }
 
 bool Abstract_Loadable_File::is_comment(QString line) {
-	if (line.mid(0, 2) == "--") {
+	int i;
+	for (i = 0; line[i] == '\t'; i++)
+		;
+	if (line.mid(i, 2) == "--") {
 		return true;
 	}
 	return false;
 }
 
-bool Abstract_Loadable_File::read_key(QString& trimmed_line, QString& key) {
+State Abstract_Loadable_File::read_key(QString& trimmed_line, QString& key) {
 	int delimiter = trimmed_line.indexOf(':');
 	if (delimiter < 0) {
-		return false;
+		error("Expected key, got: " + trimmed_line);
 	}
-	QString potential_key = trimmed_line.left(delimiter);
-	for (int i = 0; i < potential_key.length(); i++) {
-		if (! potential_key[i].isLetter() && potential_key[i] != '-') {
-			return false;
-		}
+	key = trimmed_line.left(delimiter).trimmed();
+	delimiter++;
+	State next_state = State::Parsing_Key;
+	if (trimmed_line[delimiter] == '=') {
+		delimiter++;
+		next_state = State::Parsing_End_Key;
 	}
-	key = potential_key;
-	trimmed_line = trimmed_line.mid(delimiter + 1).trimmed();
-	return true;
+	trimmed_line = trimmed_line.mid(delimiter).trimmed();
+	return next_state;
 }
 
 int Abstract_Loadable_File::count_levels(QString line) {

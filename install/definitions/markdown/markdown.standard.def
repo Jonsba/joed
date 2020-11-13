@@ -1,7 +1,7 @@
-format-version: 1.0.0
+format-version := 0.0.0
 
 environment:
-	output:
+	output :=
 		'body{'
 		'	padding-top: 60px;'
 		'	padding-bottom: 80px;'
@@ -22,28 +22,28 @@ environment:
 
 styles:
 	document:
-		layout:
+		layout :=
 			header
 			_children_
 			footer
-		output:
+		output :=
 			'<link rel="stylesheet" href="document-environment.css">'
 			header
 			_children_
 			footer
 
 	style:
-		name: header
-		type: text_block
-		output:
+		name := header
+		type := text_block
+		output :=
 			'<div class="fixed-header">'
 			'<p>' .. _text_content_ .. '</p>'
 			'</div>'
 
 	style:
-		name: footer
-		type: text_block
-		output:
+		name := footer
+		type := text_block
+		output :=
 			'<div class="fixed-footer">'
 			'<p>' .. _text_content_ .. '</p>'
 			'</div>'

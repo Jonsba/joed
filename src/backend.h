@@ -18,7 +18,7 @@ struct File_Info {
 	QString path;
 };
 
-class Backend final : public Abstract_Loadable_Tree {
+class Backend final : public Abstract_Loadable_Object {
  public:
 	Backend(Lua_VM* lua_vm);
 	~Backend();
@@ -37,9 +37,10 @@ class Backend final : public Abstract_Loadable_Tree {
 	inline static const QString PDF_Viewer_Id = "pdf";
 	inline static const QString HTML_Viewer_Id = "html";
 
- private:
-	State process_key(QString key, int level);
+ protected:
 	void assign(QString end_key, QString value, bool is_first_value_line);
+
+ private:
 	//
 	File_Info the_translated_document;
 	File_Info the_translated_environment;

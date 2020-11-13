@@ -9,16 +9,17 @@
 class Lua_VM;
 class Lua_Client;
 
-class Environment final : public Abstract_Loadable_Tree {
+class Environment final : public Abstract_Loadable_Object {
  public:
 	Environment(Lua_VM* lua_vm);
 	~Environment();
-	State process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
 	QString translate();
 	//
 	inline static const QString Name_Id = "environment.name";
 	inline static const QString Basename_Id = "document-environment";
+
+ protected:
+	void assign(QString end_key, QString value, bool is_first_value_line);
 
  private:
 	QScopedPointer<Lua_Client> lua_client;

@@ -16,7 +16,7 @@ class Abstract_Loadable_File : public Abstract_Loadable_Tree {
 	QString version_string();
 
  private:
-	bool read_key(QString& trimmed_line, QString& key);
+	State read_key(QString& trimmed_line, QString& key);
 	void add_value_line(QString value_line);
 	bool is_comment(QString line);
 	int count_levels(QString line);

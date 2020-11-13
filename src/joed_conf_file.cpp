@@ -2,12 +2,8 @@
 
 Joed_Conf_File::Joed_Conf_File() : Abstract_Loadable_File(Version) {}
 
-State Joed_Conf_File::process_key(QString key, int level) {
-	if (key == Joed::Keys[Defaults_E]) {
-		return State::Parsing_Key;
-	}
-	return State::Parsing_Value;
-}
+// At the moment, one possible key (defaults), so we do nothing
+void Joed_Conf_File::process_key(QString key, int level) {}
 
 void Joed_Conf_File::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Joed::Keys[Backend_E]) {

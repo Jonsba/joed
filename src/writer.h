@@ -10,10 +10,12 @@ class Writer {
 	void open(QString file_path);
 	void close();
 	void write_key(QString key, int level);
+	void write_end_key(QString end_key, int level);
 	void write_value(QString value, int level);
-	void write_pair(QString key, QString value, int level);
+	void write_pair(QString end_key, QString value, int level);
 
  private:
+	void write_line(QString line, int level);
 	void write_tabulations(int level);
 	//
 	QFile file_descr;

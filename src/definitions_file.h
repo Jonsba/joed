@@ -33,16 +33,16 @@ class Definitions_File final : public Abstract_Loadable_File {
 	inline static const QString File_Extension = ".def";
 
  protected:
-	State process_key(QString key, int level);
+	void process_key(QString key, int level);
 	void assign(QString end_key, QString value, bool is_first_value_line);
 	//
-	inline static const File_Version Version = {1, 0, 0};
+	inline static const File_Version Version = {0, 0, 0};
 
  private:
 	QString base_path; // = path without file extension
 	Definitions_Info the_file_info;
-	QHash<QString, Abstract_Loadable_Tree*> objects_table;
-	Abstract_Loadable_Tree* current_object;
+	QHash<QString, Abstract_Loadable_Object*> objects_table;
+	Abstract_Loadable_Object* current_object;
 };
 
 #endif // DEFINITIONS_FILE_H

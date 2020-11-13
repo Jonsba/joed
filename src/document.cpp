@@ -26,8 +26,8 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->writer.reset(new Writer());
 	if (document_path == "") {
 		this->create();
-		this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
-		                                          this->the_backend->escaper(), false));
+		this->the_root_block.reset(
+		    new Root_Block(this->styles->find(Joed::Keys[Document_E]), this->the_backend->escaper()));
 	} else {
 		this->load(document_path);
 	}
@@ -63,9 +63,9 @@ void Document::compile() {
 	// Order is important because the environment might need to use variables that are set in the
 	// blocks (e.g. header and footer)
 	this->backend()->write(this->the_root_block->translate(),
-	                               this->the_backend->translated_document()->path);
+	                       this->the_backend->translated_document()->path);
 	this->backend()->write(this->environment->translate(),
-	                               this->the_backend->translated_environment()->path);
+	                       this->the_backend->translated_environment()->path);
 	this->backend()->compile();
 }
 
@@ -89,13 +89,13 @@ void Document::save() {
 	this->the_backend->reset_files_info(this->the_path);
 }
 
-State Document::process_key(QString key, int level) {
+void Document::process_key(QString key, int level) {
 	if (level == 0) {
 		if (key != Joed::Keys[Content_E]) {
-			return State::Parsing_Value;
+			return;
 		}
-		this->the_root_block.reset(
-		    new Root_Block(this->styles->find(Joed::Keys[Document_E]), this->the_backend->escaper()));
+		this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
+		                                          this->the_backend->escaper(), true));
 		this->current_blocks[0] = this->the_root_block.get();
 	}
 	if (Blocks_Keys.contains(key)) {
@@ -106,11 +106,7 @@ State Document::process_key(QString key, int level) {
 			this->current_blocks[this->block_level] =
 			    this->current_parent_block->create_block(Block_Type::Children_Block_E);
 		}
-		return State::Parsing_Key;
-	} else if (End_Keys.contains(key)) {
-		return State::Parsing_Value;
 	}
-	return State::Parsing_Key;
 }
 
 void Document::assign(QString end_key, QString value, bool is_first_value_line) {
@@ -138,7 +134,8 @@ void Document::assign(QString end_key, QString value, bool is_first_value_line) 
 	} else if (end_key == Joed::Keys[Text_E]) {
 		Text_Block* text_block = (Text_Block*)this->current_blocks[this->block_level];
 		Raw_Text_Block* rt = (Raw_Text_Block*)text_block->create_block(Block_Type::Raw_Text_Block_E);
-		rt->set_text(value);
+		// Remove the "" enclosing the text
+		rt->set_text(value.mid(1, value.length() - 2));
 	}
 }
 

@@ -1,11 +1,11 @@
-format-version: 1.0.0
+format-version := 0.0.0
 
 backend:
-	doc-file-ext: .tex
-	env-file-ext: .tex
-	output: 'context ' .. _translated_document_
-	viewer: pdf
-	escape-table:
+	doc-file-ext := .tex
+	env-file-ext := .tex
+	output := 'context ' .. _translated_document_
+	viewer := pdf
+	escape-table :=
 		{'&', '\\&'}
 		{'%', '\\%'}
 		{'$', '\\$'}
@@ -20,35 +20,35 @@ backend:
 styles:
 
 	document:
-		layout:
+		layout :=
 			_children_
-		output:
+		output :=
 			'\\starttext'
 			_children_
 			'\\stoptext'
-		default-child-style: paragraph
+		default-child-style := paragraph
 
 	style:
-		name: paragraph
-		type: text_block
-		output:
+		name := paragraph
+		type := text_block
+		output :=
 			'{\\par ' .. _text_content_ .. '}'
 
 	style:
-		name: section
-		child-of: document
-		type: layout_block
-		layout:
+		name := section
+		child-of := document
+		type := layout_block
+		layout :=
 			section.title
 			_children_
-		output:
+		output :=
 			'\\startsection[title={' .. section.title .. '}]'
 			_children_
 			'\\stopsection'
-		default-child-style: paragraph
+		default-child-style := paragraph
 		styles:
 			style:
-				name: title
-				type: text_block
-				output:
+				name := title
+				type := text_block
+				output :=
 					_text_content_

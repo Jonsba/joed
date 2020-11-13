@@ -1,7 +1,7 @@
-format-version: 1.0.0
+format-version := 0.0.0
 
 environment:
-	output:
+	output :=
 		'\\setupinteraction[state=start]'
 		'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
 		header
@@ -10,24 +10,24 @@ environment:
 styles:
 
 	document:
-		layout:
+		layout :=
 			header
 			_children_
 			footer
-		output:
+		output :=
 			'\\environment {document-environment}'
 			'\\starttext'
 			_children_
 			'\\stoptext'
 
 	style:
-		name: header
-		type: text_block
-		output:
+		name := header
+		type := text_block
+		output :=
 			'\\setupheadertexts[' .. _text_content_ .. ']'
 
 	style:
-		name: footer
-		type: text_block
-		output:
+		name := footer
+		type := text_block
+		output :=
 			'\\setupfootertexts[' .. _text_content_ .. ']'

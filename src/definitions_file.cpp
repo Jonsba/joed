@@ -25,12 +25,11 @@ Definitions_Info* Definitions_File::info() {
 	return &this->the_file_info;
 }
 
-State Definitions_File::process_key(QString key, int level) {
+void Definitions_File::process_key(QString key, int level) {
 	if (level == 0) {
 		this->current_object = this->objects_table[key];
-		return State::Parsing_Key;
 	} else {
-		return this->current_object->process_key(key, level);
+		((Abstract_Loadable_Tree*)this->current_object)->process_key(key, level);
 	}
 }
 

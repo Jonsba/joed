@@ -1,11 +1,11 @@
-format-version: 1.0.0
+format-version := 0.0.0
 
 backend:
-	doc-file-ext: .md
-	env-file-ext: .css
-	output: 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
-	viewer: html
-	escape-table:
+	doc-file-ext := .md
+	env-file-ext := .css
+	output := 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
+	viewer := html
+	escape-table :=
 		{'\\', '\\\\'}
 		{'`', '\\`'}
 		{'*', '\\*'}
@@ -25,32 +25,32 @@ backend:
 styles:
 
 	document:
-		layout:
+		layout :=
 			_children_
-		output:
+		output :=
 			_children_
-		default-child-style: paragraph
+		default-child-style := paragraph
 
 	style:
-		name: paragraph
-		type: text_block
-		output:
+		name := paragraph
+		type := text_block
+		output :=
 			_text_content_
 
 	style:
-		name: section
-		child-of: document
-		type: layout_block
-		layout:
+		name := section
+		child-of := document
+		type := layout_block
+		layout :=
 			section.title
 			_children_
-		output:
+		output :=
 			'# ' .. section.title
 			_children_
-		default-child-style: paragraph
+		default-child-style := paragraph
 		styles:
 			style:
-				name: title
-				type: text_block
-				output:
+				name := title
+				type := text_block
+				output :=
 					_text_content_

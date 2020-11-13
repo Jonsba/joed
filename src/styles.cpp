@@ -6,7 +6,7 @@ Styles::Styles(Lua_VM* lua_vm) {
 	this->lua_vm = lua_vm;
 }
 
-State Styles::process_key(QString key, int level) {
+void Styles::process_key(QString key, int level) {
 	if (level == 1) {
 		this->style_name_prefix = "";
 		if (key == Joed::Keys[Document_E]) {
@@ -16,11 +16,8 @@ State Styles::process_key(QString key, int level) {
 	} else if (level >= 2) {
 		if (key == Joed::Keys[Styles_E]) {
 			this->style_name_prefix += this->new_style->name() + ".";
-		} else if (key != Joed::Keys[Style_E]) {
-			return State::Parsing_Value;
 		}
 	}
-	return State::Parsing_Key;
 }
 
 void Styles::assign(QString key, QString value, bool is_first_value_line) {

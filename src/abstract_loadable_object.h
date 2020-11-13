@@ -3,10 +3,14 @@
 
 #include "joed.h"
 
-enum class State { Starting, Parsing_Key, Parsing_Value, Checking_If_Blank_Value };
+enum class State { Parsing_Version, Parsing_Key, Parsing_End_Key, Parsing_Value };
 
 class Abstract_Loadable_Object {
  public:
+	// Although Definitions_Loader also derivates from Abstract_Loadable_Object,
+	// the C++ standard doesn't allow it to access the protected methods of its internal
+	// Abstract_Loadable_Object objects, unless we define it as a friend class
+	friend class Definitions_File;
 	Abstract_Loadable_Object();
 
  protected:

@@ -42,10 +42,6 @@ void Backend::reset_files_info(QString document_path) {
 	this->the_compile_process->setWorkingDirectory(working_directory);
 }
 
-State Backend::process_key(QString key, int level) {
-	return State::Parsing_Value;
-}
-
 void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Joed::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
@@ -62,9 +58,9 @@ void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 
 void Backend::compile() {
 	QHash<QString, QString> global_dict = {};
-	global_dict[Translated_Document_Id] = this->the_translated_document.path;
-	global_dict[Translated_Environment_Id] = this->the_translated_environment.path;
-	global_dict[Compiled_Document_Id] = this->the_compiled_document.path;
+	global_dict[Translated_Document_Id] = '"' + this->the_translated_document.path + '"';
+	global_dict[Translated_Environment_Id] = '"' + this->the_translated_environment.path + '"';
+	global_dict[Compiled_Document_Id] = '"' + this->the_compiled_document.path + '"';
 	QString exec_command = this->lua_client->eval_expr(global_dict);
 	this->the_compile_process->start(exec_command);
 }
