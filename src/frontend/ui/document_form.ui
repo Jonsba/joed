@@ -15,11 +15,11 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="Mode_Tab">
+    <widget class="QTabWidget" name="mode_tab">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="Edition_Mode_Tab">
+     <widget class="QWidget" name="edition_mode_tab">
       <attribute name="title">
        <string>Edition mode</string>
       </attribute>
@@ -46,7 +46,7 @@
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
-           <widget class="QWidget" name="Document_Area">
+           <widget class="QWidget" name="document_area">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -90,7 +90,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
          <item>
-          <widget class="QTreeView" name="Document_Tree"/>
+          <widget class="QTreeView" name="document_tree"/>
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox">
@@ -118,7 +118,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="View_Mode_Tab">
+     <widget class="QWidget" name="view_mode_tab">
       <attribute name="title">
        <string>View mode</string>
       </attribute>

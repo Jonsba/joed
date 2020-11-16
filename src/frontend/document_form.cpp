@@ -15,7 +15,7 @@ Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
 	this->ui = new Ui::Document_Form();
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
-	QObject::connect(ui->Mode_Tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
+	QObject::connect(ui->mode_tab, &QTabWidget::currentChanged, this, &Document_Form::compile);
 }
 
 void Document_Form::reset_ui(QString document_path) {
@@ -23,15 +23,15 @@ void Document_Form::reset_ui(QString document_path) {
 
 	if (this->document->backend()->compiled_document()->type == Backend::PDF_Viewer_Id) {
 		this->document_viewer.reset(
-		    new PDF_Viewer(this->ui->View_Mode_Tab, this->document->backend()));
+		    new PDF_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	} else {
 		this->document_viewer.reset(
-		    new HTML_Viewer(this->ui->View_Mode_Tab, this->document->backend()));
+		    new HTML_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	}
 
 	this->top_widget_block.reset(new Multi_Block_Widget(
-	    this->ui->Document_Area, (Abstract_Multi_Block*)this->document->root_block(), 0));
-	this->ui->Document_Area->layout()->addWidget(this->top_widget_block.get());
+	    this->ui->document_area, (Abstract_Multi_Block*)this->document->root_block(), 0));
+	this->ui->document_area->layout()->addWidget(this->top_widget_block.get());
 
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
 	                 &Document_Form::compilation_completed);
@@ -39,7 +39,7 @@ void Document_Form::reset_ui(QString document_path) {
 
 QString Document_Form::reset(QString document_path) {
 	this->reset_ui(document_path);
-	this->ui->Mode_Tab->setCurrentIndex(0);
+	this->ui->mode_tab->setCurrentIndex(0);
 	if (document_path == "") {
 		return "<New Document>";
 	}
@@ -52,7 +52,7 @@ QString Document_Form::open() {
 		return this->document->path();
 	}
 	this->reset_ui(document_path);
-	this->ui->Mode_Tab->setCurrentIndex(0);
+	this->ui->mode_tab->setCurrentIndex(0);
 	return document_path;
 }
 
