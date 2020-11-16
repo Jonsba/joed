@@ -5,7 +5,7 @@
 
 class Children_Block : public Abstract_Non_Layouted_Block {
  public:
-	Children_Block();
+	Children_Block(bool auto_built);
 	void save(Writer* writer, int level) override;
 	QString translate() override;
 	// Undoes method shadowing

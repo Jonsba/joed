@@ -8,7 +8,7 @@ class Writer;
 
 class Root_Block : public Layout_Block {
  public:
-	Root_Block(Style* style, Escaper* escaper, bool loaded_from_document_file = false);
+	Root_Block(Style* style, Escaper* escaper, bool auto_built);
 	void save(Writer* writer);
 	QString translate();
 

@@ -7,9 +7,9 @@
 #include "text_block.h"
 #include "writer.h"
 
-Root_Block::Root_Block(Style* style, Escaper* escaper, bool loaded_from_document_file)
-    : Layout_Block(style) {
-	if (! loaded_from_document_file) {
+Root_Block::Root_Block(Style* style, Escaper* escaper, bool auto_built)
+    : Layout_Block(style, auto_built) {
+	if (auto_built) {
 		this->initialize_from_style_layout(escaper);
 	}
 }
@@ -24,23 +24,13 @@ void Root_Block::initialize_from_style_layout(Escaper* escaper) {
 		case Block_Type::Children_Block_E: {
 			Children_Block* children_block =
 			    (Children_Block*)this->create_block(Block_Type::Children_Block_E);
-			if (this->style->default_child_style()->type() == Block_Type::Text_Block_E) {
-				Text_Block* text_block = (Text_Block*)children_block->create_block(
-				    this->style->default_child_style(), escaper);
-				text_block->create_block(Block_Type::Raw_Text_Block_E);
-			} else {
-				children_block->create_block(this->style->default_child_style());
-			}
+			children_block->create_block(this->style->default_child_style(), escaper);
 			break;
 		}
 		case Block_Type::Layout_Block_E:
-			this->create_block(layout_entry->style());
+		case Block_Type::Text_Block_E:
+			this->create_block(layout_entry->style(), escaper);
 			break;
-		case Block_Type::Text_Block_E: {
-			Text_Block* tb = (Text_Block*)this->create_block(layout_entry->style(), escaper);
-			tb->create_block(Block_Type::Raw_Text_Block_E);
-			break;
-		}
 		default:
 			error("Not implemented");
 		}

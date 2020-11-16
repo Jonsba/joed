@@ -11,7 +11,7 @@ class Escaper;
 
 class Layout_Block : public Abstract_Multi_Block {
  public:
-	Layout_Block(Style* style);
+	Layout_Block(Style* style, bool auto_built);
 	QString translate() override;
 	void save(Writer* writer, int level) override;
 	// Undoes method shadowing

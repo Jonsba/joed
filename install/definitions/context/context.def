@@ -16,6 +16,7 @@ backend:
 		{'~', '\\textasciitilde{}'}
 		{'^', '\\textasciicircum{}'}
 		{'\\', '\\textbackslash{}'}
+		{'\n', '\\\\'}
 
 styles:
 

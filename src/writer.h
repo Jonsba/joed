@@ -11,7 +11,7 @@ class Writer {
 	void close();
 	void write_key(QString key, int level);
 	void write_end_key(QString end_key, int level);
-	void write_value(QString value, int level);
+	void write_value(QString value, int level, QString escape_char = "");
 	void write_pair(QString end_key, QString value, int level);
 
  private:

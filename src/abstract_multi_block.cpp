@@ -2,8 +2,10 @@
 #include "style.h"
 #include "writer.h"
 
-Abstract_Multi_Block::Abstract_Multi_Block(QString identifier, Block_Type type)
-    : Abstract_Block(identifier, type) {}
+Abstract_Multi_Block::Abstract_Multi_Block(QString identifier, Block_Type type, bool auto_built)
+    : Abstract_Block(identifier, type) {
+	this->auto_built = auto_built;
+}
 
 Abstract_Block* Abstract_Multi_Block::create_block(Block_Type type) {
 	return this->create_block(type, nullptr, nullptr);

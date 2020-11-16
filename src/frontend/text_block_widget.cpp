@@ -5,7 +5,6 @@
 
 Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block) : QTextEdit(parent) {
 	this->text_block = text_block;
-	this->document()->setMaximumBlockCount(1);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	QFontMetrics metrics = this->fontMetrics();

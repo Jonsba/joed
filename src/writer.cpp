@@ -18,9 +18,9 @@ void Writer::write_end_key(QString end_key, int level) {
 	this->write_line(end_key + " :=\n", level);
 }
 
-void Writer::write_value(QString value, int level) {
+void Writer::write_value(QString value, int level, QString escape_char) {
 	for (QString line : value.split('\n')) {
-		this->write_line(line + '\n', level);
+		this->write_line(escape_char + line + escape_char + '\n', level);
 	}
 }
 

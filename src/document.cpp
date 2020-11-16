@@ -26,8 +26,8 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->writer.reset(new Writer());
 	if (document_path == "") {
 		this->create();
-		this->the_root_block.reset(
-		    new Root_Block(this->styles->find(Joed::Keys[Document_E]), this->the_backend->escaper()));
+		this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
+		                                          this->the_backend->escaper(), true));
 	} else {
 		this->load(document_path);
 	}
@@ -95,7 +95,7 @@ void Document::process_key(QString key, int level) {
 			return;
 		}
 		this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
-		                                          this->the_backend->escaper(), true));
+		                                          this->the_backend->escaper(), false));
 		this->current_blocks[0] = this->the_root_block.get();
 	}
 	if (Blocks_Keys.contains(key)) {
@@ -133,9 +133,7 @@ void Document::assign(QString end_key, QString value, bool is_first_value_line) 
 		}
 	} else if (end_key == Joed::Keys[Text_E]) {
 		Text_Block* text_block = (Text_Block*)this->current_blocks[this->block_level];
-		Raw_Text_Block* rt = (Raw_Text_Block*)text_block->create_block(Block_Type::Raw_Text_Block_E);
-		// Remove the "" enclosing the text
-		rt->set_text(value.mid(1, value.length() - 2));
+		text_block->add_loaded_text(value, is_first_value_line);
 	}
 }
 

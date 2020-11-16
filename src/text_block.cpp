@@ -4,10 +4,20 @@
 #include "style.h"
 #include "writer.h"
 
-Text_Block::Text_Block(Style* style, Escaper* escaper)
-    : Abstract_Non_Layouted_Block(style->name(), style->type()) {
+Text_Block::Text_Block(Style* style, Escaper* escaper, bool auto_built)
+    : Abstract_Non_Layouted_Block(style->name(), style->type(), auto_built) {
 	this->style = style;
 	this->escaper = escaper;
+	if (auto_built) {
+		this->current_sub_block = (Raw_Text_Block*)this->create_block(Block_Type::Raw_Text_Block_E);
+	}
+}
+
+void Text_Block::add_loaded_text(QString quoted_text, bool is_first_value_line) {
+	if (is_first_value_line) {
+		this->current_sub_block = (Raw_Text_Block*)this->create_block(Block_Type::Raw_Text_Block_E);
+	}
+	this->current_sub_block->add_loaded_text(quoted_text);
 }
 
 Abstract_Block* Text_Block::create_block(Block_Type type, Style* style, Escaper* escaper) {

@@ -9,7 +9,7 @@ class Escaper;
 
 class Abstract_Multi_Block : public Abstract_Block {
  public:
-	Abstract_Multi_Block(QString identifier, Block_Type type);
+	Abstract_Multi_Block(QString identifier, Block_Type type, bool auto_built);
 	~Abstract_Multi_Block();
 	Abstract_Block* create_block(Block_Type type);
 	Abstract_Block* create_block(Style* style);
@@ -21,6 +21,7 @@ class Abstract_Multi_Block : public Abstract_Block {
  protected:
 	void add_block(Abstract_Block* block);
 	//
+	bool auto_built;
 	QLinkedList<Abstract_Block*> the_blocks;
 };
 

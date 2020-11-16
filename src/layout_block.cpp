@@ -8,7 +8,8 @@
 #include "text_block.h"
 #include "writer.h"
 
-Layout_Block::Layout_Block(Style* style) : Abstract_Multi_Block(style->name(), style->type()) {
+Layout_Block::Layout_Block(Style* style, bool auto_built)
+    : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
 	this->style = style;
 }
 
@@ -16,15 +17,15 @@ Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style, Escape
 	Abstract_Multi_Block* new_block;
 	switch (type) {
 	case Block_Type::Children_Block_E: {
-		new_block = new Children_Block();
+		new_block = new Children_Block(this->auto_built);
 		break;
 	}
 	case Block_Type::Layout_Block_E: {
-		new_block = new Layout_Block(style);
+		new_block = new Layout_Block(style, this->auto_built);
 		break;
 	}
 	case Block_Type::Text_Block_E: {
-		new_block = new Text_Block(style, escaper);
+		new_block = new Text_Block(style, escaper, this->auto_built);
 		break;
 	}
 	default:
