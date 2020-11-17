@@ -4,6 +4,7 @@ environment:
 	output :=
 		'\\setupinteraction[state=start]'
 		'\\placebookmarks[chapter,title,section,subsection][chapter,title,section][force=yes]'
+		'\\setupwhitespace[big]'
 		header
 		footer
 
