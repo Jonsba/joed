@@ -4,6 +4,11 @@ backend := context
 document-class := article
 
 content:
+	block:
+		style := header
+		content:
+			text :=
+				"<Header>"
 	children:
 		block:
 			style := paragraph
@@ -38,7 +43,12 @@ content:
 						style := paragraph
 						content:
 							text :=
-								"Your design proposal is simply a document that states what you propose to do for your client. Keep in mind that a proposal is not a pitch. So never send one without having a conversation with your clients first.It's kind of like proposing to a girl. You don't just go up to her and say "Will you marry me?". First you need to get to know each other a bit to see if there is a good chemistry - same with the client.Design proposal is the document you send after talking to your client either on the phone or in person. Clients will usually reach out to multiple service providers in order to find a good fit for their project. So they use design proposals to gauge the risk of going with a particular vendor."
+								"Your design proposal is simply a document that states what you propose to do for your client. Keep in mind that a proposal is not a pitch. So never send one without having a conversation with your clients first. It's kind of like proposing to a girl. You don't just go up to her and say "Will you marry me?"."
+					block:
+						style := paragraph
+						content:
+							text :=
+								"First you need to get to know each other a bit to see if there is a good chemistry - same with the client. Design proposal is the document you send after talking to your client either on the phone or in person. Clients will usually reach out to multiple service providers in order to find a good fit for their project. So they use design proposals to gauge the risk of going with a particular vendor."
 		block:
 			style := section
 			content:
@@ -52,7 +62,12 @@ content:
 						style := paragraph
 						content:
 							text :=
-								"Clients ask for proposals because they have many options to choose from. You're not the only one who can do the job. And even if you had some special power or outstanding design aesthetics, they still want to compare your offer to other options. Other proposals should feel like comparing apples to apples. Your design proposal should stand out so they can see the value. Think about the last time you were shopping for something. You've probably done a lot of research comparing different options and prices before you made a purchasing decision. Same is with clients, they will comparison shop to find the best fit. The best fit, however, doesn't mean the least expensive option, or the best design portfolio.It means that you can move the needle for them and help them with something they need to get done. If you can communicate that better than others, then you won! - even if you're way more expensive. So make sure they know you CAN do the job done right at first and then make sure they see other options less desirable. Challenge them: You can hire a designer on Fiverr or Upwork for $500 and it will take longer, there will be many revisions and they probably won't deliver the outcome you want. What happens if you got stuck? How much it will cost you? To put it simply: you must appear as the least risky option."
+								"Clients ask for proposals because they have many options to choose from. You're not the only one who can do the job. And even if you had some special power or outstanding design aesthetics, they still want to compare your offer to other options. Other proposals should feel like comparing apples to apples. Your design proposal should stand out so they can see the value. Think about the last time you were shopping for something. You've probably done a lot of research comparing different options and prices before you made a purchasing decision. Same is with clients, they will comparison shop to find the best fit."
+					block:
+						style := paragraph
+						content:
+							text :=
+								"The best fit, however, doesn't mean the least expensive option, or the best design portfolio. It means that you can move the needle for them and help them with something they need to get done. If you can communicate that better than others, then you won! - even if you're way more expensive. So make sure they know you CAN do the job done right at first and then make sure they see other options less desirable. Challenge them: You can hire a designer on Fiverr or Upwork for $500 and it will take longer, there will be many revisions and they probably won't deliver the outcome you want. What happens if you got stuck? How much it will cost you? To put it simply: you must appear as the least risky option."
 		block:
 			style := section
 			content:
@@ -66,7 +81,27 @@ content:
 						style := paragraph
 						content:
 							text :=
-								"When to send a proposal? Before you even think about putting together a design proposal for your design client, you should have a WHY conversation first.   Never send a proposal before talking to your client. It doesn't make sense to send proposals without finding out what the project goals are and what's important to them. Otherwise you will most likely just waste time, or you will compete on price. Either way you didn't differentiate yourself from other designers and therefore you have small chances of closing this project. So before you even think about crafting a proposal for you client, first you have to have a sales conversation. If you don't want to read my other article about _how to talk to design clients_, just remember ask them these three basic questions:   Why this? (Why you need to design this?)   Why me? (Why you want to work with someone expensive as me?)   Why now? (Why do you want to do it now? Can't this project wait?) The goal of these questions is to uncover real motivator behind the project.Do this before sending your proposal. Whatever you work on (logo, branding, website etc.) - your project must be important to you client, otherwise is really hard to charge premium rates or even "fair" rates. The goal of the first question - Why this? - is to uncover the real business objective of whatever they want you to do.Why bother doing this at all? - They need to have in mind some outcome in mind.Otherwise is hard to justify the price, so they will go for the cheapest option. So if this is a new website, they may say "We need a new website", then you ask "why you need it?" and they reply "because our website is old, not responsive, doesn't communicate who we are (they list problems)". Then you dig deeper "Why you need responsive website? You don't convert? You want to generate more sales? etc." - here we're trying to learn what is the value of what this new website. So they will hopefully sit back and think how amazing it would be if the new website could achieve some target. Based on their answers you can estimate that e.g. Their bounce rate is over 90% and they're potentially loosing let's say 1M of business a year. So with that, you can say that this project will cost $100k which is only 10% of projected value of what this project will bring to their business. The purpose of the next question - Why now? - is to make sure that is project is urgent. If this is something they've been trying to do internally for over 6mo but couldn't achieve their goals, you already know that they need to get it done ASAP. Or perhaps they have a certain deadline in mind e.g. they need a new website ready for a special event. If the project is not urgent, client will slack with making a decision, they'll be putting it off. So make sure this project is urgent and needs to be completed by some specific date, otherwise they will keep losing money or simply won't grow as fast. The last question - why me? - is to actually to see why they think you’re a good fit for the project."
+								"When to send a proposal? Before you even think about putting together a design proposal for your design client, you should have a WHY conversation first. Never send a proposal before talking to your client. It doesn't make sense to send proposals without finding out what the project goals are and what's important to them. Otherwise you will most likely just waste time, or you will compete on price. Either way you didn't differentiate yourself from other designers and therefore you have small chances of closing this project."
+					block:
+						style := paragraph
+						content:
+							text :=
+								"So before you even think about crafting a proposal for you client, first you have to have a sales conversation. If you don't want to read my other article about _how to talk to design clients_, just remember ask them these three basic questions: Why this? (Why you need to design this?) Why me? (Why you want to work with someone expensive as me?) Why now? (Why do you want to do it now? Can't this project wait?)
+					block:
+						style := paragraph
+						content:
+							text :=
+								"The goal of these questions is to uncover real motivator behind the project. Do this before sending your proposal. Whatever you work on (logo, branding, website etc.) - your project must be important to you client, otherwise is really hard to charge premium rates or even "fair" rates. The goal of the first question - Why this? - is to uncover the real business objective of whatever they want you to do. Why bother doing this at all? - They need to have in mind some outcome in mind. Otherwise is hard to justify the price, so they will go for the cheapest option. So if this is a new website, they may say "We need a new website", then you ask "why you need it?" and they reply "because our website is old, not responsive, doesn't communicate who we are (they list problems)"."
+					block:
+						style := paragraph
+						content:
+							text :=
+								"Then you dig deeper "Why you need responsive website? You don't convert? You want to generate more sales? etc." - here we're trying to learn what is the value of what this new website. So they will hopefully sit back and think how amazing it would be if the new website could achieve some target. Based on their answers you can estimate that e. g. Their bounce rate is over 90% and they're potentially loosing let's say 1M of business a year. So with that, you can say that this project will cost $100k which is only 10% of projected value of what this project will bring to their business. The purpose of the next question - Why now? - is to make sure that is project is urgent. If this is something they've been trying to do internally for over 6mo but couldn't achieve their goals, you already know that they need to get it done ASAP. Or perhaps they have a certain deadline in mind e. g. they need a new website ready for a special event. If the project is not urgent, client will slack with making a decision, they'll be putting it off."
+					block:
+						style := paragraph
+						content:
+							text :=
+								"So make sure this project is urgent and needs to be completed by some specific date, otherwise they will keep losing money or simply won't grow as fast. The last question - why me? - is to actually to see why they think you’re a good fit for the project."
 		block:
 			style := section
 			content:
@@ -95,3 +130,8 @@ content:
 						content:
 							text :=
 								"Last paragraph."
+	block:
+		style := footer
+		content:
+			text :=
+				"<Footer>"

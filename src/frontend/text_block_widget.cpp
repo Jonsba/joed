@@ -1,11 +1,18 @@
 #include "text_block_widget.h"
+#include "color_scheme.h"
+
 #include "src/joed.h"
 #include "src/raw_text_block.h"
 #include "src/text_block.h"
 
-Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block) : QTextEdit(parent) {
+Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block, int level)
+    : QTextEdit(parent) {
 	this->text_block = text_block;
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	this->setFrameStyle(QFrame::Box);
+	this->setLineWidth(0);
+	this->color_scheme.reset(new Color_Scheme(level));
+	this->setPalette(this->color_scheme->palette());
 
 	QFontMetrics metrics = this->fontMetrics();
 	this->setMinimumHeight(this->fontMetrics().height());
@@ -38,3 +45,5 @@ void Text_Block_Widget::resizeEvent(QResizeEvent* event) {
 	QTextEdit::resizeEvent(event);
 	this->resize_to_fit_contents();
 }
+
+Text_Block_Widget::~Text_Block_Widget() = default;

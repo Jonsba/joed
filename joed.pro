@@ -28,6 +28,7 @@ SOURCES += \
 	src/escaper.cpp \
 	src/frontend/abstract_document_viewer.cpp \
 	src/frontend/children_widget_block.cpp \
+	src/frontend/color_scheme.cpp \
 	src/frontend/document_form.cpp \
 	src/frontend/editor_form.cpp \
 	src/frontend/html_viewer.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
 	src/escaper.h \
 	src/frontend/abstract_document_viewer.h \
 	src/frontend/children_widget_block.h \
+	src/frontend/color_scheme.h \
 	src/frontend/document_form.h \
 	src/frontend/editor_form.h \
 	src/frontend/html_viewer.h \

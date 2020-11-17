@@ -30,7 +30,7 @@ void Document_Form::reset_ui(QString document_path) {
 	}
 
 	this->top_widget_block.reset(new Multi_Block_Widget(
-	    this->ui->Document_Area, (Abstract_Multi_Block*)this->document->root_block()));
+	    this->ui->Document_Area, (Abstract_Multi_Block*)this->document->root_block(), 0));
 	this->ui->Document_Area->layout()->addWidget(this->top_widget_block.get());
 
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
