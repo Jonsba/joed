@@ -5,12 +5,25 @@
 
 class Writer;
 
-enum class Block_Type {
+enum class Block_Base_Type {
 	Uninitialized_E,
 	Layout_Block_E,
 	Children_Block_E,
 	Text_Block_E,
 	Raw_Text_Block_E
+};
+
+enum class Block_Variant {
+	Standard_E,
+	// Text blocks only
+	Title_E,
+	Caption_E
+	//
+};
+
+struct Block_Type {
+	Block_Base_Type base;
+	Block_Variant variant;
 };
 
 class Abstract_Block {
@@ -24,9 +37,15 @@ class Abstract_Block {
 	//
 	inline static const QString Layout_Block_Value = "layout_block";
 	inline static const QString Text_Block_Value = "text_block";
+	inline static const QString Title_Value = "title";
+	inline static const QString Caption_Value = "caption";
 	inline static const QString Children_Block_Id = "_children_";
 	inline static const QString Raw_Text_Block_Id = "_raw_text_";
 	inline static const QString Text_Content_Id = "_text_content_";
+	inline static const Block_Type Children_Block_Type = {Block_Base_Type::Children_Block_E,
+	                                                      Block_Variant::Standard_E};
+	inline static const Block_Type Raw_Text_Block_Type = {Block_Base_Type::Raw_Text_Block_E,
+	                                                      Block_Variant::Standard_E};
 
  protected:
 	void set_identifier(QString Identifier);

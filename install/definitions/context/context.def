@@ -50,6 +50,6 @@ styles:
 		styles:
 			style:
 				name := title
-				type := text_block
+				type := text_block>title
 				output :=
 					_text_content_

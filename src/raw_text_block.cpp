@@ -1,7 +1,7 @@
 #include "raw_text_block.h"
 #include "writer.h"
 
-Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Raw_Text_Block_Id, Block_Type::Raw_Text_Block_E) {
+Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Raw_Text_Block_Id, Raw_Text_Block_Type) {
 	this->the_text = "";
 }
 

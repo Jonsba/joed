@@ -15,16 +15,16 @@ Layout_Block::Layout_Block(Style* style, bool auto_built)
 
 Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style, Escaper* escaper) {
 	Abstract_Multi_Block* new_block;
-	switch (type) {
-	case Block_Type::Children_Block_E: {
+	switch (type.base) {
+	case Block_Base_Type::Children_Block_E: {
 		new_block = new Children_Block(this->auto_built);
 		break;
 	}
-	case Block_Type::Layout_Block_E: {
+	case Block_Base_Type::Layout_Block_E: {
 		new_block = new Layout_Block(style, this->auto_built);
 		break;
 	}
-	case Block_Type::Text_Block_E: {
+	case Block_Base_Type::Text_Block_E: {
 		new_block = new Text_Block(style, escaper, this->auto_built);
 		break;
 	}

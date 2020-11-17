@@ -13,10 +13,16 @@ void Style::assign(QString key, QString value, bool is_first_value_line) {
 	if (key == Joed::Keys[Name_E]) {
 		this->the_name = value;
 	} else if (key == Joed::Keys[Type_E]) {
-		if (value == Abstract_Block::Layout_Block_Value) {
-			this->block_type = Block_Type::Layout_Block_E;
-		} else if (value == Abstract_Block::Text_Block_Value) {
-			this->block_type = Block_Type::Text_Block_E;
+		QStringList type_variant_pair = value.split('>');
+		if (type_variant_pair[0] == Abstract_Block::Layout_Block_Value) {
+			this->block_type.base = Block_Base_Type::Layout_Block_E;
+		} else if (type_variant_pair[0] == Abstract_Block::Text_Block_Value) {
+			this->block_type.base = Block_Base_Type::Text_Block_E;
+			if (type_variant_pair.length() == 2) {
+				if (type_variant_pair[1] == Abstract_Block::Title_Value) {
+					this->block_type.variant = Block_Variant::Title_E;
+				}
+			}
 		} else {
 			error("Unknown type: " + value);
 		}

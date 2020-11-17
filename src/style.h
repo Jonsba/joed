@@ -40,7 +40,7 @@ class Style final : Abstract_Loadable_Object {
 	Style* parent = nullptr;
 	Style* the_default_child_style = nullptr;
 	QScopedPointer<Lua_Client> lua_client;
-	Block_Type block_type = Block_Type::Uninitialized_E;
+	Block_Type block_type = {Block_Base_Type::Uninitialized_E, Block_Variant::Standard_E};
 };
 
 #endif // STYLE_H

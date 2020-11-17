@@ -11,7 +11,7 @@ Style* Layout_Entry::style() {
 
 Block_Type Layout_Entry::type() {
 	if (this->the_style == nullptr) {
-		return Block_Type::Children_Block_E;
+		return Abstract_Block::Children_Block_Type;
 	}
 	return this->the_style->type();
 }

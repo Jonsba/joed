@@ -104,7 +104,7 @@ void Document::process_key(QString key, int level) {
 		this->current_parent_block = (Layout_Block*)this->current_blocks[this->block_level - 1];
 		if (key == Joed::Keys[Children_E]) {
 			this->current_blocks[this->block_level] =
-			    this->current_parent_block->create_block(Block_Type::Children_Block_E);
+			    this->current_parent_block->create_block(Abstract_Block::Children_Block_Type);
 		}
 	}
 }
@@ -119,12 +119,12 @@ void Document::assign(QString end_key, QString value, bool is_first_value_line) 
 		    this->backend_definitions_file.get()));
 	} else if (end_key == Joed::Keys[Style_E]) {
 		Style* style = this->styles->find(value);
-		switch (style->type()) {
-		case Block_Type::Layout_Block_E: {
+		switch (style->type().base) {
+		case Block_Base_Type::Layout_Block_E: {
 			this->current_blocks[this->block_level] = this->current_parent_block->create_block(style);
 			break;
 		}
-		case Block_Type::Text_Block_E:
+		case Block_Base_Type::Text_Block_E:
 			this->current_blocks[this->block_level] =
 			    this->current_parent_block->create_block(style, this->the_backend->escaper());
 			break;
