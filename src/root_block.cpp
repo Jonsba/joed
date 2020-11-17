@@ -16,11 +16,7 @@ Root_Block::Root_Block(Style* style, Escaper* escaper, bool auto_built)
 
 void Root_Block::initialize_from_style_layout(Escaper* escaper) {
 	for (Layout_Entry* layout_entry : this->style->layout_entries()) {
-		Block_Type type = Block_Type::Children_Block_E;
-		if (! layout_entry->is_children_entry()) {
-			type = layout_entry->style()->type();
-		}
-		switch (type) {
+		switch (layout_entry->type()) {
 		case Block_Type::Children_Block_E: {
 			Children_Block* children_block =
 			    (Children_Block*)this->create_block(Block_Type::Children_Block_E);
@@ -43,7 +39,7 @@ QString Root_Block::translate() {
 	// prevent issue when evalutating the output expression with the Lua VM
 	QHash<QString, QString> global_dict = {};
 	for (Layout_Entry* layout : this->style->layout_entries()) {
-		if (! layout->is_children_entry()) {
+		if (layout->type() != Block_Type::Children_Block_E) {
 			global_dict[layout->style()->name()] = "";
 		}
 	}
