@@ -10,9 +10,9 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 }
 
 Parse_State Style::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Joed::Keys[Name_E]) {
+	if (end_key == Field::Keys[Name_E]) {
 		this->the_name = value;
-	} else if (end_key == Joed::Keys[Type_E]) {
+	} else if (end_key == Field::Keys[Type_E]) {
 		QStringList type_variant_pair = value.split('>');
 		if (type_variant_pair[0] == Abstract_Block::Layout_Block_Value) {
 			this->block_type.base = Block_Base_Type::Layout_Block_E;
@@ -26,9 +26,9 @@ Parse_State Style::assign(QString end_key, QString value, bool is_first_value_li
 		} else {
 			return Parse_State::Invalid_Value_E;
 		}
-	} else if (end_key == Joed::Keys[Declare_E]) {
+	} else if (end_key == Field::Keys[Declare_E]) {
 		this->declare += value + '\n';
-	} else if (end_key == Joed::Keys[Output_E]) {
+	} else if (end_key == Field::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else {
 		return Parse_State::Invalid_Key_E;
@@ -37,16 +37,16 @@ Parse_State Style::assign(QString end_key, QString value, bool is_first_value_li
 }
 
 Parse_State Style::assign(QString end_key, Style* object, bool is_first_value_line) {
-	if (end_key == Joed::Keys[Child_Of_E]) {
+	if (end_key == Field::Keys[Child_Of_E]) {
 		this->parent = object;
-	} else if (end_key == Joed::Keys[Layout_E]) {
+	} else if (end_key == Field::Keys[Layout_E]) {
 		if (is_first_value_line) {
 			this->the_layout_entries.clear();
 		}
 		this->the_layout_entries.append(new Layout_Entry(object));
-	} else if (end_key == Joed::Keys[Inherits_E]) {
+	} else if (end_key == Field::Keys[Inherits_E]) {
 		this->base_style = object;
-	} else if (end_key == Joed::Keys[Default_Child_Style_E]) {
+	} else if (end_key == Field::Keys[Default_Child_Style_E]) {
 		this->the_default_child_style = object;
 	} else {
 		return Parse_State::Invalid_Key_E;

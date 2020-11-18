@@ -31,7 +31,7 @@ class Document final : public Abstract_Loadable_File {
 	void compile();
 	//
 	inline static const File_Version Version = {0, 0, 0};
-	inline static const QStringList Blocks_Keys = {Joed::Keys[Children_E], Joed::Keys[Block_E]};
+	inline static const QStringList Blocks_Keys = {Field::Keys[Children_E], Field::Keys[Block_E]};
 
  protected:
 	Parse_State process_key(QString key, int level);

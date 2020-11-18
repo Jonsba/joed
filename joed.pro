@@ -62,6 +62,7 @@ HEADERS += \
 	src/document.h \
 	src/environment.h \
 	src/escaper.h \
+	src/field.h \
 	src/frontend/abstract_document_viewer.h \
 	src/frontend/children_widget_block.h \
 	src/frontend/color_scheme.h \

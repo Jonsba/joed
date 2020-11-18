@@ -7,9 +7,9 @@ Environment::Environment(Lua_VM* lua_vm) {
 }
 
 Parse_State Environment::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Joed::Keys[Name_E]) {
+	if (end_key == Field::Keys[Name_E]) {
 		this->name = value;
-	} else if (end_key == Joed::Keys[Output_E]) {
+	} else if (end_key == Field::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else {
 		return Parse_State::Invalid_Key_E;

@@ -43,15 +43,15 @@ void Backend::reset_files_info(QString document_path) {
 }
 
 Parse_State Backend::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Joed::Keys[Output_E]) {
+	if (end_key == Field::Keys[Output_E]) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
-	} else if (end_key == Joed::Keys[Doc_File_Ext_E]) {
+	} else if (end_key == Field::Keys[Doc_File_Ext_E]) {
 		this->the_translated_document.type = value;
-	} else if (end_key == Joed::Keys[Env_File_Ext_E]) {
+	} else if (end_key == Field::Keys[Env_File_Ext_E]) {
 		this->the_translated_environment.type = value;
-	} else if (end_key == Joed::Keys[Viewer_E]) {
+	} else if (end_key == Field::Keys[Viewer_E]) {
 		this->the_compiled_document.type = value;
-	} else if (end_key == Joed::Keys[Escape_Table_E]) {
+	} else if (end_key == Field::Keys[Escape_Table_E]) {
 		this->the_escaper->parse(value);
 	} else {
 		return Parse_State::Invalid_Key_E;

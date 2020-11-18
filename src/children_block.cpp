@@ -1,4 +1,5 @@
 #include "children_block.h"
+#include "joed.h"
 #include "layout_block.h"
 #include "text_block.h"
 #include "writer.h"
@@ -29,7 +30,7 @@ QString Children_Block::translate() {
 }
 
 void Children_Block::save(Writer* writer, int level) {
-	writer->write_key(Joed::Keys[Children_E], level);
+	writer->write_key(Field::Keys[Children_E], level);
 	for (Abstract_Block* block : this->the_blocks) {
 		block->save(writer, level + 1);
 	}
