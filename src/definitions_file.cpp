@@ -1,4 +1,5 @@
 #include "definitions_file.h"
+#include "abstract_loadable_tree.h"
 #include "backend.h"
 #include "environment.h"
 #include "styles.h"
@@ -25,14 +26,18 @@ Definitions_Info* Definitions_File::info() {
 	return &this->the_file_info;
 }
 
-void Definitions_File::process_key(QString key, int level) {
+Parse_State Definitions_File::process_key(QString key, int level) {
 	if (level == 0) {
 		this->current_object = this->objects_table[key];
+		if (this->current_object == nullptr) {
+			return Parse_State::Invalid_Key_E;
+		}
+		return Parse_State::Success_E;
 	} else {
-		((Abstract_Loadable_Tree*)this->current_object)->process_key(key, level);
+		return ((Abstract_Loadable_Tree*)this->current_object)->process_key(key, level);
 	}
 }
 
-void Definitions_File::assign(QString end_key, QString value, bool is_first_value_line) {
-	this->current_object->assign(end_key, value, is_first_value_line);
+Parse_State Definitions_File::assign(QString end_key, QString value, bool is_first_value_line) {
+	return this->current_object->assign(end_key, value, is_first_value_line);
 }

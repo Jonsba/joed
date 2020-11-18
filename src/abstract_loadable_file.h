@@ -16,14 +16,19 @@ class Abstract_Loadable_File : public Abstract_Loadable_Tree {
 	QString version_string();
 
  private:
-	State read_key(QString& trimmed_line, QString& key);
-	void add_value_line(QString value_line);
+	struct Line_Context {
+		QString key;
+		QString value;
+		int line_number;
+		int key_line_number;
+	};
+	//
+	State tokenize_line(QString trimmed_line, Line_Context& context);
 	bool is_comment(QString line);
 	int count_levels(QString line);
-	void check_version_validity(QString version_string);
-	//
-	// DEBUG ///////////////////////////////////////////////////////////////////////////////////////
-	void print_indent(QString text, int level);
+	void check_version_validity(Line_Context& context);
+	void eval_parse_ret(Parse_State parse_state, Line_Context context);
+	void error_line(QString text, int line_number);
 
  private:
 	File_Version Version;

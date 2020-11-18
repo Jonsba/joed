@@ -19,7 +19,7 @@ class Environment final : public Abstract_Loadable_Object {
 	inline static const QString Basename_Id = "document-environment";
 
  protected:
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
 
  private:
 	QScopedPointer<Lua_Client> lua_client;

@@ -4,6 +4,7 @@
 #include "joed.h"
 
 enum class State { Parsing_Version, Parsing_Key, Parsing_End_Key, Parsing_Value };
+enum class Parse_State { Success_E, Invalid_Key_E, Invalid_Value_E };
 
 class Abstract_Loadable_Object {
  public:
@@ -14,8 +15,7 @@ class Abstract_Loadable_Object {
 	Abstract_Loadable_Object();
 
  protected:
-	virtual void assign(QString end_key, QString value, bool is_first_value_line) = 0;
-	//
+	virtual Parse_State assign(QString end_key, QString value, bool is_first_value_line) = 0;
 };
 
 #endif // ABSTRACT_LOADABLE_OBJECT_H

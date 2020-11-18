@@ -38,7 +38,7 @@ class Backend final : public Abstract_Loadable_Object {
 	inline static const QString HTML_Viewer_Id = "html";
 
  protected:
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
 
  private:
 	//

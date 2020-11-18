@@ -23,8 +23,8 @@ class Styles final : public Abstract_Loadable_Tree {
 	                                               Joed::Keys[Default_Child_Style_E]};
 
  protected:
-	void process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	Parse_State process_key(QString key, int level);
+	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
 
  private:
 	//

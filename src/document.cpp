@@ -89,14 +89,15 @@ void Document::save() {
 	this->the_backend->reset_files_info(this->the_path);
 }
 
-void Document::process_key(QString key, int level) {
+Parse_State Document::process_key(QString key, int level) {
 	if (level == 0) {
-		if (key != Joed::Keys[Content_E]) {
-			return;
+		if (key == Joed::Keys[Content_E]) {
+			this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
+			                                          this->the_backend->escaper(), false));
+			this->current_blocks[0] = this->the_root_block.get();
+		} else if (key != Joed::Keys[Backend_E] && key != Joed::Keys[Document_Class_E]) {
+			return Parse_State::Invalid_Key_E;
 		}
-		this->the_root_block.reset(new Root_Block(this->styles->find(Joed::Keys[Document_E]),
-		                                          this->the_backend->escaper(), false));
-		this->current_blocks[0] = this->the_root_block.get();
 	}
 	if (Blocks_Keys.contains(key)) {
 		// Every 3 levels, there is a offset of 1 level to be corrected
@@ -106,10 +107,13 @@ void Document::process_key(QString key, int level) {
 			this->current_blocks[this->block_level] =
 			    this->current_parent_block->create_block(Abstract_Block::Children_Block_Type);
 		}
+	} else if (key != Joed::Keys[Content_E]) {
+		return Parse_State::Invalid_Key_E;
 	}
+	return Parse_State::Success_E;
 }
 
-void Document::assign(QString end_key, QString value, bool is_first_value_line) {
+Parse_State Document::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Joed::Keys[Backend_E]) {
 		this->backend_definitions_file.reset(new Definitions_File(
 		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()}));
@@ -129,12 +133,15 @@ void Document::assign(QString end_key, QString value, bool is_first_value_line) 
 			    this->current_parent_block->create_block(style, this->the_backend->escaper());
 			break;
 		default:
-			error("Not implemented");
+			return Parse_State::Invalid_Value_E;
 		}
 	} else if (end_key == Joed::Keys[Text_E]) {
 		Text_Block* text_block = (Text_Block*)this->current_blocks[this->block_level];
 		text_block->add_loaded_text(value, is_first_value_line);
+	} else {
+		return Parse_State::Invalid_Key_E;
 	}
+	return Parse_State::Success_E;
 }
 
 Document::~Document() = default;

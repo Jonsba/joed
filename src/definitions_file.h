@@ -33,8 +33,8 @@ class Definitions_File final : public Abstract_Loadable_File {
 	inline static const QString File_Extension = ".def";
 
  protected:
-	void process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	Parse_State process_key(QString key, int level);
+	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
 	//
 	inline static const File_Version Version = {0, 0, 0};
 
