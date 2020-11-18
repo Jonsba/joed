@@ -10,25 +10,25 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 }
 
 Parse_State Style::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Field::Keys[Name_E]) {
+	if (end_key == Field::Key::Name) {
 		this->the_name = value;
-	} else if (end_key == Field::Keys[Type_E]) {
+	} else if (end_key == Field::Key::Type) {
 		QStringList type_variant_pair = value.split('>');
-		if (type_variant_pair[0] == Abstract_Block::Layout_Block_Value) {
+		if (type_variant_pair[0] == Field::Value::Layout_Block) {
 			this->block_type.base = Block_Base_Type::Layout_Block_E;
-		} else if (type_variant_pair[0] == Abstract_Block::Text_Block_Value) {
+		} else if (type_variant_pair[0] == Field::Value::Text_Block) {
 			this->block_type.base = Block_Base_Type::Text_Block_E;
 			if (type_variant_pair.length() == 2) {
-				if (type_variant_pair[1] == Abstract_Block::Title_Value) {
+				if (type_variant_pair[1] == Field::Value::Title) {
 					this->block_type.variant = Block_Variant::Title_E;
 				}
 			}
 		} else {
 			return Parse_State::Invalid_Value_E;
 		}
-	} else if (end_key == Field::Keys[Declare_E]) {
+	} else if (end_key == Field::Key::Declare) {
 		this->declare += value + '\n';
-	} else if (end_key == Field::Keys[Output_E]) {
+	} else if (end_key == Field::Key::Output) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else {
 		return Parse_State::Invalid_Key_E;
@@ -37,16 +37,16 @@ Parse_State Style::assign(QString end_key, QString value, bool is_first_value_li
 }
 
 Parse_State Style::assign(QString end_key, Style* object, bool is_first_value_line) {
-	if (end_key == Field::Keys[Child_Of_E]) {
+	if (end_key == Field::Key::Child_Of) {
 		this->parent = object;
-	} else if (end_key == Field::Keys[Layout_E]) {
+	} else if (end_key == Field::Key::Layout) {
 		if (is_first_value_line) {
 			this->the_layout_entries.clear();
 		}
 		this->the_layout_entries.append(new Layout_Entry(object));
-	} else if (end_key == Field::Keys[Inherits_E]) {
+	} else if (end_key == Field::Key::Inherits) {
 		this->base_style = object;
-	} else if (end_key == Field::Keys[Default_Child_Style_E]) {
+	} else if (end_key == Field::Key::Default_Child_Style) {
 		this->the_default_child_style = object;
 	} else {
 		return Parse_State::Invalid_Key_E;

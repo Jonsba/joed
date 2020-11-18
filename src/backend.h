@@ -31,11 +31,6 @@ class Backend final : public Abstract_Loadable_Object {
 	QProcess* compile_process();
 	Escaper* escaper();
 	//
-	inline static const QString Translated_Document_Id = "_translated_document_";
-	inline static const QString Translated_Environment_Id = "_translated_environment_";
-	inline static const QString Compiled_Document_Id = "_compiled_document_";
-	inline static const QString PDF_Viewer_Id = "pdf";
-	inline static const QString HTML_Viewer_Id = "html";
 
  protected:
 	Parse_State assign(QString end_key, QString value, bool is_first_value_line);

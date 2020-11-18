@@ -8,9 +8,9 @@ Definitions_File::Definitions_File(QString name, Definitions_Objects definitions
                                    Definitions_File* parent)
     : Abstract_Loadable_File(Version) {
 
-	this->objects_table[Field::Keys[Styles_E]] = definitions_object.styles;
-	this->objects_table[Field::Keys[Backend_E]] = definitions_object.backend;
-	this->objects_table[Field::Keys[Environment_E]] = definitions_object.environment;
+	this->objects_table[Field::Key::Styles] = definitions_object.styles;
+	this->objects_table[Field::Key::Backend] = definitions_object.backend;
+	this->objects_table[Field::Key::Environment] = definitions_object.environment;
 
 	//
 	if (parent == nullptr) {

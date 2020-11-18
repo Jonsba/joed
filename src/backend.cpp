@@ -34,24 +34,24 @@ void Backend::reset_files_info(QString document_path) {
 		dir.mkdir(working_directory);
 	}
 	this->the_translated_document.path =
-	    working_directory + document_base_name + this->the_translated_document.type;
+	    working_directory + document_base_name + "." + this->the_translated_document.type;
 	this->the_translated_environment.path =
-	    working_directory + Environment::Basename_Id + this->the_translated_environment.type;
+	    working_directory + Environment::Name_Id + "." + this->the_translated_environment.type;
 	this->the_compiled_document.path =
 	    working_directory + document_base_name + "." + this->the_compiled_document.type;
 	this->the_compile_process->setWorkingDirectory(working_directory);
 }
 
 Parse_State Backend::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Field::Keys[Output_E]) {
+	if (end_key == Field::Key::Output) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
-	} else if (end_key == Field::Keys[Doc_File_Ext_E]) {
+	} else if (end_key == Field::Key::Doc_File_Ext) {
 		this->the_translated_document.type = value;
-	} else if (end_key == Field::Keys[Env_File_Ext_E]) {
+	} else if (end_key == Field::Key::Env_File_Ext) {
 		this->the_translated_environment.type = value;
-	} else if (end_key == Field::Keys[Viewer_E]) {
+	} else if (end_key == Field::Key::Viewer) {
 		this->the_compiled_document.type = value;
-	} else if (end_key == Field::Keys[Escape_Table_E]) {
+	} else if (end_key == Field::Key::Escape_Table) {
 		this->the_escaper->parse(value);
 	} else {
 		return Parse_State::Invalid_Key_E;
@@ -61,9 +61,10 @@ Parse_State Backend::assign(QString end_key, QString value, bool is_first_value_
 
 void Backend::compile() {
 	QHash<QString, QString> global_dict = {};
-	global_dict[Translated_Document_Id] = '"' + this->the_translated_document.path + '"';
-	global_dict[Translated_Environment_Id] = '"' + this->the_translated_environment.path + '"';
-	global_dict[Compiled_Document_Id] = '"' + this->the_compiled_document.path + '"';
+	global_dict[Field::Id::Translated_Document] = '"' + this->the_translated_document.path + '"';
+	global_dict[Field::Id::Translated_Environment] =
+	    '"' + this->the_translated_environment.path + '"';
+	global_dict[Field::Id::Compiled_Document] = '"' + this->the_compiled_document.path + '"';
 	QString exec_command = this->lua_client->eval_expr(global_dict);
 	this->the_compile_process->start(exec_command);
 }

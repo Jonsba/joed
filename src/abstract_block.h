@@ -35,13 +35,6 @@ class Abstract_Block {
 	virtual QString translate() = 0;
 	virtual void save(Writer* writer, int level);
 	//
-	inline static const QString Layout_Block_Value = "layout_block";
-	inline static const QString Text_Block_Value = "text_block";
-	inline static const QString Title_Value = "title";
-	inline static const QString Caption_Value = "caption";
-	inline static const QString Children_Block_Id = "_children_";
-	inline static const QString Raw_Text_Block_Id = "_raw_text_";
-	inline static const QString Text_Content_Id = "_text_content_";
 	inline static const Block_Type Children_Block_Type = {Block_Base_Type::Children_Block_E,
 	                                                      Block_Variant::Standard_E};
 	inline static const Block_Type Raw_Text_Block_Type = {Block_Base_Type::Raw_Text_Block_E,

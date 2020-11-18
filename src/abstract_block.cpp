@@ -1,4 +1,5 @@
 #include "abstract_block.h"
+#include "field.h"
 #include "writer.h"
 
 Abstract_Block::Abstract_Block(QString identifier, Block_Type type)
@@ -13,7 +14,8 @@ Block_Type Abstract_Block::type() {
 }
 
 void Abstract_Block::save(Writer* writer, int level) {
-	writer->write_key(Field::Keys[Block_E], level);
+
+	writer->write_key(Field::Key::Block, level);
 }
 
 Abstract_Block::~Abstract_Block() = default;

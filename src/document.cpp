@@ -26,7 +26,7 @@ Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->writer.reset(new Writer());
 	if (document_path == "") {
 		this->create();
-		this->the_root_block.reset(new Root_Block(this->styles->find(Field::Keys[Document_E]),
+		this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
 		                                          this->the_backend->escaper(), true));
 	} else {
 		this->load(document_path);
@@ -80,9 +80,9 @@ void Document::save_as(QString file_path) {
 
 void Document::save() {
 	this->writer->open(this->the_path);
-	this->writer->write_pair(Field::Keys[Version_E], this->version_string() + "\n", 0);
-	this->writer->write_pair(Field::Keys[Backend_E], this->backend_definitions_file->info()->name, 0);
-	this->writer->write_pair(Field::Keys[Document_Class_E],
+	this->writer->write_pair(Field::Key::Version, this->version_string() + "\n", 0);
+	this->writer->write_pair(Field::Key::Backend, this->backend_definitions_file->info()->name, 0);
+	this->writer->write_pair(Field::Key::Document_Class,
 	                         this->document_class_definitions_file->info()->name + "\n", 0);
 	this->root_block()->save(this->writer.get());
 	this->writer->close();
@@ -91,11 +91,11 @@ void Document::save() {
 
 Parse_State Document::process_key(QString key, int level) {
 	if (level == 0) {
-		if (key == Field::Keys[Content_E]) {
-			this->the_root_block.reset(new Root_Block(this->styles->find(Field::Keys[Document_E]),
+		if (key == Field::Key::Content) {
+			this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
 			                                          this->the_backend->escaper(), false));
 			this->current_blocks[0] = this->the_root_block.get();
-		} else if (key != Field::Keys[Backend_E] && key != Field::Keys[Document_Class_E]) {
+		} else if (key != Field::Key::Backend && key != Field::Key::Document_Class) {
 			return Parse_State::Invalid_Key_E;
 		}
 	}
@@ -103,25 +103,25 @@ Parse_State Document::process_key(QString key, int level) {
 		// Every 3 levels, there is a offset of 1 level to be corrected
 		this->block_level = level - level / 3;
 		this->current_parent_block = (Layout_Block*)this->current_blocks[this->block_level - 1];
-		if (key == Field::Keys[Children_E]) {
+		if (key == Field::Key::Children) {
 			this->current_blocks[this->block_level] =
 			    this->current_parent_block->create_block(Abstract_Block::Children_Block_Type);
 		}
-	} else if (key != Field::Keys[Content_E]) {
+	} else if (key != Field::Key::Content) {
 		return Parse_State::Invalid_Key_E;
 	}
 	return Parse_State::Success_E;
 }
 
 Parse_State Document::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Field::Keys[Backend_E]) {
+	if (end_key == Field::Key::Backend) {
 		this->backend_definitions_file.reset(new Definitions_File(
 		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()}));
-	} else if (end_key == Field::Keys[Document_Class_E]) {
+	} else if (end_key == Field::Key::Document_Class) {
 		this->document_class_definitions_file.reset(new Definitions_File(
 		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()},
 		    this->backend_definitions_file.get()));
-	} else if (end_key == Field::Keys[Style_E]) {
+	} else if (end_key == Field::Key::Style) {
 		Style* style = this->styles->find(value);
 		switch (style->type().base) {
 		case Block_Base_Type::Layout_Block_E: {
@@ -135,7 +135,7 @@ Parse_State Document::assign(QString end_key, QString value, bool is_first_value
 		default:
 			return Parse_State::Invalid_Value_E;
 		}
-	} else if (end_key == Field::Keys[Text_E]) {
+	} else if (end_key == Field::Key::Text) {
 		Text_Block* text_block = (Text_Block*)this->current_blocks[this->block_level];
 		text_block->add_loaded_text(value, is_first_value_line);
 	} else {

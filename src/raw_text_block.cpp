@@ -1,7 +1,7 @@
 #include "raw_text_block.h"
 #include "writer.h"
 
-Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Raw_Text_Block_Id, Raw_Text_Block_Type) {
+Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Field::Id::Raw_Text_Block, Raw_Text_Block_Type) {
 	this->the_text = "";
 }
 
@@ -28,6 +28,6 @@ QString Raw_Text_Block::translate() {
 }
 
 void Raw_Text_Block::save(Writer* writer, int level) {
-	writer->write_end_key(Field::Keys[Text_E], level);
+	writer->write_end_key(Field::Key::Text, level);
 	writer->write_value(this->the_text, level + 1, "\"");
 }

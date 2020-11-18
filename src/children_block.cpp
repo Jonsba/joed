@@ -5,7 +5,7 @@
 #include "writer.h"
 
 Children_Block::Children_Block(bool auto_built)
-    : Abstract_Non_Layouted_Block(Children_Block_Id, Children_Block_Type, auto_built) {}
+    : Abstract_Non_Layouted_Block(Field::Id::Children_Block, Children_Block_Type, auto_built) {}
 
 Abstract_Block* Children_Block::create_block(Block_Type type, Style* style, Escaper* escaper) {
 	Abstract_Multi_Block* new_block;
@@ -30,7 +30,7 @@ QString Children_Block::translate() {
 }
 
 void Children_Block::save(Writer* writer, int level) {
-	writer->write_key(Field::Keys[Children_E], level);
+	writer->write_key(Field::Key::Children, level);
 	for (Abstract_Block* block : this->the_blocks) {
 		block->save(writer, level + 1);
 	}

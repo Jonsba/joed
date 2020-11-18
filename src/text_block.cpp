@@ -36,12 +36,13 @@ Abstract_Block* Text_Block::create_block(Block_Type type, Style* style, Escaper*
 
 QString Text_Block::translate() {
 	QHash<QString, QString> global_dict = {};
-	global_dict[Text_Content_Id] = this->escaper->escape(Abstract_Non_Layouted_Block::translate());
+	global_dict[Field::Id::Text_Content] =
+	    this->escaper->escape(Abstract_Non_Layouted_Block::translate());
 	return this->style->translate(global_dict);
 }
 
 void Text_Block::save(Writer* writer, int level) {
 	this->Abstract_Block::save(writer, level);
-	writer->write_pair(Field::Keys[Style_E], this->style->name(), level + 1);
+	writer->write_pair(Field::Key::Style, this->style->name(), level + 1);
 	this->Abstract_Multi_Block::save(writer, level + 1);
 }

@@ -1,8 +1,8 @@
 format-version := 0.0.0
 
 backend:
-	doc-file-ext := .tex
-	env-file-ext := .tex
+	doc-file-ext := tex
+	env-file-ext := tex
 	output := 'context ' .. _translated_document_
 	viewer := pdf
 	escape-table :=

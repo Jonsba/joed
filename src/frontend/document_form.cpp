@@ -21,7 +21,7 @@ Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
 void Document_Form::reset_ui(QString document_path) {
 	this->document.reset(new Document(document_path));
 
-	if (this->document->backend()->compiled_document()->type == Backend::PDF_Viewer_Id) {
+	if (this->document->backend()->compiled_document()->type == Field::Value::PDF_Viewer) {
 		this->document_viewer.reset(
 		    new PDF_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	} else {

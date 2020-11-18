@@ -18,9 +18,9 @@ class Styles final : public Abstract_Loadable_Tree {
 	~Styles();
 	Style* find(QString name);
 	//
-	inline static const QStringList Keys_Object = {Field::Keys[Child_Of_E], Field::Keys[Layout_E],
-	                                               Field::Keys[Inherits_E],
-	                                               Field::Keys[Default_Child_Style_E]};
+	inline static const QStringList Keys_Object = {Field::Key::Child_Of, Field::Key::Layout,
+	                                               Field::Key::Inherits,
+	                                               Field::Key::Default_Child_Style};
 
  protected:
 	Parse_State process_key(QString key, int level);

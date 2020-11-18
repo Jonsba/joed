@@ -28,7 +28,7 @@ QLinkedList<Abstract_Block*> Abstract_Multi_Block::blocks() {
 }
 
 void Abstract_Multi_Block::save(Writer* writer, int level) {
-	writer->write_key(Field::Keys[Content_E], level);
+	writer->write_key(Field::Key::Content, level);
 	for (Abstract_Block* block : this->the_blocks) {
 		block->save(writer, level + 1);
 	}

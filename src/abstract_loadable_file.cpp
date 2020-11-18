@@ -81,10 +81,8 @@ QString Abstract_Loadable_File::version_string() {
 }
 
 void Abstract_Loadable_File::check_version_validity(Line_Context& context) {
-	if (context.key != "format-version") { // TODO: fix name
-		error("Expected '"
-		      "format-version"
-		      " := <x>.<y>.<z>' at first line");
+	if (context.key != Field::Key::Version) {
+		error("Expected '" + Field::Key::Version + " := <x>.<y>.<z>' at first line");
 	}
 	QStringList version_list = context.value.split(".");
 	int major_version = version_list[0].toInt();

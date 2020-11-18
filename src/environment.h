@@ -15,8 +15,7 @@ class Environment final : public Abstract_Loadable_Object {
 	~Environment();
 	QString translate();
 	//
-	inline static const QString Name_Id = "environment.name";
-	inline static const QString Basename_Id = "document-environment";
+	inline static const QString Name_Id = "document-environment";
 
  protected:
 	Parse_State assign(QString end_key, QString value, bool is_first_value_line);

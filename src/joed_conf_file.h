@@ -12,7 +12,7 @@ class Joed_Conf_File : public Abstract_Loadable_File {
 	Joed_Conf_File();
 	QString backend_name();
 	QString document_class();
-	//
+
  protected:
 	Parse_State process_key(QString key, int level);
 	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
