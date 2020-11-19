@@ -155,7 +155,12 @@ void Abstract_Loadable_File::abort_parse(Parse_Exception& exception, Line_Contex
 	case Parse_Exception_Code::Other:
 		exception.msg = msg_line(exception.msg, context.line_number);
 		break;
+	case Parse_Exception_Code::Processed:
+		exception.msg =
+		    msg_line("Error while processing line", context.line_number) + "\n\n" + exception.msg;
+		break;
 	}
+	exception.code = Parse_Exception_Code::Processed;
 	throw exception;
 }
 

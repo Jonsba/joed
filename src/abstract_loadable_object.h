@@ -5,7 +5,7 @@
 
 enum class State { Parsing_Version, Parsing_Key, Parsing_End_Key, Parsing_Value };
 
-enum class Parse_Exception_Code { Invalid_Key, Invalid_Value, Invalid_Indent, Other };
+enum class Parse_Exception_Code { Invalid_Key, Invalid_Value, Invalid_Indent, Other, Processed };
 struct Parse_Exception {
 	Parse_Exception_Code code;
 	QString msg = "";
