@@ -23,14 +23,17 @@ void Document_Form::reset_ui(QString document_path) {
 	try {
 		this->document.reset(new Document(document_path));
 	} catch (Parse_Exception& exception) {
-		QMessageBox msgBox;
+		QMessageBox msg_box;
+		msg_box.setStyleSheet("QLabel{min-width: 500px;}");
+		msg_box.setInformativeText(exception.msg);
 		if (document_path == "") {
-			msgBox.setText("Error while creating new document:");
+			msg_box.setText("<b>Fatal error while creating a new document</b>");
+			msg_box.exec();
+			abort();
 		} else {
-			msgBox.setText("Error while opening document:");
+			msg_box.setText("<b>Cannot open the document</b>");
+			msg_box.exec();
 		}
-		msgBox.setInformativeText(exception.msg);
-		msgBox.exec();
 	}
 
 	if (this->document->backend()->compiled_document()->type == Field::Value::PDF_Viewer) {

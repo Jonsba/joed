@@ -46,5 +46,6 @@ QString Root_Block::translate() {
 }
 
 void Root_Block::save(Writer* writer) {
-	Abstract_Multi_Block::save(writer, 0);
+	writer->write_key(Field::Key::Document, 0);
+	Abstract_Multi_Block::save(writer, 1);
 }

@@ -23,6 +23,10 @@ struct Invalid_Indent_Exception : Parse_Exception {
 	Invalid_Indent_Exception() : Parse_Exception({Parse_Exception_Code::Invalid_Indent, ""}) {}
 };
 
+struct Other_Parse_Exception : Parse_Exception {
+	Other_Parse_Exception(QString msg) : Parse_Exception({Parse_Exception_Code::Other, msg}) {}
+};
+
 class Abstract_Loadable_Object {
  public:
 	// Although Definitions_Loader also derivates from Abstract_Loadable_Object,

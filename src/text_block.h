@@ -10,7 +10,6 @@ class Raw_Text_Block;
 class Text_Block : public Abstract_Non_Layouted_Block {
  public:
 	Text_Block(Style* style, Escaper* escaper, bool auto_built);
-	void add_loaded_text(QString quoted_text, bool is_first_value_line);
 	QString translate() override;
 	void save(Writer* writer, int level) override;
 

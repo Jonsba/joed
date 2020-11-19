@@ -90,25 +90,43 @@ void Document::save() {
 }
 
 void Document::process_key(QString key, int level) {
+	this->key_level = level;
 	if (level == 0) {
-		if (key == Field::Key::Content) {
+		if (key == Field::Key::Document) {
 			this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
 			                                          this->the_backend->escaper(), false));
-			this->current_blocks[0] = this->the_root_block.get();
+			this->current_block = this->the_root_block.get();
 		} else if (key != Field::Key::Backend && key != Field::Key::Document_Class) {
 			throw Invalid_Key_Exception();
 		}
-	}
-	if (Blocks_Keys.contains(key)) {
-		// Every 3 levels, there is a offset of 1 level to be corrected
-		this->block_level = level - level / 3;
-		this->current_parent_block = (Layout_Block*)this->current_blocks[this->block_level - 1];
-		if (key == Field::Key::Children) {
-			this->current_blocks[this->block_level] =
-			    this->current_parent_block->create_block(Abstract_Block::Children_Block_Type);
+	} else {
+		if (key != Field::Key::Blocks) {
+			if (this->parent_blocks[level] == nullptr) {
+				throw Invalid_Key_Exception();
+			}
+			if (key == Field::Key::Children) {
+				this->current_block =
+				    this->parent_blocks[level]->create_block(Abstract_Block::Children_Block_Type);
+			} else {
+				Style* style = styles->find(key);
+				if (style == nullptr) {
+					throw Other_Parse_Exception("Cannot find style: " + key);
+				}
+				switch (style->type().base) {
+				case Block_Base_Type::Layout_Block_E:
+					this->current_block = this->parent_blocks[level]->create_block(style);
+					break;
+				case Block_Base_Type::Text_Block_E:
+					this->current_block =
+					    this->parent_blocks[level]->create_block(style, this->the_backend->escaper());
+					break;
+				default:
+					throw Invalid_Value_Exception();
+				}
+				return;
+			}
 		}
-	} else if (key != Field::Key::Content) {
-		throw Invalid_Key_Exception();
+		this->parent_blocks[level + 1] = (Abstract_Multi_Block*)this->current_block;
 	}
 }
 
@@ -120,23 +138,13 @@ void Document::assign(QString end_key, QString value, bool is_first_value_line) 
 		this->document_class_definitions_file.reset(new Definitions_File(
 		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()},
 		    this->backend_definitions_file.get()));
-	} else if (end_key == Field::Key::Style) {
-		Style* style = this->styles->find(value);
-		switch (style->type().base) {
-		case Block_Base_Type::Layout_Block_E: {
-			this->current_blocks[this->block_level] = this->current_parent_block->create_block(style);
-			break;
-		}
-		case Block_Base_Type::Text_Block_E:
-			this->current_blocks[this->block_level] =
-			    this->current_parent_block->create_block(style, this->the_backend->escaper());
-			break;
-		default:
-			throw Invalid_Value_Exception();
-		}
 	} else if (end_key == Field::Key::Text) {
-		Text_Block* text_block = (Text_Block*)this->current_blocks[this->block_level];
-		text_block->add_loaded_text(value, is_first_value_line);
+		if (is_first_value_line) {
+			// key_level is the level of the 'blocks' key, which causes an offset to be corrected
+			this->current_block = this->parent_blocks[this->key_level + 1]->create_block(
+			    Abstract_Block::Raw_Text_Block_Type);
+		}
+		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
 	} else {
 		throw Invalid_Key_Exception();
 	}

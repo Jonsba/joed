@@ -13,13 +13,6 @@ Text_Block::Text_Block(Style* style, Escaper* escaper, bool auto_built)
 	}
 }
 
-void Text_Block::add_loaded_text(QString quoted_text, bool is_first_value_line) {
-	if (is_first_value_line) {
-		this->current_sub_block = (Raw_Text_Block*)this->create_block(Raw_Text_Block_Type);
-	}
-	this->current_sub_block->add_loaded_text(quoted_text);
-}
-
 Abstract_Block* Text_Block::create_block(Block_Type type, Style* style, Escaper* escaper) {
 	Abstract_Block* new_block;
 	switch (type.base) {
@@ -42,7 +35,6 @@ QString Text_Block::translate() {
 }
 
 void Text_Block::save(Writer* writer, int level) {
-	this->Abstract_Block::save(writer, level);
-	writer->write_pair(Field::Key::Style, this->style->name(), level + 1);
+	writer->write_key(this->style->name(), level);
 	this->Abstract_Multi_Block::save(writer, level + 1);
 }

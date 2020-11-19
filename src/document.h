@@ -7,6 +7,7 @@
 #include <QScopedPointer>
 
 class Abstract_Block;
+class Abstract_Multi_Block;
 class Backend;
 class Definitions_File;
 class Environment;
@@ -31,7 +32,6 @@ class Document final : public Abstract_Loadable_File {
 	void compile();
 	//
 	inline static const File_Version Version = {0, 0, 0};
-	inline static const QStringList Blocks_Keys = {Field::Key::Children, Field::Key::Block};
 
  protected:
 	void process_key(QString key, int level);
@@ -48,10 +48,10 @@ class Document final : public Abstract_Loadable_File {
 	QScopedPointer<Environment> environment;
 	QScopedPointer<Styles> styles;
 	QScopedPointer<Root_Block> the_root_block;
-	QHash<int, Abstract_Block*> current_blocks;
-	Layout_Block* current_parent_block;
+	int key_level;
+	QHash<int, Abstract_Multi_Block*> parent_blocks;
+	Abstract_Block* current_block;
 	QScopedPointer<Writer> writer;
-	int block_level;
 };
 
 #endif // DOCUMENT_H

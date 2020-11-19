@@ -13,9 +13,6 @@ Block_Type Abstract_Block::type() {
 	return this->Type;
 }
 
-void Abstract_Block::save(Writer* writer, int level) {
-
-	writer->write_key(Field::Key::Block, level);
-}
+void Abstract_Block::save(Writer* writer, int level) {}
 
 Abstract_Block::~Abstract_Block() = default;

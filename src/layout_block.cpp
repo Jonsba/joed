@@ -48,6 +48,6 @@ QString Layout_Block::translate(QHash<QString, QString> global_dict) {
 
 void Layout_Block::save(Writer* writer, int level) {
 	this->Abstract_Block::save(writer, level);
-	writer->write_pair(Field::Key::Style, this->style->name(), level + 1);
+	writer->write_key(this->style->name(), level);
 	this->Abstract_Multi_Block::save(writer, level + 1);
 }
