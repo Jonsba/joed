@@ -9,7 +9,7 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
-Parse_State Style::assign(QString end_key, QString value, bool is_first_value_line) {
+void Style::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Field::Key::Name) {
 		this->the_name = value;
 	} else if (end_key == Field::Key::Type) {
@@ -24,19 +24,18 @@ Parse_State Style::assign(QString end_key, QString value, bool is_first_value_li
 				}
 			}
 		} else {
-			return Parse_State::Invalid_Value_E;
+			throw Invalid_Value_Exception();
 		}
 	} else if (end_key == Field::Key::Declare) {
 		this->declare += value + '\n';
 	} else if (end_key == Field::Key::Output) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
-Parse_State Style::assign(QString end_key, Style* object, bool is_first_value_line) {
+void Style::assign(QString end_key, Style* object, bool is_first_value_line) {
 	if (end_key == Field::Key::Child_Of) {
 		this->parent = object;
 	} else if (end_key == Field::Key::Layout) {
@@ -49,9 +48,8 @@ Parse_State Style::assign(QString end_key, Style* object, bool is_first_value_li
 	} else if (end_key == Field::Key::Default_Child_Style) {
 		this->the_default_child_style = object;
 	} else {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
 QString Style::name() {

@@ -11,7 +11,7 @@ class Abstract_Loadable_Tree : public Abstract_Loadable_Object {
 
  protected:
 	// returns false when the key is invalid
-	virtual Parse_State process_key(QString key, int level) = 0;
+	virtual void process_key(QString key, int level) = 0;
 };
 
 #endif // ABSTRACT_LOADABLE_TREE_H

@@ -4,7 +4,24 @@
 #include "field.h"
 
 enum class State { Parsing_Version, Parsing_Key, Parsing_End_Key, Parsing_Value };
-enum class Parse_State { Success_E, Invalid_Key_E, Invalid_Value_E };
+
+enum class Parse_Exception_Code { Invalid_Key, Invalid_Value, Invalid_Indent, Other };
+struct Parse_Exception {
+	Parse_Exception_Code code;
+	QString msg = "";
+};
+
+struct Invalid_Key_Exception : Parse_Exception {
+	Invalid_Key_Exception() : Parse_Exception({Parse_Exception_Code::Invalid_Key, ""}) {}
+};
+
+struct Invalid_Value_Exception : Parse_Exception {
+	Invalid_Value_Exception() : Parse_Exception({Parse_Exception_Code::Invalid_Value, ""}) {}
+};
+
+struct Invalid_Indent_Exception : Parse_Exception {
+	Invalid_Indent_Exception() : Parse_Exception({Parse_Exception_Code::Invalid_Indent, ""}) {}
+};
 
 class Abstract_Loadable_Object {
  public:
@@ -15,7 +32,7 @@ class Abstract_Loadable_Object {
 	Abstract_Loadable_Object();
 
  protected:
-	virtual Parse_State assign(QString end_key, QString value, bool is_first_value_line) = 0;
+	virtual void assign(QString end_key, QString value, bool is_first_value_line) = 0;
 };
 
 #endif // ABSTRACT_LOADABLE_OBJECT_H

@@ -34,8 +34,8 @@ class Document final : public Abstract_Loadable_File {
 	inline static const QStringList Blocks_Keys = {Field::Key::Children, Field::Key::Block};
 
  protected:
-	Parse_State process_key(QString key, int level);
-	Parse_State assign(QString end_key, QString value, bool is_first_value_line = true);
+	void process_key(QString key, int level);
+	void assign(QString end_key, QString value, bool is_first_value_line = true);
 
  private:
 	void create();

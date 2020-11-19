@@ -89,14 +89,14 @@ void Document::save() {
 	this->the_backend->reset_files_info(this->the_path);
 }
 
-Parse_State Document::process_key(QString key, int level) {
+void Document::process_key(QString key, int level) {
 	if (level == 0) {
 		if (key == Field::Key::Content) {
 			this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
 			                                          this->the_backend->escaper(), false));
 			this->current_blocks[0] = this->the_root_block.get();
 		} else if (key != Field::Key::Backend && key != Field::Key::Document_Class) {
-			return Parse_State::Invalid_Key_E;
+			throw Invalid_Key_Exception();
 		}
 	}
 	if (Blocks_Keys.contains(key)) {
@@ -108,12 +108,11 @@ Parse_State Document::process_key(QString key, int level) {
 			    this->current_parent_block->create_block(Abstract_Block::Children_Block_Type);
 		}
 	} else if (key != Field::Key::Content) {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
-Parse_State Document::assign(QString end_key, QString value, bool is_first_value_line) {
+void Document::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Field::Key::Backend) {
 		this->backend_definitions_file.reset(new Definitions_File(
 		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()}));
@@ -133,15 +132,14 @@ Parse_State Document::assign(QString end_key, QString value, bool is_first_value
 			    this->current_parent_block->create_block(style, this->the_backend->escaper());
 			break;
 		default:
-			return Parse_State::Invalid_Value_E;
+			throw Invalid_Value_Exception();
 		}
 	} else if (end_key == Field::Key::Text) {
 		Text_Block* text_block = (Text_Block*)this->current_blocks[this->block_level];
 		text_block->add_loaded_text(value, is_first_value_line);
 	} else {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
 Document::~Document() = default;

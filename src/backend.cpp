@@ -1,6 +1,5 @@
 #include "backend.h"
 #include "environment.h"
-
 #include "escaper.h"
 #include "joed.h"
 #include "layout_block.h"
@@ -42,7 +41,7 @@ void Backend::reset_files_info(QString document_path) {
 	this->the_compile_process->setWorkingDirectory(working_directory);
 }
 
-Parse_State Backend::assign(QString end_key, QString value, bool is_first_value_line) {
+void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Field::Key::Output) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else if (end_key == Field::Key::Doc_File_Ext) {
@@ -54,9 +53,8 @@ Parse_State Backend::assign(QString end_key, QString value, bool is_first_value_
 	} else if (end_key == Field::Key::Escape_Table) {
 		this->the_escaper->parse(value);
 	} else {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
 void Backend::compile() {

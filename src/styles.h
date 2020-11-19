@@ -23,8 +23,8 @@ class Styles final : public Abstract_Loadable_Tree {
 	                                               Field::Key::Default_Child_Style};
 
  protected:
-	Parse_State process_key(QString key, int level);
-	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
+	void process_key(QString key, int level);
+	void assign(QString end_key, QString value, bool is_first_value_line);
 
  private:
 	//

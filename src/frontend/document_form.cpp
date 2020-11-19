@@ -9,6 +9,7 @@
 #include "ui_document_form.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QProcess>
 
 Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
@@ -19,7 +20,18 @@ Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
 }
 
 void Document_Form::reset_ui(QString document_path) {
-	this->document.reset(new Document(document_path));
+	try {
+		this->document.reset(new Document(document_path));
+	} catch (Parse_Exception& exception) {
+		QMessageBox msgBox;
+		if (document_path == "") {
+			msgBox.setText("Error while creating new document:");
+		} else {
+			msgBox.setText("Error while opening document:");
+		}
+		msgBox.setInformativeText(exception.msg);
+		msgBox.exec();
+	}
 
 	if (this->document->backend()->compiled_document()->type == Field::Value::PDF_Viewer) {
 		this->document_viewer.reset(

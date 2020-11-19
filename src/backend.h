@@ -33,7 +33,7 @@ class Backend final : public Abstract_Loadable_Object {
 	//
 
  protected:
-	Parse_State assign(QString end_key, QString value, bool is_first_value_line);
+	void assign(QString end_key, QString value, bool is_first_value_line);
 
  private:
 	//

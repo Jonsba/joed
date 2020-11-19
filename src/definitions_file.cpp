@@ -26,18 +26,17 @@ Definitions_Info* Definitions_File::info() {
 	return &this->the_file_info;
 }
 
-Parse_State Definitions_File::process_key(QString key, int level) {
+void Definitions_File::process_key(QString key, int level) {
 	if (level == 0) {
 		this->current_object = this->objects_table[key];
 		if (this->current_object == nullptr) {
-			return Parse_State::Invalid_Key_E;
+			throw Invalid_Key_Exception();
 		}
-		return Parse_State::Success_E;
 	} else {
-		return ((Abstract_Loadable_Tree*)this->current_object)->process_key(key, level);
+		((Abstract_Loadable_Tree*)this->current_object)->process_key(key, level);
 	}
 }
 
-Parse_State Definitions_File::assign(QString end_key, QString value, bool is_first_value_line) {
-	return this->current_object->assign(end_key, value, is_first_value_line);
+void Definitions_File::assign(QString end_key, QString value, bool is_first_value_line) {
+	this->current_object->assign(end_key, value, is_first_value_line);
 }

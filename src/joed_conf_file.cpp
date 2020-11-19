@@ -2,22 +2,20 @@
 
 Joed_Conf_File::Joed_Conf_File() : Abstract_Loadable_File(Version) {}
 
-Parse_State Joed_Conf_File::process_key(QString key, int level) {
+void Joed_Conf_File::process_key(QString key, int level) {
 	if (key != Field::Key::Defaults) {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
-Parse_State Joed_Conf_File::assign(QString end_key, QString value, bool is_first_value_line) {
+void Joed_Conf_File::assign(QString end_key, QString value, bool is_first_value_line) {
 	if (end_key == Field::Key::Backend) {
 		this->the_backend_name = value;
 	} else if (end_key == Field::Key::Document_Class) {
 		this->the_document_class = value;
 	} else {
-		return Parse_State::Invalid_Key_E;
+		throw Invalid_Key_Exception();
 	}
-	return Parse_State::Success_E;
 }
 
 QString Joed_Conf_File::backend_name() {

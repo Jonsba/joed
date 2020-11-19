@@ -2,7 +2,7 @@
 
 void error(QString error_msg) {
 	echo(error_msg);
-	throw;
+	abort();
 }
 
 void echo(QString text) {
