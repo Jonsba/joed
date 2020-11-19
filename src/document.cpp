@@ -11,7 +11,7 @@
 #include "raw_text_block.h"
 #include "root_block.h"
 #include "style.h"
-#include "styles.h"
+#include "document_styles.h"
 #include "text_block.h"
 #include "writer.h"
 
@@ -20,7 +20,7 @@
 Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
 	this->the_path = document_path;
 	this->lua_vm.reset(new Lua_VM());
-	this->styles.reset(new Styles(this->lua_vm.get()));
+	this->styles.reset(new Document_Styles(this->lua_vm.get()));
 	this->the_backend.reset(new Backend(this->lua_vm.get()));
 	this->environment.reset(new Environment(this->lua_vm.get()));
 	this->writer.reset(new Writer());

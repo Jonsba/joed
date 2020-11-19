@@ -8,9 +8,8 @@ environment:
 		header
 		footer
 
-styles:
-
-	document:
+document-styles:
+	properties:
 		layout :=
 			header
 			_children_
@@ -20,15 +19,15 @@ styles:
 			'\\starttext'
 			_children_
 			'\\stoptext'
+	styles:
+		header:
+			properties:
+				type := text_block
+				output :=
+					'\\setupheadertexts[' .. _text_content_ .. ']'
 
-	style:
-		name := header
-		type := text_block
-		output :=
-			'\\setupheadertexts[' .. _text_content_ .. ']'
-
-	style:
-		name := footer
-		type := text_block
-		output :=
-			'\\setupfootertexts[' .. _text_content_ .. ']'
+		footer:
+			properties:
+				type := text_block
+				output :=
+					'\\setupfootertexts[' .. _text_content_ .. ']'

@@ -14,7 +14,7 @@ class Environment;
 class Layout_Block;
 class Lua_VM;
 class Root_Block;
-class Styles;
+class Document_Styles;
 class Writer;
 
 class QProcess;
@@ -46,7 +46,7 @@ class Document final : public Abstract_Loadable_File {
 	QScopedPointer<Definitions_File> document_class_definitions_file;
 	QScopedPointer<Backend> the_backend;
 	QScopedPointer<Environment> environment;
-	QScopedPointer<Styles> styles;
+	QScopedPointer<Document_Styles> styles;
 	QScopedPointer<Root_Block> the_root_block;
 	int key_level;
 	QHash<int, Abstract_Multi_Block*> parent_blocks;

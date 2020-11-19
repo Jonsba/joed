@@ -1,18 +1,17 @@
 #include "definitions_file.h"
 #include "abstract_loadable_tree.h"
 #include "backend.h"
+#include "document_styles.h"
 #include "environment.h"
-#include "styles.h"
 
 Definitions_File::Definitions_File(QString name, Definitions_Objects definitions_object,
                                    Definitions_File* parent)
     : Abstract_Loadable_File(Version) {
 
-	this->objects_table[Field::Key::Styles] = definitions_object.styles;
+	this->objects_table[Field::Key::Document_Styles] = definitions_object.document_styles;
 	this->objects_table[Field::Key::Backend] = definitions_object.backend;
 	this->objects_table[Field::Key::Environment] = definitions_object.environment;
 
-	//
 	if (parent == nullptr) {
 		this->base_path = Root_Directory + name + Joed::Sep + name;
 	} else {

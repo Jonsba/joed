@@ -28,8 +28,8 @@ environment:
 		'	margin-bottom: 2em;'
 		'}'
 
-styles:
-	document:
+document-styles:
+	properties:
 		layout :=
 			header
 			_children_
@@ -39,19 +39,20 @@ styles:
 			header
 			_children_
 			footer
+	styles:
+		header:
+			properties:
+				type := text_block
+				output :=
+					'<div class="fixed-header">'
+					'<p>' .. _text_content_ .. '</p>'
+					'</div>'
 
-	style:
-		name := header
-		type := text_block
-		output :=
-			'<div class="fixed-header">'
-			'<p>' .. _text_content_ .. '</p>'
-			'</div>'
+		footer:
+			properties:
+				type := text_block
+				output :=
+					'<div class="fixed-footer">'
+					'<p>' .. _text_content_ .. '</p>'
+					'</div>'
 
-	style:
-		name := footer
-		type := text_block
-		output :=
-			'<div class="fixed-footer">'
-			'<p>' .. _text_content_ .. '</p>'
-			'</div>'

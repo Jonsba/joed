@@ -8,14 +8,14 @@
 #include <QString>
 
 class Lua_VM;
-class Styles;
+class Document_Styles;
 class Backend;
 class Environment;
 
 struct Definitions_Objects {
 	Backend* backend;
 	Environment* environment;
-	Styles* styles;
+	Document_Styles* document_styles;
 };
 
 struct Definitions_Info {

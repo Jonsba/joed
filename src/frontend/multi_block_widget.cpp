@@ -5,7 +5,7 @@
 
 #include "src/joed.h"
 #include "src/style.h"
-#include "src/styles.h"
+#include "src/document_styles.h"
 #include "src/text_block.h"
 
 #include <QLayout>

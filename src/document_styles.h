@@ -12,10 +12,10 @@
 
 class Style;
 
-class Styles final : public Abstract_Loadable_Tree {
+class Document_Styles final : public Abstract_Loadable_Tree {
  public:
-	Styles(Lua_VM* lua_vm);
-	~Styles();
+	Document_Styles(Lua_VM* lua_vm);
+	~Document_Styles();
 	Style* find(QString name);
 	//
 	inline static const QStringList Keys_Object = {Field::Key::Child_Of, Field::Key::Layout,
@@ -30,11 +30,12 @@ class Styles final : public Abstract_Loadable_Tree {
 	//
 	Style* make_style(QString name);
 	Style* make_style_if_nil(QString name);
+	QString prefix_style_name(QString style_name, int level);
 
  private:
 	QHash<QString, Style*> list;
-	Style* new_style;
-	QString style_name_prefix;
+	Style* current_style;
+	QHash<int, Style*> styles_hierarchy;
 	Lua_VM* lua_vm;
 };
 

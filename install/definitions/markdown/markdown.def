@@ -25,35 +25,31 @@ backend:
 		{'>', '&gt;'}
 		{'\n', '  \n'}
 
-styles:
-
-	document:
+document-styles:
+	properties:
 		layout :=
 			_children_
 		output :=
 			_children_
 		default-child-style := paragraph
-
-	style:
-		name := paragraph
-		type := text_block
-		output :=
-			_text_content_
-
-	style:
-		name := section
-		child-of := document
-		type := layout_block
-		layout :=
-			section.title
-			_children_
-		output :=
-			'# ' .. section.title
-			_children_
-		default-child-style := paragraph
-		styles:
-			style:
-				name := title
-				type := text_block>title
-				output :=
-					_text_content_
+	styles:
+		paragraph:
+			type := text_block
+			output :=
+				_text_content_
+		section:
+			child-of := document
+			type := layout_block
+			layout :=
+				section.title
+				_children_
+			output :=
+				'# ' .. section.title
+				_children_
+			default-child-style := paragraph
+			styles:
+				title:
+					properties:
+						type := text_block>title
+						output :=
+							_text_content_

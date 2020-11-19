@@ -10,9 +10,7 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 }
 
 void Style::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Field::Key::Name) {
-		this->the_name = value;
-	} else if (end_key == Field::Key::Type) {
+	if (end_key == Field::Key::Type) {
 		QStringList type_variant_pair = value.split('>');
 		if (type_variant_pair[0] == Field::Value::Layout_Block) {
 			this->block_type.base = Block_Base_Type::Layout_Block_E;

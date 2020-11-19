@@ -18,9 +18,8 @@ backend:
 		{'\\', '\\textbackslash{}'}
 		{'\n', '\\\\'}
 
-styles:
-
-	document:
+document-styles:
+	properties:
 		layout :=
 			_children_
 		output :=
@@ -28,28 +27,27 @@ styles:
 			_children_
 			'\\stoptext'
 		default-child-style := paragraph
-
-	style:
-		name := paragraph
-		type := text_block
-		output :=
-			'{\\par ' .. _text_content_ .. '}'
-
-	style:
-		name := section
-		child-of := document
-		type := layout_block
-		layout :=
-			section.title
-			_children_
-		output :=
-			'\\startsection[title={' .. section.title .. '}]'
-			_children_
-			'\\stopsection'
-		default-child-style := paragraph
-		styles:
-			style:
-				name := title
-				type := text_block>title
+	styles:
+		paragraph:
+			properties:
+				type := text_block
 				output :=
-					_text_content_
+					'{\\par ' .. _text_content_ .. '}'
+		section:
+			properties:
+				child-of := document
+				type := layout_block
+				layout :=
+					section.title
+					_children_
+				output :=
+					'\\startsection[title={' .. section.title .. '}]'
+					_children_
+					'\\stopsection'
+				default-child-style := paragraph
+			styles:
+				title:
+					properties:
+						type := text_block>title
+						output :=
+							_text_content_

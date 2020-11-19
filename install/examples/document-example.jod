@@ -1,7 +1,7 @@
 format-version := 0.0.0
 
-backend := context
-document-class := article
+backend := markdown
+document-class := colored
 
 document:
 	blocks:

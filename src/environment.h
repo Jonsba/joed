@@ -22,7 +22,6 @@ class Environment final : public Abstract_Loadable_Object {
 
  private:
 	QScopedPointer<Lua_Client> lua_client;
-	QString name;
 };
 
 #endif // ENVIRONMENT_H

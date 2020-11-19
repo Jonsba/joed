@@ -24,6 +24,7 @@ SOURCES += \
 	src/children_block.cpp \
 	src/definitions_file.cpp \
 	src/document.cpp \
+	src/document_styles.cpp \
 	src/environment.cpp \
 	src/escaper.cpp \
 	src/frontend/abstract_document_viewer.cpp \
@@ -45,7 +46,6 @@ SOURCES += \
 	src/raw_text_block.cpp \
 	src/root_block.cpp \
 	src/style.cpp \
-	src/styles.cpp \
 	src/text_block.cpp \
 	src/writer.cpp
 
@@ -60,6 +60,7 @@ HEADERS += \
 	src/children_block.h \
 	src/definitions_file.h \
 	src/document.h \
+	src/document_styles.h \
 	src/environment.h \
 	src/escaper.h \
 	src/field.h \
@@ -81,7 +82,6 @@ HEADERS += \
 	src/raw_text_block.h \
 	src/root_block.h \
 	src/style.h \
-	src/styles.h \
 	src/text_block.h \
 	src/writer.h
 

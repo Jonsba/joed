@@ -13,10 +13,10 @@ class Lua_Client;
 class Lua_VM;
 class Layout_Entry;
 
-// The final keyword suppresses a warning when destructing object in styles.cpp
+// The final keyword suppresses a warning when destructing object in document_styles.cpp
 // Another option would be to make the destructor virtual
 class Style final : Abstract_Loadable_Object {
-	friend class Styles;
+	friend class Document_Styles;
 
  public:
 	Style(QString the_name, Lua_VM* lua_vm);
