@@ -2,6 +2,7 @@
 #include "backend.h"
 #include "children_block.h"
 #include "definitions_file.h"
+#include "document_styles.h"
 #include "environment.h"
 #include "escaper.h"
 #include "joed_conf_file.h"
@@ -11,13 +12,12 @@
 #include "raw_text_block.h"
 #include "root_block.h"
 #include "style.h"
-#include "document_styles.h"
 #include "text_block.h"
 #include "writer.h"
 
 #include <QProcess>
 
-Document::Document(QString document_path) : Abstract_Loadable_File(Version) {
+Document::Document(QString document_path) {
 	this->the_path = document_path;
 	this->lua_vm.reset(new Lua_VM());
 	this->styles.reset(new Document_Styles(this->lua_vm.get()));

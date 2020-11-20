@@ -1,6 +1,6 @@
 #include "joed_conf_file.h"
 
-Joed_Conf_File::Joed_Conf_File() : Abstract_Loadable_File(Version) {}
+Joed_Conf_File::Joed_Conf_File() {}
 
 void Joed_Conf_File::process_key(QString key, int level) {
 	if (key != Field::Key::Defaults) {

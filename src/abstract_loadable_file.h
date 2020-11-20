@@ -16,9 +16,12 @@ struct Cannot_Open_Exception : Parse_Exception {
 
 class Abstract_Loadable_File : public Abstract_Loadable_Tree {
  public:
-	Abstract_Loadable_File(const File_Version Version);
+	Abstract_Loadable_File();
 	void load(QString file_path);
 	QString version_string();
+
+ protected:
+	virtual const File_Version Version() = 0;
 
  private:
 	struct Line_Context {
@@ -34,9 +37,6 @@ class Abstract_Loadable_File : public Abstract_Loadable_Tree {
 	void check_version_validity(Line_Context& context);
 	void abort_parse(Parse_Exception& exception, Line_Context& context);
 	QString msg_line(QString text, int line_number);
-
- private:
-	File_Version Version;
 	QString file_path;
 };
 

@@ -30,10 +30,9 @@ class Document final : public Abstract_Loadable_File {
 	void save_as(QString file_path);
 	QProcess* compile_process();
 	void compile();
-	//
-	inline static const File_Version Version = {0, 0, 0};
 
  protected:
+	const File_Version Version() { return {0, 0, 0}; }
 	void process_key(QString key, int level);
 	void assign(QString end_key, QString value, bool is_first_value_line = true);
 

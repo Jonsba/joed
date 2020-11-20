@@ -5,8 +5,7 @@
 #include "environment.h"
 
 Definitions_File::Definitions_File(QString name, Definitions_Objects definitions_object,
-                                   Definitions_File* parent)
-    : Abstract_Loadable_File(Version) {
+                                   Definitions_File* parent) {
 
 	this->objects_table[Field::Key::Document_Styles] = definitions_object.document_styles;
 	this->objects_table[Field::Key::Backend] = definitions_object.backend;

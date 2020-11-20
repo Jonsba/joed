@@ -3,9 +3,7 @@
 
 #include <QFile>
 
-Abstract_Loadable_File::Abstract_Loadable_File(const File_Version Version) {
-	this->Version = Version;
-}
+Abstract_Loadable_File::Abstract_Loadable_File() {}
 
 void Abstract_Loadable_File::load(QString file_path) {
 	this->file_path = file_path;
@@ -82,8 +80,8 @@ void Abstract_Loadable_File::load(QString file_path) {
 }
 
 QString Abstract_Loadable_File::version_string() {
-	return QString::number(this->Version.Major) + "." + QString::number(this->Version.Minor) + "." +
-	       QString::number(this->Version.Revision);
+	return QString::number(this->Version().Major) + "." + QString::number(this->Version().Minor) +
+	       "." + QString::number(this->Version().Revision);
 }
 
 void Abstract_Loadable_File::check_version_validity(Line_Context& context) {
@@ -93,10 +91,10 @@ void Abstract_Loadable_File::check_version_validity(Line_Context& context) {
 	QStringList version_list = context.value.split(".");
 	int major_version = version_list[0].toInt();
 	int minor_version = version_list[1].toInt();
-	if (major_version != Version.Major || minor_version > Version.Minor) {
+	if (major_version != Version().Major || minor_version > Version().Minor) {
 		echo("Unsupporter version: " + context.value);
-		error("Any version between " + QString::number(Version.Major) + ".0.0 and " +
-		      QString::number(Version.Major) + "." + QString::number(Version.Minor) +
+		error("Any version between " + QString::number(Version().Major) + ".0.0 and " +
+		      QString::number(Version().Major) + "." + QString::number(Version().Minor) +
 		      ".x are supported");
 	}
 }
