@@ -22,6 +22,8 @@ void HTML_Viewer::refresh() {
 	// QTextBrowser doesn't support external CSS files, so we will copy paste the CSS content
 	// directly in the HTML content
 	QString html_text =
-	    html_file.readAll().replace("<head>", "<head><style>" + css_file.readAll() + "</style>");
+	    html_file.readAll()
+	        .replace("<link rel=\"stylesheet\" href=\"document-environment.css\">", "")
+	        .replace("<head>", "<head><style>" + css_file.readAll() + "</style>");
 	this->html_view->setHtml(html_text);
 }

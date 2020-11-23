@@ -3,9 +3,11 @@
 
 #include "abstract_block.h"
 
+class Escaper;
+
 class Raw_Text_Block : public Abstract_Block {
  public:
-	Raw_Text_Block();
+	Raw_Text_Block(Escaper* escaper);
 	void set_text(QString text);
 	void add_loaded_text(QString quoted_text);
 	QString text();
@@ -14,6 +16,7 @@ class Raw_Text_Block : public Abstract_Block {
 
  private:
 	QString the_text;
+	Escaper* escaper;
 };
 
 #endif // RAW_TEXT_BLOCK_H

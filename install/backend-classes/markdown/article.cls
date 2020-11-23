@@ -36,15 +36,17 @@ document-styles:
 				'<div class="fixed-header">'
 				'<p>' .. _text_content_ .. '</p>'
 				'</div>'
-
+				''
 		footer:
 			output :=
 				'<div class="fixed-footer">'
 				'<p>' .. _text_content_ .. '</p>'
 				'</div>'
+				''
 		paragraph:
 			output :=
 				_text_content_
+				''
 		section:
 			output :=
 				'# ' .. section.title
@@ -54,3 +56,4 @@ document-styles:
 				title:
 					output :=
 						_text_content_
+				''

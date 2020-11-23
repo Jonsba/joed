@@ -10,5 +10,5 @@ QString Abstract_Non_Layouted_Block::translate() {
 	for (Abstract_Block* child_block : this->the_blocks) {
 		child_contents.append(child_block->translate());
 	}
-	return child_contents.join("\n\n");
+	return child_contents.join("\n");
 }

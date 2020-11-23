@@ -17,7 +17,7 @@ Abstract_Block* Text_Block::create_block(Block_Type type, Style* style, Escaper*
 	Abstract_Block* new_block;
 	switch (type.base) {
 	case Block_Base_Type::Raw_Text_Block_E: {
-		new_block = new Raw_Text_Block();
+		new_block = new Raw_Text_Block(this->escaper);
 		break;
 	}
 	default:
@@ -29,8 +29,7 @@ Abstract_Block* Text_Block::create_block(Block_Type type, Style* style, Escaper*
 
 QString Text_Block::translate() {
 	QHash<QString, QString> global_dict = {};
-	global_dict[Field::Id::Text_Content] =
-	    this->escaper->escape(Abstract_Non_Layouted_Block::translate());
+	global_dict[Field::Id::Text_Content] = Abstract_Non_Layouted_Block::translate();
 	return this->style->translate(global_dict);
 }
 
