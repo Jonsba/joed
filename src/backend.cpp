@@ -64,7 +64,13 @@ void Backend::write(QString code, QString file_path) {
 }
 
 QString Backend::name() { return this->the_name; }
-Document_Class_Info Backend::document_class(QString name) { return this->document_classes[name]; }
+Document_Class_Info Backend::document_class(QString name) {
+	if (! this->document_classes.contains(name)) {
+		throw Exception("Document class '" + name + "' for backend '" + this->the_name +
+		                "' doesn't exist");
+	}
+	return this->document_classes[name];
+}
 
 QProcess* Backend::compile_process() { return this->the_compile_process.get(); }
 
@@ -75,8 +81,11 @@ File_Info* Backend::compiled_document() { return &this->the_compiled_document; }
 Escaper* Backend::escaper() { return this->the_escaper.get(); }
 
 void Backend::process_intermediate_key(QString key, int level) {
-	if (level == 0 && key != Field::Key::Document_Classes) {
-		throw Invalid_Key_Exception();
+	if (level == 0) {
+		if (key != Field::Key::Document_Classes) {
+			throw Invalid_Key_Exception();
+		}
+		return;
 	}
 	if (level > 1) {
 		throw Invalid_Key_Exception();

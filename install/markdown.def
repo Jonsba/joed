@@ -28,6 +28,6 @@ document-classes:
 	article:
 		generic-class := article
 		backend-class := article
-	article.colored:
+	article.dark:
 		generic-class := article
-		backend-class := article.colored
+		backend-class := article.dark
