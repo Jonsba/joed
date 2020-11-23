@@ -1,5 +1,5 @@
-#ifndef STYLES_H
-#define STYLES_H
+#ifndef DOCUMENT_STYLES_H
+#define DOCUMENT_STYLES_H
 
 #include "abstract_loadable_tree.h"
 #include "lua_vm.h"
@@ -23,8 +23,8 @@ class Document_Styles final : public Abstract_Loadable_Tree {
 	                                               Field::Key::Default_Child_Style};
 
  protected:
-	void process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	void process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value, int level, bool is_first_value_line);
 
  private:
 	//
@@ -39,4 +39,4 @@ class Document_Styles final : public Abstract_Loadable_Tree {
 	Lua_VM* lua_vm;
 };
 
-#endif // STYLES_H
+#endif // DOCUMENT_STYLES_H

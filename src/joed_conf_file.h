@@ -15,8 +15,8 @@ class Joed_Conf_File : public Abstract_Loadable_File {
 
  protected:
 	const File_Version Version() { return {0, 0, 0}; }
-	void process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	void process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value, int level, bool is_first_value_line);
 
  private:
 	QString the_backend_name;

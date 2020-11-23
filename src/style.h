@@ -29,7 +29,7 @@ class Style final : Abstract_Loadable_Object {
 	QString translate(QHash<QString, QString> key_value);
 
  protected:
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	void assign(QString end_key, QString value, int level, bool is_first_value_line);
 	void assign(QString end_key, Style* object, bool is_first_value_line);
 
  private:

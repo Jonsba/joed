@@ -1,7 +1,7 @@
 #ifndef BACKEND_H
 #define BACKEND_H
 
-#include "abstract_loadable_tree.h"
+#include "abstract_loadable_file.h"
 #include "joed.h"
 
 #include <QScopedPointer>
@@ -18,13 +18,21 @@ struct File_Info {
 	QString path;
 };
 
-class Backend final : public Abstract_Loadable_Object {
+struct Document_Class_Info {
+	QString generic_class;
+	QString backend_class;
+};
+
+class Backend final : public Abstract_Loadable_File {
  public:
 	Backend(Lua_VM* lua_vm);
 	~Backend();
+	void load(QString name);
 	void reset_files_info(QString document_path);
 	void write(QString code, QString file_path);
 	void compile();
+	QString name();
+	Document_Class_Info document_class(QString name);
 	File_Info* translated_document();
 	File_Info* translated_environment();
 	File_Info* compiled_document();
@@ -33,10 +41,16 @@ class Backend final : public Abstract_Loadable_Object {
 	//
 
  protected:
-	void assign(QString end_key, QString value, bool is_first_value_line);
+	const File_Version Version() { return {0, 0, 0}; }
+	void process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value, int level, bool is_first_value_line);
 
  private:
+	inline static const QString File_Extension = ".def";
 	//
+	QString the_name;
+	QHash<QString, Document_Class_Info> document_classes;
+	QString current_document_class;
 	File_Info the_translated_document;
 	File_Info the_translated_environment;
 	File_Info the_compiled_document;

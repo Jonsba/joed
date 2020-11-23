@@ -9,7 +9,7 @@ Style::Style(QString name, Lua_VM* lua_vm) {
 	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
-void Style::assign(QString end_key, QString value, bool is_first_value_line) {
+void Style::assign(QString end_key, QString value, int level, bool is_first_value_line) {
 	if (end_key == Field::Key::Type) {
 		QStringList type_variant_pair = value.split('>');
 		if (type_variant_pair[0] == Field::Value::Layout_Block) {
@@ -50,21 +50,13 @@ void Style::assign(QString end_key, Style* object, bool is_first_value_line) {
 	}
 }
 
-QString Style::name() {
-	return this->the_name;
-}
+QString Style::name() { return this->the_name; }
 
-Block_Type Style::type() {
-	return this->block_type;
-}
+Block_Type Style::type() { return this->block_type; }
 
-Style* Style::default_child_style() {
-	return this->the_default_child_style;
-}
+Style* Style::default_child_style() { return this->the_default_child_style; }
 
-QLinkedList<Layout_Entry*> Style::layout_entries() {
-	return this->the_layout_entries;
-}
+QLinkedList<Layout_Entry*> Style::layout_entries() { return this->the_layout_entries; }
 
 QString Style::translate(QHash<QString, QString> global_dict) {
 	return this->lua_client->eval_expr(global_dict);

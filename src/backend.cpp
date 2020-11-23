@@ -17,6 +17,11 @@ Backend::Backend(Lua_VM* lua_vm) {
 	this->lua_client.reset(new Lua_Client(lua_vm));
 }
 
+void Backend::load(QString name) {
+	this->the_name = name;
+	this->Abstract_Loadable_File::load(Joed::System_Data_Path + name + File_Extension);
+}
+
 void Backend::reset_files_info(QString document_path) {
 	QFileInfo document_file;
 	if (document_path != "") {
@@ -41,22 +46,6 @@ void Backend::reset_files_info(QString document_path) {
 	this->the_compile_process->setWorkingDirectory(working_directory);
 }
 
-void Backend::assign(QString end_key, QString value, bool is_first_value_line) {
-	if (end_key == Field::Key::Output) {
-		this->lua_client->add_expr_line(value, is_first_value_line);
-	} else if (end_key == Field::Key::Doc_File_Ext) {
-		this->the_translated_document.type = value;
-	} else if (end_key == Field::Key::Env_File_Ext) {
-		this->the_translated_environment.type = value;
-	} else if (end_key == Field::Key::Viewer) {
-		this->the_compiled_document.type = value;
-	} else if (end_key == Field::Key::Escape_Table) {
-		this->the_escaper->parse(value);
-	} else {
-		throw Invalid_Key_Exception();
-	}
-}
-
 void Backend::compile() {
 	QHash<QString, QString> global_dict = {};
 	global_dict[Field::Id::Translated_Document] = '"' + this->the_translated_document.path + '"';
@@ -74,22 +63,46 @@ void Backend::write(QString code, QString file_path) {
 	file.close();
 }
 
-QProcess* Backend::compile_process() {
-	return this->the_compile_process.get();
+QString Backend::name() { return this->the_name; }
+Document_Class_Info Backend::document_class(QString name) { return this->document_classes[name]; }
+
+QProcess* Backend::compile_process() { return this->the_compile_process.get(); }
+
+File_Info* Backend::translated_document() { return &this->the_translated_document; }
+File_Info* Backend::translated_environment() { return &this->the_translated_environment; }
+File_Info* Backend::compiled_document() { return &this->the_compiled_document; }
+
+Escaper* Backend::escaper() { return this->the_escaper.get(); }
+
+void Backend::process_intermediate_key(QString key, int level) {
+	if (level == 0 && key != Field::Key::Document_Classes) {
+		throw Invalid_Key_Exception();
+	}
+	if (level > 1) {
+		throw Invalid_Key_Exception();
+	}
+	this->current_document_class = key;
+	this->document_classes[key] = {"", ""};
 }
 
-File_Info* Backend::translated_document() {
-	return &this->the_translated_document;
-}
-File_Info* Backend::translated_environment() {
-	return &this->the_translated_environment;
-}
-File_Info* Backend::compiled_document() {
-	return &this->the_compiled_document;
-}
-
-Escaper* Backend::escaper() {
-	return this->the_escaper.get();
+void Backend::assign(QString end_key, QString value, int level, bool is_first_value_line) {
+	if (end_key == Field::Key::Output) {
+		this->lua_client->add_expr_line(value, is_first_value_line);
+	} else if (end_key == Field::Key::Doc_File_Ext) {
+		this->the_translated_document.type = value;
+	} else if (end_key == Field::Key::Env_File_Ext) {
+		this->the_translated_environment.type = value;
+	} else if (end_key == Field::Key::Viewer) {
+		this->the_compiled_document.type = value;
+	} else if (end_key == Field::Key::Escape_Table) {
+		this->the_escaper->parse(value);
+	} else if (end_key == Field::Key::Generic_Class) {
+		this->document_classes[this->current_document_class].generic_class = value;
+	} else if (end_key == Field::Key::Backend_Class) {
+		this->document_classes[this->current_document_class].backend_class = value;
+	} else {
+		throw Invalid_Key_Exception();
+	}
 }
 
 Backend::~Backend() = default;

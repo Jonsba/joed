@@ -1,0 +1,23 @@
+format-version := 0.0.0
+
+doc-file-ext := tex
+env-file-ext := tex
+output := 'context ' .. _translated_document_
+viewer := pdf
+escape-table :=
+	{'&', '\\&'}
+	{'%', '\\%'}
+	{'$', '\\$'}
+	{'#', '\\#'}
+	{'_', '\\_'}
+	{'{', '\\{'}
+	{'}', '\\}'}
+	{'~', '\\textasciitilde{}'}
+	{'^', '\\textasciicircum{}'}
+	{'\\', '\\textbackslash{}'}
+	{'\n', '\\\\'}
+
+document-classes:
+	article:
+		generic-class := article
+		backend-class := article

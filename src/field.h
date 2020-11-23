@@ -6,6 +6,7 @@
 struct Field {
 	struct Key {
 		inline static const QString Backend = "backend";
+		inline static const QString Backend_Class = "backend-class";
 		inline static const QString Blocks = "blocks";
 		inline static const QString Child_Of = "child-of";
 		inline static const QString Children = "children";
@@ -15,14 +16,15 @@ struct Field {
 		inline static const QString Document = "document";
 		inline static const QString Document_Styles = "document-styles";
 		inline static const QString Document_Class = "document-class";
+		inline static const QString Document_Classes = "document-classes";
 		inline static const QString Doc_File_Ext = "doc-file-ext";
 		inline static const QString Env_File_Ext = "env-file-ext";
 		inline static const QString Environment = "environment";
 		inline static const QString Escape_Table = "escape-table";
+		inline static const QString Generic_Class = "generic-class";
 		inline static const QString Inherits = "inherits";
 		inline static const QString Layout = "layout";
 		inline static const QString Output = "output";
-		inline static const QString Properties = "properties";
 		inline static const QString Styles = "styles";
 		inline static const QString Text = "text";
 		inline static const QString Type = "type";

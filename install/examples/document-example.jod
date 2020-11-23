@@ -1,14 +1,14 @@
 format-version := 0.0.0
 
-backend := markdown
-document-class := colored
+backend := context
+document-class := article
 
 document:
 	blocks:
 		header:
 			blocks:
 				text :=
-					"<Header>"
+					"The Header"
 		children:
 			paragraph:
 				blocks:
@@ -108,4 +108,4 @@ document:
 		footer:
 			blocks:
 				text :=
-					"<Footer>"
+					"The Footer"

@@ -9,7 +9,7 @@
 class Abstract_Block;
 class Abstract_Multi_Block;
 class Backend;
-class Definitions_File;
+class Document_Class;
 class Environment;
 class Layout_Block;
 class Lua_VM;
@@ -33,21 +33,19 @@ class Document final : public Abstract_Loadable_File {
 
  protected:
 	const File_Version Version() { return {0, 0, 0}; }
-	void process_key(QString key, int level);
-	void assign(QString end_key, QString value, bool is_first_value_line = true);
+	void process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value, int level, bool is_first_value_line = true);
 
  private:
 	void create();
 	//
 	QString the_path;
 	QScopedPointer<Lua_VM> lua_vm;
-	QScopedPointer<Definitions_File> backend_definitions_file;
-	QScopedPointer<Definitions_File> document_class_definitions_file;
 	QScopedPointer<Backend> the_backend;
+	QScopedPointer<Document_Class> document_class;
 	QScopedPointer<Environment> environment;
 	QScopedPointer<Document_Styles> styles;
 	QScopedPointer<Root_Block> the_root_block;
-	int key_level;
 	QHash<int, Abstract_Multi_Block*> parent_blocks;
 	Abstract_Block* current_block;
 	QScopedPointer<Writer> writer;

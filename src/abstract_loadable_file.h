@@ -9,11 +9,6 @@ struct File_Version {
 	int Revision;
 };
 
-struct Cannot_Open_Exception : Parse_Exception {
-	Cannot_Open_Exception(QString file_path)
-	    : Parse_Exception({Parse_Exception_Code::Other, "Cannot open file '" + file_path + "'"}) {}
-};
-
 class Abstract_Loadable_File : public Abstract_Loadable_Tree {
  public:
 	Abstract_Loadable_File();
@@ -34,8 +29,9 @@ class Abstract_Loadable_File : public Abstract_Loadable_Tree {
 	State tokenize_line(QString trimmed_line, Line_Context& context);
 	bool is_comment(QString line);
 	int count_levels(QString line);
+	void set_last_key_level(int& last_key_level, int level);
 	void check_version_validity(Line_Context& context);
-	void abort_parse(Parse_Exception& exception, Line_Context& context);
+	void abort_parse(Exception& exception, Line_Context& context);
 	QString msg_line(QString text, int line_number);
 	QString file_path;
 };

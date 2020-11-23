@@ -12,7 +12,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 		throw Cannot_Open_Exception(file_path);
 	}
 	QString line, trimmed_line;
-	int level = 0, last_key_level;
+	int level = 0, last_key_level = 0;
 	bool is_first_value_line;
 	State state = State::Parsing_Version;
 	Line_Context context = {"", "", 0, 0};
@@ -37,7 +37,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 			break;
 		default:
 			state = State::Parsing_Value;
-			if (level > last_key_level + 1) {
+			if (level > last_key_level) {
 				context.value = trimmed_line;
 			} else { // Does the counted level imply that we are reading a new (end_)key?
 				state = this->tokenize_line(trimmed_line, context);
@@ -52,26 +52,24 @@ void Abstract_Loadable_File::load(QString file_path) {
 					state = State::Parsing_Key;
 					break;
 				case State::Parsing_Key:
-					if (level > last_key_level + 1) {
-						throw Invalid_Indent_Exception();
-					}
-					last_key_level = level;
-					this->process_key(context.key, level);
+					set_last_key_level(last_key_level, level);
+					this->process_intermediate_key(context.key, level);
 					break;
 				case State::Parsing_End_Key:
+					set_last_key_level(last_key_level, level);
 					state = State::Parsing_Value;
 					is_first_value_line = true;
+					// Do we have a one-liner to be processed before reading the next line?
 					if (context.value != "") {
-						// We first check for one-liner before reading the next line
 						continue;
 					}
 					break;
 				case State::Parsing_Value:
-					this->assign(context.key, context.value, is_first_value_line);
+					this->assign(context.key, context.value, last_key_level, is_first_value_line);
 					is_first_value_line = false;
 					break;
 				}
-			} catch (Parse_Exception& exception) {
+			} catch (Exception& exception) {
 				this->abort_parse(exception, context);
 			}
 			break;
@@ -134,31 +132,38 @@ int Abstract_Loadable_File::count_levels(QString line) {
 	return i;
 }
 
-void Abstract_Loadable_File::abort_parse(Parse_Exception& exception, Line_Context& context) {
+void Abstract_Loadable_File::set_last_key_level(int& last_key_level, int level) {
+	if (level > last_key_level + 1) {
+		throw Invalid_Indent_Exception();
+	}
+	last_key_level = level;
+}
+
+void Abstract_Loadable_File::abort_parse(Exception& exception, Line_Context& context) {
 	switch (exception.code) {
-	case Parse_Exception_Code::Invalid_Key:
+	case Exception_Code::Invalid_Key:
 		// If an assign statement that didn't evaluate a one-liner returned this error, it means that
 		// the current line is no longer the line with the key. That's why we use key_line_number here
 		exception.msg = msg_line("invalid key '" + context.key + "'", context.key_line_number);
 		break;
-	case Parse_Exception_Code::Invalid_Value:
+	case Exception_Code::Invalid_Value:
 		exception.msg =
 		    msg_line("invalid value '" + context.value + "' for key '" + context.key + "'",
 		             context.line_number);
 		break;
-	case Parse_Exception_Code::Invalid_Indent:
+	case Exception_Code::Invalid_Indent:
 		exception.msg =
 		    msg_line("invalid indentation for key '" + context.key + "'", context.line_number);
 		break;
-	case Parse_Exception_Code::Other:
+	case Exception_Code::Other:
 		exception.msg = msg_line(exception.msg, context.line_number);
 		break;
-	case Parse_Exception_Code::Processed:
-		exception.msg =
-		    msg_line("Error while processing line", context.line_number) + "\n\n" + exception.msg;
+	case Exception_Code::Processed:
+		exception.msg = msg_line("Error while processing line: ", context.line_number) + "\n\t" +
+		                exception.msg.replace("\n", "\n\t");
 		break;
 	}
-	exception.code = Parse_Exception_Code::Processed;
+	exception.code = Exception_Code::Processed;
 	throw exception;
 }
 

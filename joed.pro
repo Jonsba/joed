@@ -22,11 +22,13 @@ SOURCES += \
 	src/abstract_non_layouted_block.cpp \
 	src/backend.cpp \
 	src/children_block.cpp \
-	src/definitions_file.cpp \
+	src/class_file.cpp \
 	src/document.cpp \
+	src/document_class.cpp \
 	src/document_styles.cpp \
 	src/environment.cpp \
 	src/escaper.cpp \
+	src/exceptions.cpp \
 	src/frontend/abstract_document_viewer.cpp \
 	src/frontend/children_widget_block.cpp \
 	src/frontend/color_scheme.cpp \
@@ -58,11 +60,13 @@ HEADERS += \
 	src/abstract_non_layouted_block.h \
 	src/backend.h \
 	src/children_block.h \
-	src/definitions_file.h \
+	src/class_file.h \
 	src/document.h \
+	src/document_class.h \
 	src/document_styles.h \
 	src/environment.h \
 	src/escaper.h \
+	src/exceptions.h \
 	src/field.h \
 	src/frontend/abstract_document_viewer.h \
 	src/frontend/children_widget_block.h \

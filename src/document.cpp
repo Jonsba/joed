@@ -1,7 +1,7 @@
 #include "document.h"
 #include "backend.h"
 #include "children_block.h"
-#include "definitions_file.h"
+#include "document_class.h"
 #include "document_styles.h"
 #include "environment.h"
 #include "escaper.h"
@@ -20,9 +20,11 @@
 Document::Document(QString document_path) {
 	this->the_path = document_path;
 	this->lua_vm.reset(new Lua_VM());
-	this->styles.reset(new Document_Styles(this->lua_vm.get()));
 	this->the_backend.reset(new Backend(this->lua_vm.get()));
 	this->environment.reset(new Environment(this->lua_vm.get()));
+	this->styles.reset(new Document_Styles(this->lua_vm.get()));
+	this->document_class.reset(new Document_Class({this->environment.get(), this->styles.get()}));
+
 	this->writer.reset(new Writer());
 	if (document_path == "") {
 		this->create();
@@ -34,30 +36,18 @@ Document::Document(QString document_path) {
 	this->the_backend->reset_files_info(document_path);
 }
 
-Backend* Document::backend() {
-	return this->the_backend.get();
-}
+Backend* Document::backend() { return this->the_backend.get(); }
 
 void Document::create() {
 	Joed_Conf_File joed_conf_file;
 	joed_conf_file.load(Joed::Joed_Conf_File);
-	this->backend_definitions_file.reset(new Definitions_File(
-	    joed_conf_file.backend_name(),
-	    {this->the_backend.get(), this->environment.get(), this->styles.get()}));
-
-	this->document_class_definitions_file.reset(
-	    new Definitions_File(joed_conf_file.document_class(),
-	                         {this->the_backend.get(), this->environment.get(), this->styles.get()},
-	                         this->backend_definitions_file.get()));
+	this->the_backend->load(joed_conf_file.backend_name());
+	this->document_class->try_load(joed_conf_file.document_class(), this->the_backend.get());
 }
 
-Root_Block* Document::root_block() {
-	return this->the_root_block.get();
-}
+Root_Block* Document::root_block() { return this->the_root_block.get(); }
 
-QProcess* Document::compile_process() {
-	return this->the_backend->compile_process();
-}
+QProcess* Document::compile_process() { return this->the_backend->compile_process(); }
 
 void Document::compile() {
 	// Order is important because the environment might need to use variables that are set in the
@@ -69,9 +59,7 @@ void Document::compile() {
 	this->backend()->compile();
 }
 
-QString Document::path() {
-	return this->the_path;
-}
+QString Document::path() { return this->the_path; }
 
 void Document::save_as(QString file_path) {
 	this->the_path = file_path;
@@ -81,16 +69,14 @@ void Document::save_as(QString file_path) {
 void Document::save() {
 	this->writer->open(this->the_path);
 	this->writer->write_pair(Field::Key::Version, this->version_string() + "\n", 0);
-	this->writer->write_pair(Field::Key::Backend, this->backend_definitions_file->info()->name, 0);
-	this->writer->write_pair(Field::Key::Document_Class,
-	                         this->document_class_definitions_file->info()->name + "\n", 0);
+	this->writer->write_pair(Field::Key::Backend, this->the_backend->name(), 0);
+	this->writer->write_pair(Field::Key::Document_Class, this->document_class->name() + "\n", 0);
 	this->root_block()->save(this->writer.get());
 	this->writer->close();
 	this->the_backend->reset_files_info(this->the_path);
 }
 
-void Document::process_key(QString key, int level) {
-	this->key_level = level;
+void Document::process_intermediate_key(QString key, int level) {
 	if (level == 0) {
 		if (key == Field::Key::Document) {
 			this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
@@ -110,7 +96,7 @@ void Document::process_key(QString key, int level) {
 			} else {
 				Style* style = styles->find(key);
 				if (style == nullptr) {
-					throw Other_Parse_Exception("Cannot find style: " + key);
+					throw Exception("Cannot find style: " + key);
 				}
 				switch (style->type().base) {
 				case Block_Base_Type::Layout_Block_E:
@@ -121,7 +107,7 @@ void Document::process_key(QString key, int level) {
 					    this->parent_blocks[level]->create_block(style, this->the_backend->escaper());
 					break;
 				default:
-					throw Invalid_Value_Exception();
+					throw Exception("Style '" + style->name() + "' wasn't defined with a valid type");
 				}
 				return;
 			}
@@ -130,19 +116,16 @@ void Document::process_key(QString key, int level) {
 	}
 }
 
-void Document::assign(QString end_key, QString value, bool is_first_value_line) {
+void Document::assign(QString end_key, QString value, int level, bool is_first_value_line) {
 	if (end_key == Field::Key::Backend) {
-		this->backend_definitions_file.reset(new Definitions_File(
-		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()}));
+		this->the_backend->load(value);
+		this->document_class->try_load("", this->the_backend.get());
 	} else if (end_key == Field::Key::Document_Class) {
-		this->document_class_definitions_file.reset(new Definitions_File(
-		    value, {this->the_backend.get(), this->environment.get(), this->styles.get()},
-		    this->backend_definitions_file.get()));
+		this->document_class->try_load(value, nullptr);
 	} else if (end_key == Field::Key::Text) {
 		if (is_first_value_line) {
-			// key_level is the level of the 'blocks' key, which causes an offset to be corrected
-			this->current_block = this->parent_blocks[this->key_level + 1]->create_block(
-			    Abstract_Block::Raw_Text_Block_Type);
+			this->current_block =
+			    this->parent_blocks[level]->create_block(Abstract_Block::Raw_Text_Block_Type);
 		}
 		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
 	} else {

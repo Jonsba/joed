@@ -22,7 +22,7 @@ Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
 void Document_Form::reset_ui(QString document_path) {
 	try {
 		this->document.reset(new Document(document_path));
-	} catch (Parse_Exception& exception) {
+	} catch (Exception& exception) {
 		QMessageBox msg_box;
 		msg_box.setStyleSheet("QLabel{min-width: 500px;}");
 		msg_box.setInformativeText(exception.msg);

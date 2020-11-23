@@ -6,12 +6,12 @@
 
 class Abstract_Loadable_Tree : public Abstract_Loadable_Object {
  public:
-	friend class Definitions_File;
+	friend class Class_File;
 	Abstract_Loadable_Tree();
 
  protected:
 	// returns false when the key is invalid
-	virtual void process_key(QString key, int level) = 0;
+	virtual void process_intermediate_key(QString key, int level) = 0;
 };
 
 #endif // ABSTRACT_LOADABLE_TREE_H
