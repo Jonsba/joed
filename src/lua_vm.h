@@ -11,6 +11,7 @@ class lua_State;
 class Lua_VM {
  public:
 	Lua_VM();
+	~Lua_VM();
 	int load_expr(QString expr);
 	QString eval_expr(int cookie);
 	void push_variable(QString variable, QString value);
