@@ -34,10 +34,7 @@ class Style final : Abstract_Loadable_Object {
 
  private:
 	QString the_name;
-	QString declare;
 	QLinkedList<Layout_Entry*> the_layout_entries;
-	Style* base_style = nullptr;
-	Style* parent = nullptr;
 	Style* the_default_child_style = nullptr;
 	QScopedPointer<Lua_Client> lua_client;
 	Block_Type block_type = {Block_Base_Type::Uninitialized_E, Block_Variant::Standard_E};

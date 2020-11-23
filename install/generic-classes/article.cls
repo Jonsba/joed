@@ -18,7 +18,6 @@ document-styles:
 				title:
 					type := text_block>title
 			type := layout_block
-			child-of := document
 			layout :=
 				section.title
 				_children_

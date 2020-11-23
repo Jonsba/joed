@@ -24,8 +24,6 @@ void Style::assign(QString end_key, QString value, int level, bool is_first_valu
 		} else {
 			throw Invalid_Value_Exception();
 		}
-	} else if (end_key == Field::Key::Declare) {
-		this->declare += value + '\n';
 	} else if (end_key == Field::Key::Output) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else {
@@ -34,15 +32,11 @@ void Style::assign(QString end_key, QString value, int level, bool is_first_valu
 }
 
 void Style::assign(QString end_key, Style* object, bool is_first_value_line) {
-	if (end_key == Field::Key::Child_Of) {
-		this->parent = object;
-	} else if (end_key == Field::Key::Layout) {
+	if (end_key == Field::Key::Layout) {
 		if (is_first_value_line) {
 			this->the_layout_entries.clear();
 		}
 		this->the_layout_entries.append(new Layout_Entry(object));
-	} else if (end_key == Field::Key::Inherits) {
-		this->base_style = object;
 	} else if (end_key == Field::Key::Default_Child_Style) {
 		this->the_default_child_style = object;
 	} else {

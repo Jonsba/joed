@@ -8,9 +8,7 @@ struct Field {
 		inline static const QString Backend = "backend";
 		inline static const QString Backend_Class = "backend-class";
 		inline static const QString Blocks = "blocks";
-		inline static const QString Child_Of = "child-of";
 		inline static const QString Children = "children";
-		inline static const QString Declare = "declare";
 		inline static const QString Default_Child_Style = "default-child-style";
 		inline static const QString Defaults = "defaults";
 		inline static const QString Document = "document";
@@ -22,7 +20,6 @@ struct Field {
 		inline static const QString Environment = "environment";
 		inline static const QString Escape_Table = "escape-table";
 		inline static const QString Generic_Class = "generic-class";
-		inline static const QString Inherits = "inherits";
 		inline static const QString Layout = "layout";
 		inline static const QString Output = "output";
 		inline static const QString Styles = "styles";
@@ -32,7 +29,6 @@ struct Field {
 		inline static const QString Viewer = "viewer";
 	};
 	struct Value {
-		inline static const QString Caption = "caption";
 		inline static const QString HTML_Viewer = "html";
 		inline static const QString Layout_Block = "layout_block";
 		inline static const QString PDF_Viewer = "pdf";

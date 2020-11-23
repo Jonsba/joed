@@ -18,8 +18,7 @@ class Document_Styles final : public Abstract_Loadable_Tree {
 	~Document_Styles();
 	Style* find(QString name);
 	//
-	inline static const QStringList Keys_Object = {Field::Key::Child_Of, Field::Key::Layout,
-	                                               Field::Key::Inherits,
+	inline static const QStringList Keys_Object = {Field::Key::Layout,
 	                                               Field::Key::Default_Child_Style};
 
  protected:
