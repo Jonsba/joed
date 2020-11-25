@@ -3,7 +3,7 @@
 #include "writer.h"
 
 Abstract_Multi_Block::Abstract_Multi_Block(QString identifier, Block_Type type, bool auto_built)
-    : Abstract_Block(identifier, type) {
+	 : Abstract_Block(identifier, type) {
 	this->auto_built = auto_built;
 	this->Blocks_Identifier = Field::Key::Blocks;
 	if (type.base == Block_Base_Type::Children_Block_E) {
@@ -23,9 +23,13 @@ Abstract_Block* Abstract_Multi_Block::create_block(Style* style, Escaper* escape
 	return this->create_block(style->type(), style, escaper);
 }
 
-void Abstract_Multi_Block::add_block(Abstract_Block* child) { this->the_blocks.append(child); }
+void Abstract_Multi_Block::add_block(Abstract_Block* child) {
+	this->the_blocks.append(child);
+}
 
-QLinkedList<Abstract_Block*> Abstract_Multi_Block::blocks() { return this->the_blocks; }
+QLinkedList<Abstract_Block*> Abstract_Multi_Block::blocks() {
+	return this->the_blocks;
+}
 
 QString Abstract_Multi_Block::translate() {
 	QStringList child_contents;

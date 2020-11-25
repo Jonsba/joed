@@ -18,5 +18,9 @@ void Joed_Conf_File::assign(QString end_key, QString value, int level, bool is_f
 	}
 }
 
-QString Joed_Conf_File::backend_name() { return this->the_backend_name; }
-QString Joed_Conf_File::document_class() { return this->the_document_class; }
+QString Joed_Conf_File::backend_name() {
+	return this->the_backend_name;
+}
+QString Joed_Conf_File::document_class() {
+	return this->the_document_class;
+}

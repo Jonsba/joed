@@ -38,11 +38,11 @@ void Backend::reset_files_info(QString document_path) {
 		dir.mkdir(working_directory);
 	}
 	this->the_translated_document.path =
-	    working_directory + document_base_name + "." + this->the_translated_document.type;
+		 working_directory + document_base_name + "." + this->the_translated_document.type;
 	this->the_translated_environment.path =
-	    working_directory + Environment::Name_Id + "." + this->the_translated_environment.type;
+		 working_directory + Environment::Name_Id + "." + this->the_translated_environment.type;
 	this->the_compiled_document.path =
-	    working_directory + document_base_name + "." + this->the_compiled_document.type;
+		 working_directory + document_base_name + "." + this->the_compiled_document.type;
 	this->the_compile_process->setWorkingDirectory(working_directory);
 }
 
@@ -50,7 +50,7 @@ void Backend::compile() {
 	QHash<QString, QString> global_dict = {};
 	global_dict[Field::Id::Translated_Document] = '"' + this->the_translated_document.path + '"';
 	global_dict[Field::Id::Translated_Environment] =
-	    '"' + this->the_translated_environment.path + '"';
+		 '"' + this->the_translated_environment.path + '"';
 	global_dict[Field::Id::Compiled_Document] = '"' + this->the_compiled_document.path + '"';
 	QString exec_command = this->lua_client->eval_expr(global_dict);
 	this->the_compile_process->start(exec_command);
@@ -63,7 +63,9 @@ void Backend::write(QString code, QString file_path) {
 	file.close();
 }
 
-QString Backend::name() { return this->the_name; }
+QString Backend::name() {
+	return this->the_name;
+}
 Document_Class_Info Backend::document_class(QString name) {
 	if (! this->document_classes.contains(name)) {
 		throw Exception("Document class '" + name + "' for backend '" + this->the_name +
@@ -72,13 +74,23 @@ Document_Class_Info Backend::document_class(QString name) {
 	return this->document_classes[name];
 }
 
-QProcess* Backend::compile_process() { return this->the_compile_process.get(); }
+QProcess* Backend::compile_process() {
+	return this->the_compile_process.get();
+}
 
-File_Info* Backend::translated_document() { return &this->the_translated_document; }
-File_Info* Backend::translated_environment() { return &this->the_translated_environment; }
-File_Info* Backend::compiled_document() { return &this->the_compiled_document; }
+File_Info* Backend::translated_document() {
+	return &this->the_translated_document;
+}
+File_Info* Backend::translated_environment() {
+	return &this->the_translated_environment;
+}
+File_Info* Backend::compiled_document() {
+	return &this->the_compiled_document;
+}
 
-Escaper* Backend::escaper() { return this->the_escaper.get(); }
+Escaper* Backend::escaper() {
+	return this->the_escaper.get();
+}
 
 void Backend::process_intermediate_key(QString key, int level) {
 	if (level == 0) {

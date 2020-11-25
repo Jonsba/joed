@@ -5,7 +5,7 @@
 #include "writer.h"
 
 Children_Block::Children_Block(bool auto_built)
-    : Abstract_Multi_Block(Field::Id::Children_Block, Children_Block_Type, auto_built) {}
+	 : Abstract_Multi_Block(Field::Id::Children_Block, Children_Block_Type, auto_built) {}
 
 Abstract_Block* Children_Block::create_block(Block_Type type, Style* style, Escaper* escaper) {
 	Abstract_Multi_Block* new_block;

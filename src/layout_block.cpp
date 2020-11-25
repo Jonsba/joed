@@ -9,7 +9,7 @@
 #include "writer.h"
 
 Layout_Block::Layout_Block(Style* style, bool auto_built)
-    : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
+	 : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
 	this->style = style;
 }
 
@@ -35,7 +35,9 @@ Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style, Escape
 	return new_block;
 }
 
-QString Layout_Block::translate() { return this->translate({}); }
+QString Layout_Block::translate() {
+	return this->translate({});
+}
 
 QString Layout_Block::translate(QHash<QString, QString> global_dict) {
 	for (Abstract_Block* child_block : this->the_blocks) {

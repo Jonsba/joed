@@ -1,9 +1,13 @@
 #include "document_class.h"
 #include "backend.h"
 
-Document_Class::Document_Class(Class_Objects class_objects) { this->class_objects = class_objects; }
+Document_Class::Document_Class(Class_Objects class_objects) {
+	this->class_objects = class_objects;
+}
 
-QString Document_Class::name() { return this->the_name; }
+QString Document_Class::name() {
+	return this->the_name;
+}
 
 void Document_Class::try_load(QString name, Backend* backend) {
 	if (name != "") this->the_name = name;

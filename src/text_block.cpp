@@ -5,7 +5,7 @@
 #include "writer.h"
 
 Text_Block::Text_Block(Style* style, Escaper* escaper, bool auto_built)
-    : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
+	 : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
 	this->style = style;
 	this->escaper = escaper;
 	if (auto_built) {

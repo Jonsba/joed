@@ -36,7 +36,9 @@ Document::Document(QString document_path) {
 	this->the_backend->reset_files_info(document_path);
 }
 
-Backend* Document::backend() { return this->the_backend.get(); }
+Backend* Document::backend() {
+	return this->the_backend.get();
+}
 
 void Document::create() {
 	Joed_Conf_File joed_conf_file;
@@ -45,9 +47,13 @@ void Document::create() {
 	this->document_class->try_load(joed_conf_file.document_class(), this->the_backend.get());
 }
 
-Root_Block* Document::root_block() { return this->the_root_block.get(); }
+Root_Block* Document::root_block() {
+	return this->the_root_block.get();
+}
 
-QProcess* Document::compile_process() { return this->the_backend->compile_process(); }
+QProcess* Document::compile_process() {
+	return this->the_backend->compile_process();
+}
 
 void Document::compile() {
 	// Order is important because the environment might need to use variables that are set in the
@@ -59,7 +65,9 @@ void Document::compile() {
 	this->backend()->compile();
 }
 
-QString Document::path() { return this->the_path; }
+QString Document::path() {
+	return this->the_path;
+}
 
 void Document::save_as(QString file_path) {
 	this->the_path = file_path;
@@ -92,7 +100,7 @@ void Document::process_intermediate_key(QString key, int level) {
 			}
 			if (key == Field::Key::Children) {
 				this->current_block =
-				    this->parent_blocks[level]->create_block(Abstract_Block::Children_Block_Type);
+					 this->parent_blocks[level]->create_block(Abstract_Block::Children_Block_Type);
 			} else {
 				Style* style = styles->find(key);
 				if (style == nullptr) {
@@ -104,7 +112,7 @@ void Document::process_intermediate_key(QString key, int level) {
 					break;
 				case Block_Base_Type::Text_Block_E:
 					this->current_block =
-					    this->parent_blocks[level]->create_block(style, this->the_backend->escaper());
+						 this->parent_blocks[level]->create_block(style, this->the_backend->escaper());
 					break;
 				default:
 					throw Exception("Style '" + style->name() + "' wasn't defined with a valid type");
@@ -125,7 +133,7 @@ void Document::assign(QString end_key, QString value, int level, bool is_first_v
 	} else if (end_key == Field::Key::Text) {
 		if (is_first_value_line) {
 			this->current_block =
-			    this->parent_blocks[level]->create_block(Abstract_Block::Raw_Text_Block_Type);
+				 this->parent_blocks[level]->create_block(Abstract_Block::Raw_Text_Block_Type);
 		}
 		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
 	} else {

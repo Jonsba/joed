@@ -34,7 +34,9 @@ void Document_Styles::assign(QString key, QString value, int level, bool is_firs
 	}
 }
 
-Style* Document_Styles::find(QString name) { return this->list[name]; }
+Style* Document_Styles::find(QString name) {
+	return this->list[name];
+}
 
 Style* Document_Styles::make_style(QString name) {
 	this->list[name] = new Style(name, this->lua_vm);

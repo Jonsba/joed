@@ -44,13 +44,21 @@ void Style::assign(QString end_key, Style* object, bool is_first_value_line) {
 	}
 }
 
-QString Style::name() { return this->the_name; }
+QString Style::name() {
+	return this->the_name;
+}
 
-Block_Type Style::type() { return this->block_type; }
+Block_Type Style::type() {
+	return this->block_type;
+}
 
-Style* Style::default_child_style() { return this->the_default_child_style; }
+Style* Style::default_child_style() {
+	return this->the_default_child_style;
+}
 
-QLinkedList<Layout_Entry*> Style::layout_entries() { return this->the_layout_entries; }
+QLinkedList<Layout_Entry*> Style::layout_entries() {
+	return this->the_layout_entries;
+}
 
 QString Style::translate(QHash<QString, QString> global_dict) {
 	return this->lua_client->eval_expr(global_dict);

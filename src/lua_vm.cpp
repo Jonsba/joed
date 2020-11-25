@@ -65,6 +65,10 @@ void Lua_VM::push_table(QString key, QString value) {
 	lua_setglobal(the_L, to_chars(splitted_key[0]));
 }
 
-lua_State* Lua_VM::L() { return this->the_L; }
+lua_State* Lua_VM::L() {
+	return this->the_L;
+}
 
-Lua_VM::~Lua_VM() { lua_close(this->the_L); }
+Lua_VM::~Lua_VM() {
+	lua_close(this->the_L);
+}

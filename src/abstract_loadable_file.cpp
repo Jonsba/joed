@@ -148,12 +148,12 @@ void Abstract_Loadable_File::abort_parse(Exception& exception, Line_Context& con
 		break;
 	case Exception_Code::Invalid_Value:
 		exception.msg =
-		    msg_line("invalid value '" + context.value + "' for key '" + context.key + "'",
+			 msg_line("invalid value '" + context.value + "' for key '" + context.key + "'",
 		             context.line_number);
 		break;
 	case Exception_Code::Invalid_Indent:
 		exception.msg =
-		    msg_line("invalid indentation for key '" + context.key + "'", context.line_number);
+			 msg_line("invalid indentation for key '" + context.key + "'", context.line_number);
 		break;
 	case Exception_Code::Other:
 		exception.msg = msg_line(exception.msg, context.line_number);

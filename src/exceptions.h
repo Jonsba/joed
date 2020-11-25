@@ -26,7 +26,7 @@ struct Invalid_Indent_Exception : Exception {
 
 struct Cannot_Open_Exception : Exception {
 	Cannot_Open_Exception(QString file_path)
-	    : Exception({Exception_Code::Other, "Cannot open file '" + file_path + "'"}) {}
+		 : Exception({Exception_Code::Other, "Cannot open file '" + file_path + "'"}) {}
 };
 
 #endif // EXCEPTIONS_H
