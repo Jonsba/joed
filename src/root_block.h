@@ -8,12 +8,12 @@ class Writer;
 
 class Root_Block : public Layout_Block {
  public:
-	Root_Block(Style* style, Escaper* escaper, bool auto_built);
+	Root_Block(Style* style, bool auto_built);
 	void save(Writer* writer);
-	QString translate();
+	QString translate(Escaper* escaper);
 
  private:
-	void initialize_from_style_layout(Escaper* escaper);
+	void initialize_from_style_layout();
 };
 
 #endif // ROOT_BLOCK_H

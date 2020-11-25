@@ -4,6 +4,7 @@
 #include <QString>
 
 class Writer;
+class Escaper;
 
 enum class Block_Base_Type {
 	Uninitialized_E,
@@ -32,7 +33,7 @@ class Abstract_Block {
 	virtual ~Abstract_Block();
 	QString identifier();
 	Block_Type type();
-	virtual QString translate() = 0;
+	virtual QString translate(Escaper* escaper) = 0;
 	virtual void save(Writer* writer, int level) = 0;
 	//
 	inline static const Block_Type Children_Block_Type = {Block_Base_Type::Children_Block_E,

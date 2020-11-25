@@ -10,7 +10,7 @@ class Children_Block : public Abstract_Multi_Block {
 	using Abstract_Multi_Block::create_block;
 
  private:
-	Abstract_Block* create_block(Block_Type type, Style* style, Escaper* escaper) override;
+	Abstract_Block* create_block(Block_Type type, Style* style) override;
 };
 
 #endif // CHILDREN_BLOCK_H

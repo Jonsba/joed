@@ -4,7 +4,6 @@
 #include "document_class.h"
 #include "document_styles.h"
 #include "environment.h"
-#include "escaper.h"
 #include "joed_conf_file.h"
 #include "layout_entry.h"
 #include "lua_client.h"
@@ -28,8 +27,7 @@ Document::Document(QString document_path) {
 	this->writer.reset(new Writer());
 	if (document_path == "") {
 		this->create();
-		this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
-		                                          this->the_backend->escaper(), true));
+		this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document), true));
 	} else {
 		this->load(document_path);
 	}
@@ -58,7 +56,7 @@ QProcess* Document::compile_process() {
 void Document::compile() {
 	// Order is important because the environment might need to use variables that are set in the
 	// blocks (e.g. header and footer)
-	this->backend()->write(this->the_root_block->translate(),
+	this->backend()->write(this->the_root_block->translate(this->backend()->escaper()),
 	                       this->the_backend->translated_document()->path);
 	this->backend()->write(this->environment->translate(),
 	                       this->the_backend->translated_environment()->path);
@@ -87,8 +85,8 @@ void Document::save() {
 void Document::process_intermediate_key(QString key, int level) {
 	if (level == 0) {
 		if (key == Field::Key::Document) {
-			this->the_root_block.reset(new Root_Block(this->styles->find(Field::Key::Document),
-			                                          this->the_backend->escaper(), false));
+			this->the_root_block.reset(
+			    new Root_Block(this->styles->find(Field::Key::Document), false));
 			this->current_block = this->the_root_block.get();
 		} else if (key != Field::Key::Backend && key != Field::Key::Document_Class) {
 			throw Invalid_Key_Exception();
@@ -111,8 +109,7 @@ void Document::process_intermediate_key(QString key, int level) {
 					this->current_block = this->parent_blocks[level]->create_block(style);
 					break;
 				case Block_Base_Type::Text_Block_E:
-					this->current_block =
-						 this->parent_blocks[level]->create_block(style, this->the_backend->escaper());
+					this->current_block = this->parent_blocks[level]->create_block(style);
 					break;
 				default:
 					throw Exception("Style '" + style->name() + "' wasn't defined with a valid type");

@@ -9,18 +9,17 @@ class Raw_Text_Block;
 
 class Text_Block : public Abstract_Multi_Block {
  public:
-	Text_Block(Style* style, Escaper* escaper, bool auto_built);
-	QString translate() override;
+	Text_Block(Style* style, bool auto_built);
+	QString translate(Escaper* escaper) override;
 	void save(Writer* writer, int level) override;
 
  private:
 	Abstract_Block* create_block(Block_Type type) {
 		return Abstract_Multi_Block::create_block(type);
 	}
-	Abstract_Block* create_block(Block_Type type, Style* style, Escaper* escaper) override;
+	Abstract_Block* create_block(Block_Type type, Style* style) override;
 	//
 	Style* style;
-	Escaper* escaper;
 	Raw_Text_Block* current_sub_block;
 };
 

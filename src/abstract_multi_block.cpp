@@ -3,7 +3,7 @@
 #include "writer.h"
 
 Abstract_Multi_Block::Abstract_Multi_Block(QString identifier, Block_Type type, bool auto_built)
-	 : Abstract_Block(identifier, type) {
+    : Abstract_Block(identifier, type) {
 	this->auto_built = auto_built;
 	this->Blocks_Identifier = Field::Key::Blocks;
 	if (type.base == Block_Base_Type::Children_Block_E) {
@@ -12,15 +12,11 @@ Abstract_Multi_Block::Abstract_Multi_Block(QString identifier, Block_Type type, 
 }
 
 Abstract_Block* Abstract_Multi_Block::create_block(Block_Type type) {
-	return this->create_block(type, nullptr, nullptr);
+	return this->create_block(type, nullptr);
 }
 
 Abstract_Block* Abstract_Multi_Block::create_block(Style* style) {
-	return this->create_block(style->type(), style, nullptr);
-}
-
-Abstract_Block* Abstract_Multi_Block::create_block(Style* style, Escaper* escaper) {
-	return this->create_block(style->type(), style, escaper);
+	return this->create_block(style->type(), style);
 }
 
 void Abstract_Multi_Block::add_block(Abstract_Block* child) {
@@ -31,10 +27,10 @@ QLinkedList<Abstract_Block*> Abstract_Multi_Block::blocks() {
 	return this->the_blocks;
 }
 
-QString Abstract_Multi_Block::translate() {
+QString Abstract_Multi_Block::translate(Escaper* escaper) {
 	QStringList child_contents;
 	for (Abstract_Block* child_block : this->the_blocks) {
-		child_contents.append(child_block->translate());
+		child_contents.append(child_block->translate(escaper));
 	}
 	return child_contents.join("\n");
 }

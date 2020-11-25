@@ -1,7 +1,6 @@
 #include "layout_block.h"
 #include "abstract_block.h"
 #include "children_block.h"
-#include "escaper.h"
 #include "layout_entry.h"
 #include "raw_text_block.h"
 #include "style.h"
@@ -9,11 +8,11 @@
 #include "writer.h"
 
 Layout_Block::Layout_Block(Style* style, bool auto_built)
-	 : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
+    : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
 	this->style = style;
 }
 
-Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style, Escaper* escaper) {
+Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style) {
 	Abstract_Multi_Block* new_block;
 	switch (type.base) {
 	case Block_Base_Type::Children_Block_E: {
@@ -25,7 +24,7 @@ Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style, Escape
 		break;
 	}
 	case Block_Base_Type::Text_Block_E: {
-		new_block = new Text_Block(style, escaper, this->auto_built);
+		new_block = new Text_Block(style, this->auto_built);
 		break;
 	}
 	default:
@@ -35,13 +34,13 @@ Abstract_Block* Layout_Block::create_block(Block_Type type, Style* style, Escape
 	return new_block;
 }
 
-QString Layout_Block::translate() {
-	return this->translate({});
+QString Layout_Block::translate(Escaper* escaper) {
+	return this->translate(escaper, {});
 }
 
-QString Layout_Block::translate(QHash<QString, QString> global_dict) {
+QString Layout_Block::translate(Escaper* escaper, QHash<QString, QString> global_dict) {
 	for (Abstract_Block* child_block : this->the_blocks) {
-		global_dict[child_block->identifier()] = child_block->translate();
+		global_dict[child_block->identifier()] = child_block->translate(escaper);
 	}
 	return this->style->translate(global_dict);
 }

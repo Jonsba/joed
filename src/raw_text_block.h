@@ -7,16 +7,15 @@ class Escaper;
 
 class Raw_Text_Block : public Abstract_Block {
  public:
-	Raw_Text_Block(Escaper* escaper);
+	Raw_Text_Block();
 	void set_text(QString text);
 	void add_loaded_text(QString quoted_text);
 	QString text();
-	QString translate() override;
+	QString translate(Escaper* escaper) override;
 	void save(Writer* writer, int level) override;
 
  private:
 	QString the_text;
-	Escaper* escaper;
 };
 
 #endif // RAW_TEXT_BLOCK_H

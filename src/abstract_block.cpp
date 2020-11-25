@@ -3,7 +3,7 @@
 #include "writer.h"
 
 Abstract_Block::Abstract_Block(QString identifier, Block_Type type)
-	 : Identifier(identifier), Type(type) {}
+    : Identifier(identifier), Type(type) {}
 
 QString Abstract_Block::identifier() {
 	return this->Identifier;
