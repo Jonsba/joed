@@ -33,7 +33,7 @@ class Abstract_Block {
 	QString identifier();
 	Block_Type type();
 	virtual QString translate() = 0;
-	virtual void save(Writer* writer, int level);
+	virtual void save(Writer* writer, int level) = 0;
 	//
 	inline static const Block_Type Children_Block_Type = {Block_Base_Type::Children_Block_E,
 	                                                      Block_Variant::Standard_E};

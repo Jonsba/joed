@@ -5,7 +5,7 @@
 #include "writer.h"
 
 Text_Block::Text_Block(Style* style, Escaper* escaper, bool auto_built)
-    : Abstract_Non_Layouted_Block(style->name(), style->type(), auto_built) {
+    : Abstract_Multi_Block(style->name(), style->type(), auto_built) {
 	this->style = style;
 	this->escaper = escaper;
 	if (auto_built) {
@@ -29,7 +29,7 @@ Abstract_Block* Text_Block::create_block(Block_Type type, Style* style, Escaper*
 
 QString Text_Block::translate() {
 	QHash<QString, QString> global_dict = {};
-	global_dict[Field::Id::Text_Content] = Abstract_Non_Layouted_Block::translate();
+	global_dict[Field::Id::Text_Content] = Abstract_Multi_Block::translate();
 	return this->style->translate(global_dict);
 }
 

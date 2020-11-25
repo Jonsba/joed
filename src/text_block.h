@@ -1,13 +1,13 @@
 #ifndef TEXT_BLOCK_H
 #define TEXT_BLOCK_H
 
-#include "abstract_non_layouted_block.h"
+#include "abstract_multi_block.h"
 
 class Style;
 class Escaper;
 class Raw_Text_Block;
 
-class Text_Block : public Abstract_Non_Layouted_Block {
+class Text_Block : public Abstract_Multi_Block {
  public:
 	Text_Block(Style* style, Escaper* escaper, bool auto_built);
 	QString translate() override;

@@ -19,7 +19,6 @@ SOURCES += \
 	src/abstract_loadable_object.cpp \
 	src/abstract_loadable_tree.cpp \
 	src/abstract_multi_block.cpp \
-	src/abstract_non_layouted_block.cpp \
 	src/backend.cpp \
 	src/children_block.cpp \
 	src/class_file.cpp \
@@ -57,7 +56,6 @@ HEADERS += \
 	src/abstract_loadable_object.h \
 	src/abstract_loadable_tree.h \
 	src/abstract_multi_block.h \
-	src/abstract_non_layouted_block.h \
 	src/backend.h \
 	src/children_block.h \
 	src/class_file.h \

@@ -1,13 +1,11 @@
 #ifndef CHILDREN_BLOCK_H
 #define CHILDREN_BLOCK_H
 
-#include "abstract_non_layouted_block.h"
+#include "abstract_multi_block.h"
 
-class Children_Block : public Abstract_Non_Layouted_Block {
+class Children_Block : public Abstract_Multi_Block {
  public:
 	Children_Block(bool auto_built);
-	void save(Writer* writer, int level) override;
-	QString translate() override;
 	// Undoes method shadowing
 	using Abstract_Multi_Block::create_block;
 

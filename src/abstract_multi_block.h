@@ -16,12 +16,14 @@ class Abstract_Multi_Block : public Abstract_Block {
 	Abstract_Block* create_block(Style* style, Escaper* escaper);
 	virtual Abstract_Block* create_block(Block_Type type, Style* style, Escaper* escaper) = 0;
 	QLinkedList<Abstract_Block*> blocks();
-	void save(Writer* writer, int level) override;
+	virtual QString translate() override;
+	virtual void save(Writer* writer, int level) override;
 
  protected:
 	void add_block(Abstract_Block* block);
 	//
 	bool auto_built;
+	QString Blocks_Identifier; // const
 	QLinkedList<Abstract_Block*> the_blocks;
 };
 
