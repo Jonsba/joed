@@ -3,9 +3,9 @@
 #include "color_scheme.h"
 #include "text_block_widget.h"
 
-#include "src/joed.h"
-#include "src/style.h"
 #include "src/document_styles.h"
+#include "src/joed.h"
+#include "src/style_properties.h"
 #include "src/text_block.h"
 
 #include <QLayout>
@@ -26,14 +26,14 @@ Multi_Block_Widget::Multi_Block_Widget(QWidget* parent, Abstract_Multi_Block* mu
 	//
 	for (Abstract_Block* block : multi_block->blocks()) {
 		QWidget* block_widget;
-		switch (block->type().base) {
-		case Block_Base_Type::Children_Block_E:
+		switch (block->style()->type) {
+		case Style_Type::Children_E:
 			block_widget = new Children_Widget_Block(this, (Children_Block*)block, level);
 			break;
-		case Block_Base_Type::Layout_Block_E:
+		case Style_Type::Layouted_E:
 			block_widget = new Multi_Block_Widget(this, (Abstract_Multi_Block*)block, level);
 			break;
-		case Block_Base_Type::Text_Block_E:
+		case Style_Type::Text_E:
 			block_widget = new Text_Block_Widget(this, (Text_Block*)block, level);
 			break;
 		default:

@@ -2,15 +2,10 @@
 #include "field.h"
 #include "writer.h"
 
-Abstract_Block::Abstract_Block(QString identifier, Block_Type type)
-    : Identifier(identifier), Type(type) {}
+Abstract_Block::Abstract_Block(Style* style) : The_Style(style) {}
 
-QString Abstract_Block::identifier() {
-	return this->Identifier;
-}
-
-Block_Type Abstract_Block::type() {
-	return this->Type;
+const Style* Abstract_Block::style() {
+	return this->The_Style;
 }
 
 Abstract_Block::~Abstract_Block() = default;

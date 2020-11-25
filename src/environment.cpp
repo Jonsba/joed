@@ -1,5 +1,4 @@
 #include "environment.h"
-#include "abstract_block.h"
 #include "lua_client.h"
 
 Environment::Environment(Lua_VM* lua_vm) {

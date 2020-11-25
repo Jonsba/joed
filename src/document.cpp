@@ -10,7 +10,7 @@
 #include "lua_vm.h"
 #include "raw_text_block.h"
 #include "root_block.h"
-#include "style.h"
+#include "style_properties.h"
 #include "text_block.h"
 #include "writer.h"
 
@@ -98,21 +98,22 @@ void Document::process_intermediate_key(QString key, int level) {
 			}
 			if (key == Field::Key::Children) {
 				this->current_block =
-					 this->parent_blocks[level]->create_block(Abstract_Block::Children_Block_Type);
+				    this->parent_blocks[level]->create_block(Raw_Styles::Children_Style);
 			} else {
 				Style* style = styles->find(key);
 				if (style == nullptr) {
 					throw Exception("Cannot find style: " + key);
 				}
-				switch (style->type().base) {
-				case Block_Base_Type::Layout_Block_E:
+				switch (style->type) {
+				case Style_Type::Layouted_E:
 					this->current_block = this->parent_blocks[level]->create_block(style);
 					break;
-				case Block_Base_Type::Text_Block_E:
+				case Style_Type::Text_E:
 					this->current_block = this->parent_blocks[level]->create_block(style);
 					break;
 				default:
-					throw Exception("Style '" + style->name() + "' wasn't defined with a valid type");
+					throw Exception("Style '" + style->identifier +
+					                "' wasn't defined with a valid type");
 				}
 				return;
 			}
@@ -129,8 +130,7 @@ void Document::assign(QString end_key, QString value, int level, bool is_first_v
 		this->document_class->try_load(value, nullptr);
 	} else if (end_key == Field::Key::Text) {
 		if (is_first_value_line) {
-			this->current_block =
-				 this->parent_blocks[level]->create_block(Abstract_Block::Raw_Text_Block_Type);
+			this->current_block = this->parent_blocks[level]->create_block(Raw_Styles::Raw_Text_Style);
 		}
 		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
 	} else {

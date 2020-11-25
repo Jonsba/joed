@@ -15,14 +15,14 @@ Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block, in
 	this->setPalette(this->color_scheme->palette());
 	QFontMetrics metrics = this->fontMetrics();
 	this->setMinimumHeight(this->fontMetrics().height());
-	if (text_block->type().variant == Block_Variant::Title_E) {
+	if (text_block->style()->variant == Style_Variant::Title_E) {
 		QFont font = this->font();
 		font.setPointSize(16);
 		this->setFont(font);
 	}
 	for (auto block : text_block->blocks()) {
-		switch (block->type().base) {
-		case Block_Base_Type::Raw_Text_Block_E:
+		switch (block->style()->type) {
+		case Style_Type::Raw_Text_E:
 			this->setPlainText(((Raw_Text_Block*)block)->text());
 			break;
 		default:

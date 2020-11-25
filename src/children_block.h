@@ -6,11 +6,7 @@
 class Children_Block : public Abstract_Multi_Block {
  public:
 	Children_Block(bool auto_built);
-	// Undoes method shadowing
-	using Abstract_Multi_Block::create_block;
-
- private:
-	Abstract_Block* create_block(Block_Type type, Style* style) override;
+	Abstract_Block* create_block(Style* style) override;
 };
 
 #endif // CHILDREN_BLOCK_H

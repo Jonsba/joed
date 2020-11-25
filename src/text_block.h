@@ -3,23 +3,18 @@
 
 #include "abstract_multi_block.h"
 
-class Style;
 class Escaper;
 class Raw_Text_Block;
 
 class Text_Block : public Abstract_Multi_Block {
  public:
 	Text_Block(Style* style, bool auto_built);
+	Abstract_Block* create_block(Style* style) override;
 	QString translate(Escaper* escaper) override;
 	void save(Writer* writer, int level) override;
 
  private:
-	Abstract_Block* create_block(Block_Type type) {
-		return Abstract_Multi_Block::create_block(type);
-	}
-	Abstract_Block* create_block(Block_Type type, Style* style) override;
 	//
-	Style* style;
 	Raw_Text_Block* current_sub_block;
 };
 

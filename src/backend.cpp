@@ -4,7 +4,7 @@
 #include "joed.h"
 #include "layout_block.h"
 #include "lua_client.h"
-#include "style.h"
+#include "style_properties.h"
 
 #include <QFile>
 #include <QFileInfo>

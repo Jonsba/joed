@@ -44,7 +44,7 @@ SOURCES += \
 	src/main.cpp \
 	src/raw_text_block.cpp \
 	src/root_block.cpp \
-	src/style.cpp \
+	src/style_properties.cpp \
 	src/text_block.cpp \
 	src/writer.cpp
 
@@ -81,7 +81,8 @@ HEADERS += \
 	src/lua_vm.h \
 	src/raw_text_block.h \
 	src/root_block.h \
-	src/style.h \
+	src/style_properties.h \
+	src/styles.h \
 	src/text_block.h \
 	src/writer.h
 

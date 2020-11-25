@@ -3,7 +3,6 @@
 
 #include "layout_block.h"
 
-class Style;
 class Writer;
 
 class Root_Block : public Layout_Block {

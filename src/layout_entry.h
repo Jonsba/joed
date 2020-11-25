@@ -1,16 +1,13 @@
 #ifndef LAYOUT_ENTRY_H
 #define LAYOUT_ENTRY_H
 
-#include "abstract_block.h"
-
-class Style;
+#include "styles.h"
 
 class Layout_Entry {
 
  public:
-	Layout_Entry(Style* the_style);
+	Layout_Entry(Style* style);
 	Style* style();
-	Block_Type type();
 
  private:
 	Style* the_style;

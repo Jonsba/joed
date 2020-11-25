@@ -2,7 +2,7 @@
 #include "escaper.h"
 #include "writer.h"
 
-Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Field::Id::Raw_Text_Block, Raw_Text_Block_Type) {
+Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Raw_Styles::Raw_Text_Style) {
 	this->the_text = "";
 }
 

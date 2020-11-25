@@ -1,22 +1,13 @@
 #include "abstract_multi_block.h"
-#include "style.h"
+#include "style_properties.h"
 #include "writer.h"
 
-Abstract_Multi_Block::Abstract_Multi_Block(QString identifier, Block_Type type, bool auto_built)
-    : Abstract_Block(identifier, type) {
+Abstract_Multi_Block::Abstract_Multi_Block(Style* style, bool auto_built) : Abstract_Block(style) {
 	this->auto_built = auto_built;
 	this->Blocks_Identifier = Field::Key::Blocks;
-	if (type.base == Block_Base_Type::Children_Block_E) {
+	if (style->type == Style_Type::Children_E) {
 		this->Blocks_Identifier = Field::Key::Children;
 	}
-}
-
-Abstract_Block* Abstract_Multi_Block::create_block(Block_Type type) {
-	return this->create_block(type, nullptr);
-}
-
-Abstract_Block* Abstract_Multi_Block::create_block(Style* style) {
-	return this->create_block(style->type(), style);
 }
 
 void Abstract_Multi_Block::add_block(Abstract_Block* child) {

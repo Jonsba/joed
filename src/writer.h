@@ -1,7 +1,6 @@
 #ifndef WRITER_H
 #define WRITER_H
 
-#include "abstract_loadable_file.h"
 #include <QFile>
 
 class Writer {

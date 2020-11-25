@@ -2,7 +2,7 @@
 #define DOCUMENT_STYLES_H
 
 #include "abstract_loadable_tree.h"
-#include "lua_vm.h"
+#include "styles.h"
 
 #include <QHash>
 #include <QString>
@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-class Style;
+class Lua_VM;
 
 class Document_Styles final : public Abstract_Loadable_Tree {
  public:

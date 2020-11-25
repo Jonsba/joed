@@ -1,5 +1,4 @@
 #include "document_form.h"
-#include "abstract_document_viewer.h"
 #include "html_viewer.h"
 #include "multi_block_widget.h"
 #include "pdf_viewer.h"
@@ -35,7 +34,6 @@ void Document_Form::reset_ui(QString document_path) {
 			msg_box.exec();
 		}
 	}
-
 	if (this->document->backend()->compiled_document()->type == Field::Value::PDF_Viewer) {
 		this->document_viewer.reset(
 		    new PDF_Viewer(this->ui->view_mode_tab, this->document->backend()));

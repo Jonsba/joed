@@ -5,16 +5,16 @@
 #include "text_block.h"
 
 Children_Block::Children_Block(bool auto_built)
-    : Abstract_Multi_Block(Field::Id::Children_Block, Children_Block_Type, auto_built) {}
+    : Abstract_Multi_Block(Raw_Styles::Children_Style, auto_built) {}
 
-Abstract_Block* Children_Block::create_block(Block_Type type, Style* style) {
+Abstract_Block* Children_Block::create_block(Style* style) {
 	Abstract_Multi_Block* new_block;
-	switch (type.base) {
-	case Block_Base_Type::Layout_Block_E: {
+	switch (style->type) {
+	case Style_Type::Layouted_E: {
 		new_block = new Layout_Block(style, this->auto_built);
 		break;
 	}
-	case Block_Base_Type::Text_Block_E: {
+	case Style_Type::Text_E: {
 		new_block = new Text_Block(style, this->auto_built);
 		break;
 	}
