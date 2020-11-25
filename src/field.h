@@ -8,11 +8,9 @@ struct Field {
 		inline static const QString Backend = "backend";
 		inline static const QString Backend_Class = "backend-class";
 		inline static const QString Blocks = "blocks";
-		inline static const QString Children = "children";
 		inline static const QString Default_Child_Style = "default-child-style";
 		inline static const QString Defaults = "defaults";
 		inline static const QString Document = "document";
-		inline static const QString Document_Styles = "document-styles";
 		inline static const QString Document_Class = "document-class";
 		inline static const QString Document_Classes = "document-classes";
 		inline static const QString Doc_File_Ext = "doc-file-ext";
@@ -23,7 +21,6 @@ struct Field {
 		inline static const QString Layout = "layout";
 		inline static const QString Output = "output";
 		inline static const QString Styles = "styles";
-		inline static const QString Text = "text";
 		inline static const QString Type = "type";
 		inline static const QString Version = "format-version";
 		inline static const QString Viewer = "viewer";
@@ -36,10 +33,10 @@ struct Field {
 		inline static const QString Title = "title";
 	};
 	struct Id {
-		inline static const QString Children_Block = "_children_";
+		inline static const QString Children = "_children_";
 		inline static const QString Compiled_Document = "_compiled_document_";
-		inline static const QString Raw_Text_Block = "_raw_text_";
-		inline static const QString Text_Content = "_text_content_";
+		inline static const QString Text = "_text_";
+		inline static const QString Text_Block = "_text_block_";
 		inline static const QString Translated_Document = "_translated_document_";
 		inline static const QString Translated_Environment = "_translated_environment_";
 	};

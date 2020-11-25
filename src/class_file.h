@@ -8,14 +8,15 @@
 #include <QString>
 
 class Lua_VM;
-class Document_Styles;
+class Styles;
 class Environment;
 
 struct Class_Objects {
 	Environment* environment;
-	Document_Styles* document_styles;
+	Styles* document_styles;
 };
 
+// Represents a generic or a backend class file
 class Class_File final : public Abstract_Loadable_File {
  public:
 	Class_File(QString path, Class_Objects class_objects);

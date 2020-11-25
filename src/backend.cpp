@@ -95,12 +95,12 @@ Escaper* Backend::escaper() {
 void Backend::process_intermediate_key(QString key, int level) {
 	if (level == 0) {
 		if (key != Field::Key::Document_Classes) {
-			throw Invalid_Key_Exception();
+			throw Exceptions::Invalid_Key();
 		}
 		return;
 	}
 	if (level > 1) {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 	this->current_document_class = key;
 	this->document_classes[key] = {"", ""};
@@ -122,7 +122,7 @@ void Backend::assign(QString end_key, QString value, int level, bool is_first_va
 	} else if (end_key == Field::Key::Backend_Class) {
 		this->document_classes[this->current_document_class].backend_class = value;
 	} else {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 }
 

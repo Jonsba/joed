@@ -4,7 +4,7 @@ Joed_Conf_File::Joed_Conf_File() {}
 
 void Joed_Conf_File::process_intermediate_key(QString key, int level) {
 	if (key != Field::Key::Defaults) {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 }
 
@@ -14,7 +14,7 @@ void Joed_Conf_File::assign(QString end_key, QString value, int level, bool is_f
 	} else if (end_key == Field::Key::Document_Class) {
 		this->the_document_class = value;
 	} else {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 }
 

@@ -1,4 +1,5 @@
 #include "writer.h"
+#include "exceptions.h"
 #include "joed.h"
 
 Writer::Writer() {}
@@ -6,8 +7,7 @@ Writer::Writer() {}
 void Writer::open(QString file_path) {
 	this->file_descr.setFileName(file_path);
 	if (! this->file_descr.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		error("Cannot open " + file_path + " for writing");
-		return;
+		throw Exceptions::Cannot_Open(file_path);
 	}
 }
 

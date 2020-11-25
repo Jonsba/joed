@@ -1,8 +1,9 @@
 #include "raw_text_block.h"
 #include "escaper.h"
+#include "styles.h"
 #include "writer.h"
 
-Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Raw_Styles::Raw_Text_Style) {
+Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Styles::Raw_Text_Style) {
 	this->the_text = "";
 }
 
@@ -29,6 +30,6 @@ QString Raw_Text_Block::translate(Escaper* escaper) {
 }
 
 void Raw_Text_Block::save(Writer* writer, int level) {
-	writer->write_end_key(Field::Key::Text, level);
+	writer->write_end_key(Field::Id::Text, level);
 	writer->write_value(this->the_text, level + 1, "\"");
 }

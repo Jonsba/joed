@@ -11,7 +11,7 @@ void Style_Properties::assign(QString end_key, QString value, int level, bool is
 	if (end_key == Field::Key::Output) {
 		this->lua_client->add_expr_line(value, is_first_value_line);
 	} else {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 }
 
@@ -24,7 +24,7 @@ void Style_Properties::assign(QString end_key, Style* style, bool is_first_value
 	} else if (end_key == Field::Key::Default_Child_Style) {
 		this->the_default_child_style = style;
 	} else {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 }
 

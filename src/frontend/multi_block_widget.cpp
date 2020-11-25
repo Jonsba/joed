@@ -3,9 +3,8 @@
 #include "color_scheme.h"
 #include "text_block_widget.h"
 
-#include "src/document_styles.h"
 #include "src/joed.h"
-#include "src/style_properties.h"
+#include "src/styles.h"
 #include "src/text_block.h"
 
 #include <QLayout>
@@ -37,7 +36,7 @@ Multi_Block_Widget::Multi_Block_Widget(QWidget* parent, Abstract_Multi_Block* mu
 			block_widget = new Text_Block_Widget(this, (Text_Block*)block, level);
 			break;
 		default:
-			error("Unimplemented!");
+			throw Exceptions::Not_Implemented();
 		}
 		this->block_widgets_container->addWidget(block_widget);
 	}

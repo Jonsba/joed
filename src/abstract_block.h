@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_BLOCK_H
 #define ABSTRACT_BLOCK_H
 
-#include "styles.h"
+#include "style.h"
 
 #include <QString>
 

@@ -2,6 +2,7 @@
 #include "children_block.h"
 #include "layout_entry.h"
 #include "style_properties.h"
+#include "styles.h"
 #include "text_block.h"
 #include "writer.h"
 
@@ -15,7 +16,8 @@ void Root_Block::initialize_from_style_layout() {
 	for (Layout_Entry* layout_entry : this->The_Style->properties->layout_entries()) {
 		switch (layout_entry->style()->type) {
 		case Style_Type::Children_E: {
-			Children_Block* children_block = (Children_Block*)this->create_block(Raw_Styles::Children_Style);
+			Children_Block* children_block =
+			    (Children_Block*)this->create_block(Styles::Children_Style);
 			children_block->create_block(this->The_Style->properties->default_child_style());
 			break;
 		}
@@ -24,7 +26,7 @@ void Root_Block::initialize_from_style_layout() {
 			this->create_block(layout_entry->style());
 			break;
 		default:
-			error("Not implemented");
+			throw Exceptions::Not_Implemented();
 		}
 	}
 }

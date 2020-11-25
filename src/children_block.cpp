@@ -2,10 +2,11 @@
 #include "field.h"
 #include "joed.h"
 #include "layout_block.h"
+#include "styles.h"
 #include "text_block.h"
 
 Children_Block::Children_Block(bool auto_built)
-    : Abstract_Multi_Block(Raw_Styles::Children_Style, auto_built) {}
+    : Abstract_Multi_Block(Styles::Children_Style, auto_built) {}
 
 Abstract_Block* Children_Block::create_block(Style* style) {
 	Abstract_Multi_Block* new_block;
@@ -19,7 +20,7 @@ Abstract_Block* Children_Block::create_block(Style* style) {
 		break;
 	}
 	default:
-		error("Not implemented!");
+		throw Exceptions::Not_Implemented();
 	}
 	this->add_block(new_block);
 	return new_block;

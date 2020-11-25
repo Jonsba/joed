@@ -9,7 +9,7 @@ void Abstract_Loadable_File::load(QString file_path) {
 	this->file_path = file_path;
 	QFile file_descr(file_path);
 	if (! file_descr.open(QIODevice::ReadOnly)) {
-		throw Cannot_Open_Exception(file_path);
+		throw Exceptions::Cannot_Open(file_path);
 	}
 	QString line, trimmed_line;
 	int level = 0, last_key_level = 0;
@@ -84,16 +84,16 @@ QString Abstract_Loadable_File::version_string() {
 
 void Abstract_Loadable_File::check_version_validity(Line_Context& context) {
 	if (context.key != Field::Key::Version) {
-		error("Expected '" + Field::Key::Version + " := <x>.<y>.<z>' at first line");
+		throw Exception("Expected '" + Field::Key::Version + " := <x>.<y>.<z>' at first line");
 	}
 	QStringList version_list = context.value.split(".");
 	int major_version = version_list[0].toInt();
 	int minor_version = version_list[1].toInt();
 	if (major_version != Version().Major || minor_version > Version().Minor) {
-		echo("Unsupporter version: " + context.value);
-		error("Any version between " + QString::number(Version().Major) + ".0.0 and " +
-		      QString::number(Version().Major) + "." + QString::number(Version().Minor) +
-		      ".x are supported");
+		throw Exception("Unsupporter version: " + context.value + '\n' + "Any version between " +
+		                QString::number(Version().Major) + ".0.0 and " +
+		                QString::number(Version().Major) + "." + QString::number(Version().Minor) +
+		                ".x are supported");
 	}
 }
 
@@ -134,7 +134,7 @@ int Abstract_Loadable_File::count_levels(QString line) {
 
 void Abstract_Loadable_File::set_last_key_level(int& last_key_level, int level) {
 	if (level > last_key_level + 1) {
-		throw Invalid_Indent_Exception();
+		throw Exceptions::Invalid_Indent();
 	}
 	last_key_level = level;
 }

@@ -2,8 +2,7 @@
 #define STYLE_PROPERTIES_H
 
 #include "abstract_loadable_object.h"
-#include "joed.h"
-#include "styles.h"
+#include "style.h"
 
 #include <QLinkedList>
 #include <QScopedPointer>
@@ -16,7 +15,7 @@ class Layout_Entry;
 // The final keyword suppresses a warning when destructing object in document_styles.cpp
 // Another option would be to make the destructor virtual
 class Style_Properties final : Abstract_Loadable_Object {
-	friend class Document_Styles;
+	friend class Styles;
 
  public:
 	Style_Properties(Lua_VM* lua_vm);

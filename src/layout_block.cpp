@@ -25,7 +25,7 @@ Abstract_Block* Layout_Block::create_block(Style* style) {
 		break;
 	}
 	default:
-		error("Not implemented!");
+		throw Exception("Style '" + style->identifier + "' has an unsupported type");
 	}
 	this->add_block(new_block);
 	return new_block;

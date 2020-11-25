@@ -1,7 +1,7 @@
 #ifndef LAYOUT_ENTRY_H
 #define LAYOUT_ENTRY_H
 
-#include "styles.h"
+#include "style.h"
 
 class Layout_Entry {
 

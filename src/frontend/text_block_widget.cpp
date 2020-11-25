@@ -1,8 +1,8 @@
 #include "text_block_widget.h"
 #include "color_scheme.h"
-
 #include "src/joed.h"
 #include "src/raw_text_block.h"
+#include "src/styles.h"
 #include "src/text_block.h"
 
 Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block, int level)
@@ -26,7 +26,7 @@ Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block, in
 			this->setPlainText(((Raw_Text_Block*)block)->text());
 			break;
 		default:
-			error("Unimplemented!");
+			throw Exceptions::Not_Implemented();
 		}
 	}
 	QObject::connect(this, &Text_Block_Widget::textChanged, this,

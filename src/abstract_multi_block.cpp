@@ -1,12 +1,12 @@
 #include "abstract_multi_block.h"
-#include "style_properties.h"
+#include "styles.h"
 #include "writer.h"
 
 Abstract_Multi_Block::Abstract_Multi_Block(Style* style, bool auto_built) : Abstract_Block(style) {
 	this->auto_built = auto_built;
 	this->Blocks_Identifier = Field::Key::Blocks;
 	if (style->type == Style_Type::Children_E) {
-		this->Blocks_Identifier = Field::Key::Children;
+		this->Blocks_Identifier = Field::Id::Children;
 	}
 }
 

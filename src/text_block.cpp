@@ -1,11 +1,12 @@
 #include "text_block.h"
 #include "raw_text_block.h"
 #include "style_properties.h"
+#include "styles.h"
 #include "writer.h"
 
 Text_Block::Text_Block(Style* style, bool auto_built) : Abstract_Multi_Block(style, auto_built) {
 	if (auto_built) {
-		this->current_sub_block = (Raw_Text_Block*)this->create_block(Raw_Styles::Raw_Text_Style);
+		this->current_sub_block = (Raw_Text_Block*)this->create_block(Styles::Raw_Text_Style);
 	}
 }
 
@@ -17,7 +18,7 @@ Abstract_Block* Text_Block::create_block(Style* style) {
 		break;
 	}
 	default:
-		error("Not implemented!");
+		throw Exceptions::Not_Implemented();
 	}
 	this->add_block(new_block);
 	return new_block;
@@ -25,7 +26,7 @@ Abstract_Block* Text_Block::create_block(Style* style) {
 
 QString Text_Block::translate(Escaper* escaper) {
 	QHash<QString, QString> global_dict = {};
-	global_dict[Field::Id::Text_Content] = Abstract_Multi_Block::translate(escaper);
+	global_dict[Field::Id::Text_Block] = Abstract_Multi_Block::translate(escaper);
 	return this->The_Style->properties->translate(global_dict);
 }
 

@@ -2,7 +2,6 @@
 #include "backend.h"
 #include "children_block.h"
 #include "document_class.h"
-#include "document_styles.h"
 #include "environment.h"
 #include "joed_conf_file.h"
 #include "layout_entry.h"
@@ -11,6 +10,7 @@
 #include "raw_text_block.h"
 #include "root_block.h"
 #include "style_properties.h"
+#include "styles.h"
 #include "text_block.h"
 #include "writer.h"
 
@@ -21,7 +21,7 @@ Document::Document(QString document_path) {
 	this->lua_vm.reset(new Lua_VM());
 	this->the_backend.reset(new Backend(this->lua_vm.get()));
 	this->environment.reset(new Environment(this->lua_vm.get()));
-	this->styles.reset(new Document_Styles(this->lua_vm.get()));
+	this->styles.reset(new Styles(this->lua_vm.get()));
 	this->document_class.reset(new Document_Class({this->environment.get(), this->styles.get()}));
 
 	this->writer.reset(new Writer());
@@ -89,33 +89,29 @@ void Document::process_intermediate_key(QString key, int level) {
 			    new Root_Block(this->styles->find(Field::Key::Document), false));
 			this->current_block = this->the_root_block.get();
 		} else if (key != Field::Key::Backend && key != Field::Key::Document_Class) {
-			throw Invalid_Key_Exception();
+			throw Exceptions::Invalid_Key();
 		}
 	} else {
 		if (key != Field::Key::Blocks) {
 			if (this->parent_blocks[level] == nullptr) {
-				throw Invalid_Key_Exception();
+				throw Exceptions::Invalid_Key();
 			}
-			if (key == Field::Key::Children) {
-				this->current_block =
-				    this->parent_blocks[level]->create_block(Raw_Styles::Children_Style);
-			} else {
-				Style* style = styles->find(key);
-				if (style == nullptr) {
-					throw Exception("Cannot find style: " + key);
-				}
-				switch (style->type) {
-				case Style_Type::Layouted_E:
-					this->current_block = this->parent_blocks[level]->create_block(style);
-					break;
-				case Style_Type::Text_E:
-					this->current_block = this->parent_blocks[level]->create_block(style);
-					break;
-				default:
-					throw Exception("Style '" + style->identifier +
-					                "' wasn't defined with a valid type");
-				}
+			Style* style = styles->find(key);
+			if (style == nullptr) {
+				throw Exception("Cannot find style: " + key);
+			}
+			switch (style->type) {
+			case Style_Type::Children_E:
+				this->current_block = this->parent_blocks[level]->create_block(Styles::Children_Style);
+				break;
+			case Style_Type::Layouted_E:
+				this->current_block = this->parent_blocks[level]->create_block(style);
 				return;
+			case Style_Type::Text_E:
+				this->current_block = this->parent_blocks[level]->create_block(style);
+				return;
+			default:
+				throw Exception("Style '" + style->identifier + "' has an unsupported type");
 			}
 		}
 		this->parent_blocks[level + 1] = (Abstract_Multi_Block*)this->current_block;
@@ -128,13 +124,13 @@ void Document::assign(QString end_key, QString value, int level, bool is_first_v
 		this->document_class->try_load("", this->the_backend.get());
 	} else if (end_key == Field::Key::Document_Class) {
 		this->document_class->try_load(value, nullptr);
-	} else if (end_key == Field::Key::Text) {
+	} else if (end_key == Field::Id::Text) {
 		if (is_first_value_line) {
-			this->current_block = this->parent_blocks[level]->create_block(Raw_Styles::Raw_Text_Style);
+			this->current_block = this->parent_blocks[level]->create_block(Styles::Raw_Text_Style);
 		}
 		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
 	} else {
-		throw Invalid_Key_Exception();
+		throw Exceptions::Invalid_Key();
 	}
 }
 

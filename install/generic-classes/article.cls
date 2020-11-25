@@ -1,6 +1,6 @@
 format-version := 0.0.0
 
-document-styles:
+document:
 	layout :=
 		header
 		_children_
@@ -14,11 +14,11 @@ document-styles:
 		paragraph:
 			type := text_block
 		section:
-			styles:
-				title:
-					type := text_block>title
 			type := layout_block
 			layout :=
 				section.title
 				_children_
 			default-child-style := paragraph
+			styles:
+				title:
+					type := text_block>title

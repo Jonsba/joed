@@ -8,7 +8,7 @@ environment:
 		header
 		footer
 
-document-styles:
+document:
 	output :=
 		'\\environment {document-environment}'
 		'\\starttext'
@@ -17,13 +17,13 @@ document-styles:
 	styles:
 		header:
 			output :=
-				'\\setupheadertexts[' .. _text_content_ .. ']'
+				'\\setupheadertexts[' .. _text_block_ .. ']'
 		footer:
 			output :=
-				'\\setupfootertexts[' .. _text_content_ .. ']'
+				'\\setupfootertexts[' .. _text_block_ .. ']'
 		paragraph:
 			output :=
-				'{\\par ' .. _text_content_ .. '}'
+				'{\\par ' .. _text_block_ .. '}'
 		section:
 			output :=
 				'\\startsection[title={' .. section.title .. '}]'
@@ -32,4 +32,4 @@ document-styles:
 			styles:
 				title:
 					output :=
-						_text_content_
+						_text_block_

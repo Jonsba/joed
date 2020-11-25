@@ -6,7 +6,6 @@
 #include <QStandardPaths>
 #include <QString>
 
-void error(QString text);
 void echo(QString text);
 void echo(int number);
 

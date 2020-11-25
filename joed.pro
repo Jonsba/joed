@@ -22,7 +22,6 @@ SOURCES += \
 	src/class_file.cpp \
 	src/document.cpp \
 	src/document_class.cpp \
-	src/document_styles.cpp \
 	src/environment.cpp \
 	src/escaper.cpp \
 	src/exceptions.cpp \
@@ -45,6 +44,7 @@ SOURCES += \
 	src/raw_text_block.cpp \
 	src/root_block.cpp \
 	src/style_properties.cpp \
+	src/styles.cpp \
 	src/text_block.cpp \
 	src/writer.cpp
 
@@ -59,7 +59,6 @@ HEADERS += \
 	src/class_file.h \
 	src/document.h \
 	src/document_class.h \
-	src/document_styles.h \
 	src/environment.h \
 	src/escaper.h \
 	src/exceptions.h \
@@ -81,6 +80,7 @@ HEADERS += \
 	src/lua_vm.h \
 	src/raw_text_block.h \
 	src/root_block.h \
+	src/style.h \
 	src/style_properties.h \
 	src/styles.h \
 	src/text_block.h \

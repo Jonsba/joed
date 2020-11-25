@@ -12,21 +12,23 @@ struct Exception {
 	QString msg;
 };
 
-struct Invalid_Key_Exception : Exception {
-	Invalid_Key_Exception() : Exception({Exception_Code::Invalid_Key, ""}) {}
-};
-
-struct Invalid_Value_Exception : Exception {
-	Invalid_Value_Exception() : Exception({Exception_Code::Invalid_Value, ""}) {}
-};
-
-struct Invalid_Indent_Exception : Exception {
-	Invalid_Indent_Exception() : Exception({Exception_Code::Invalid_Indent, ""}) {}
-};
-
-struct Cannot_Open_Exception : Exception {
-	Cannot_Open_Exception(QString file_path)
-		 : Exception({Exception_Code::Other, "Cannot open file '" + file_path + "'"}) {}
-};
+namespace Exceptions {
+   struct Not_Implemented : Exception {
+		Not_Implemented() : Exception({Exception_Code::Other, "Not implemented!"}) {}
+	};
+	struct Invalid_Key : Exception {
+		Invalid_Key() : Exception({Exception_Code::Invalid_Key, ""}) {}
+	};
+	struct Invalid_Value : Exception {
+		Invalid_Value() : Exception({Exception_Code::Invalid_Value, ""}) {}
+	};
+	struct Invalid_Indent : Exception {
+		Invalid_Indent() : Exception({Exception_Code::Invalid_Indent, ""}) {}
+	};
+	struct Cannot_Open : Exception {
+		Cannot_Open(QString file_path)
+		    : Exception({Exception_Code::Other, "Cannot open file '" + file_path + "'"}) {}
+	};
+}; // namespace Exceptions
 
 #endif // EXCEPTIONS_H

@@ -11,7 +11,7 @@ environment:
 		'	margin-bottom: 2em;'
 		'}'
 
-document-styles:
+document:
 	output :=
 		'<link rel="stylesheet" href="document-environment.css">'
 		header
@@ -21,18 +21,18 @@ document-styles:
 		header:
 			output :=
 				'<div class="fixed-header">'
-				'<p>' .. _text_content_ .. '</p>'
+				'<p>' .. _text_block_ .. '</p>'
 				'</div>'
 				''
 		footer:
 			output :=
 				'<div class="fixed-footer">'
-				'<p>' .. _text_content_ .. '</p>'
+				'<p>' .. _text_block_ .. '</p>'
 				'</div>'
 				''
 		paragraph:
 			output :=
-				_text_content_
+				_text_block_
 				''
 		section:
 			output :=
@@ -42,5 +42,5 @@ document-styles:
 			styles:
 				title:
 					output :=
-						_text_content_
+						_text_block_
 				''

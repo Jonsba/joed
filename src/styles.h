@@ -1,36 +1,39 @@
 #ifndef STYLES_H
 #define STYLES_H
 
-#include "field.h"
+#include "abstract_loadable_tree.h"
+#include "style.h"
 
-enum class Style_Type { Undefined_E, Layouted_E, Children_E, Text_E, Raw_Text_E };
+#include <QHash>
 
-enum class Style_Variant {
-	Standard_E,
-	// Text styles only
-	Title_E,
-	Caption_E
-	//
-};
+class Lua_VM;
 
-class Style_Properties;
-struct Style {
-	QString identifier;
-	Style_Type type = Style_Type::Undefined_E;
-	Style_Variant variant = Style_Variant::Standard_E;
-	Style_Properties* properties = nullptr;
-};
-
-class Raw_Styles {
- private:
-	inline static Style CB_Style = {Field::Id::Children_Block, Style_Type::Children_E,
-	                                Style_Variant::Standard_E, nullptr};
-	inline static Style RTB_Style = {Field::Id::Raw_Text_Block, Style_Type::Raw_Text_E,
-	                                 Style_Variant::Standard_E, nullptr};
-
+class Styles final : public Abstract_Loadable_Tree {
  public:
-	inline static Style* Children_Style = &CB_Style;
-	inline static Style* Raw_Text_Style = &RTB_Style;
+	Styles(Lua_VM* lua_vm);
+	~Styles();
+	Style* find(QString name);
+	// Constants (or supposed to be)
+	inline static Style* Children_Style;
+	inline static Style* Raw_Text_Style;
+	inline static const QStringList Keys_Object = {Field::Key::Layout,
+	                                               Field::Key::Default_Child_Style};
+
+ protected:
+	void process_intermediate_key(QString key, int level);
+	void assign(QString end_key, QString value, int level, bool is_first_value_line);
+
+ private:
+	Style* make_primitive_style(QString id, Style_Type type);
+	Style* make_style(QString name);
+	Style* make_style_if_nil(QString name);
+	QString prefix_style_name(QString style_name, int level);
+
+ private:
+	QHash<QString, Style*> styles;
+	Style* current_style;
+	QHash<int, Style*> styles_hierarchy;
+	Lua_VM* lua_vm;
 };
 
 #endif // STYLES_H
