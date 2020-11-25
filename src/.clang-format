@@ -1,0 +1,23 @@
+# clang-format -i *.cpp *.h
+
+BasedOnStyle: LLVM
+TabWidth: 3
+IndentWidth: 3
+UseTab: AlignWithSpaces
+ColumnLimit: 100
+
+# Force pointers to the type for C++.
+DerivePointerAlignment: false
+PointerAlignment: Left
+#
+
+SpaceAfterLogicalNot: true
+AllowShortIfStatementsOnASingleLine: true
+
+AllowShortFunctionsOnASingleLine: Inline
+# AllowShortBlocksOnASingleLine: true
+# AllowShortCaseLabelsOnASingleLine: true
+# AllowShortLoopsOnASingleLine: true
+
+
+NamespaceIndentation: All
