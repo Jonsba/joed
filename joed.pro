@@ -16,8 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
 	src/abstract_block.cpp \
 	src/abstract_loadable_file.cpp \
-	src/abstract_loadable_object.cpp \
-	src/abstract_loadable_tree.cpp \
 	src/abstract_multi_block.cpp \
 	src/backend.cpp \
 	src/children_block.cpp \

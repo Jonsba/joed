@@ -7,7 +7,6 @@
 class Abstract_Loadable_Tree : public Abstract_Loadable_Object {
  public:
 	friend class Class_File;
-	Abstract_Loadable_Tree();
 
  protected:
 	// returns false when the key is invalid
