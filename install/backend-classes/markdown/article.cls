@@ -6,10 +6,6 @@ environment:
 		'	background: black;'
 		'	color: white;'
 		'}'
-		'p {'
-		'	margin-top: 2em;'
-		'	margin-bottom: 2em;'
-		'}'
 
 document:
 	output :=

@@ -3,7 +3,7 @@ format-version := 0.0.0
 environment:
 	output :=
 		'body{'
-		'	background-color: black;'
+		'	background-color: #303030;'
 		'	color: white;'
 		'}'
 		'.fixed-header, .fixed-footer{'
