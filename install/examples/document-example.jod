@@ -8,24 +8,21 @@ document:
 		header:
 			blocks:
 				_text_ :=
-					"The Header"
+					"Page Header"
 		_children_:
 			paragraph:
 				blocks:
 					_text_ :=
-						"Some characters to escape:"
+						"This is a first paragraph"
 			paragraph:
 				blocks:
 					_text_ :=
-						"Context: &b%c$d#e_f{g}h~i^j\k"
+						"This is a second paragraph ..."
+						"... with a line break"
 			paragraph:
 				blocks:
 					_text_ :=
-						"Markdown: a\b`c*d_e{f}g[h]i(j)k#l+m-n.o!p"
-			paragraph:
-				blocks:
-					_text_ :=
-						"Excerpts from: https://www.ebaqdesign.com/blog/design-proposal"
+						"Here are some excerpts from: https://www.ebaqdesign.com/blog/design-proposal:"
 			section:
 				blocks:
 					section.title:
@@ -108,4 +105,4 @@ document:
 		footer:
 			blocks:
 				_text_ :=
-					"The Footer"
+					"Page Footer"
