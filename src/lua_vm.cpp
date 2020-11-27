@@ -1,7 +1,7 @@
 #include "lua_vm.h"
+#include "exceptions.h"
 #include "joed.h"
 
-#include <QTextCodec>
 #include <lua.hpp>
 
 char* to_chars(QString text) {
@@ -27,10 +27,13 @@ int Lua_VM::load_expr(QString expr) {
 
 QString Lua_VM::eval_expr(int cookie) {
 	lua_rawgeti(this->the_L, LUA_REGISTRYINDEX, cookie);
-	lua_call(this->the_L, 0, 1);
-	const char* result = lua_tostring(this->the_L, -1);
+	int exit_code = lua_pcall(this->the_L, 0, 1, 0);
+	QString result = QString::fromLatin1(lua_tostring(this->the_L, -1));
+	if (exit_code != 0) {
+		throw Exception(result);
+	}
 	lua_pop(this->the_L, 1);
-	return QString::fromLatin1(result);
+	return result;
 }
 
 void Lua_VM::push_variables(QHash<QString, QString> global_dict) {

@@ -33,6 +33,7 @@ class Document_Form : public QWidget {
 	QString launch_dialog(QString title, QFileDialog::AcceptMode mode);
 	void compile(int tab_index);
 	void compilation_completed();
+	void error_box(QString title, QString msg);
 
 	Ui::Document_Form* ui;
 	QScopedPointer<Abstract_Document_Viewer> document_viewer;

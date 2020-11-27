@@ -22,16 +22,11 @@ void Document_Form::reset_ui(QString document_path) {
 	try {
 		this->document.reset(new Document(document_path));
 	} catch (Exception& exception) {
-		QMessageBox msg_box;
-		msg_box.setStyleSheet("QLabel{min-width: 500px;}");
-		msg_box.setInformativeText(exception.msg);
 		if (document_path == "") {
-			msg_box.setText("<b>Fatal error while creating a new document</b>");
-			msg_box.exec();
+			this->error_box("Fatal error while creating a new document", exception.msg);
 			abort();
 		} else {
-			msg_box.setText("<b>Cannot open the document</b>");
-			msg_box.exec();
+			this->error_box("Cannot open the document", exception.msg);
 		}
 	}
 	if (this->document->backend()->compiled_document()->type == Field::Value::PDF_Viewer) {
@@ -106,11 +101,25 @@ void Document_Form::compile(int tab_index) {
 	if (tab_index != 1) {
 		return;
 	}
-	this->document->compile();
+	try {
+		this->document->compile();
+	} catch (Exception& exception) {
+		this->error_box("Cannot compile the document because of an issue with class files",
+		                exception.msg);
+		this->ui->mode_tab->setCurrentIndex(0);
+	}
 }
 
 void Document_Form::compilation_completed() {
 	this->document_viewer->refresh();
+}
+
+void Document_Form::error_box(QString title, QString msg) {
+	QMessageBox msg_box;
+	msg_box.setStyleSheet("QLabel{min-width: 500px;}");
+	msg_box.setText("<b>" + title + "</b>");
+	msg_box.setInformativeText(msg);
+	msg_box.exec();
 }
 
 Document_Form::~Document_Form() {
