@@ -12,14 +12,16 @@ PDF_Viewer::PDF_Viewer(QWidget* parent, Backend* backend)
     : Abstract_Document_Viewer(parent, backend) {
 	this->backend = backend;
 
-	this->bookmark_view = new QTreeView(this);
 	this->pdf_document = new QPdfDocument(this);
+	QPdfBookmarkModel* bookmark_model = new QPdfBookmarkModel(this);
+	bookmark_model->setDocument(this->pdf_document);
+	this->bookmark_view = new QTreeView(this);
+	this->bookmark_view->setModel(bookmark_model);
+	this->bookmark_view->setHeaderHidden(true);
 	this->pdf_view = new QPdfView(this);
 	this->pdf_view->setDocument(this->pdf_document);
 	this->pdf_view->setPageMode(QPdfView::MultiPage);
-	QPdfBookmarkModel* bookmark_model = new QPdfBookmarkModel(this);
-	bookmark_model->setDocument(this->pdf_document);
-	this->bookmark_view->setModel(bookmark_model);
+
 	QHBoxLayout* layout = new QHBoxLayout(this);
 	layout->addWidget(this->bookmark_view);
 	layout->addWidget(this->pdf_view);
