@@ -1,8 +1,7 @@
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
-build/*
-build/!Makefile
+build/
 
 *~
 *.autosave
@@ -46,6 +45,9 @@ Thumbs.db
 
 # Vim temporary files
 .*.swp
+
+# Kate temporary files
+*.kate-swp
 
 # Visual Studio generated files
 *.ib_pdb_index

@@ -1,0 +1,33 @@
+format-version := 0.1.0
+
+doc-file-ext := md
+env-file-ext := css
+output := 'pandoc ' .. _translated_document_ .. ' -s --quiet -o ' .. _compiled_document_
+viewer := html
+escape-table :=
+	{'\\', '\\\\'}
+	{'`', '\\`'}
+	{'*', '\\*'}
+	{'_', '\\_'}
+	{'{', '\\{'}
+	{'}', '\\}'}
+	{'[', '\\['}
+	{']', '\\]'}
+	{'(', '\\('}
+	{')', '\\)'}
+	{'#', '\\#'}
+	{'+', '\\+'}
+	{'-', '\\-'}
+	{'.', '\\.'}
+	{'!', '\\!'}
+	{'<', '&lt;'}
+	{'>', '&gt;'}
+	{'\n', '  \n'}
+
+document-classes:
+	article:
+		generic-class := article
+		backend-class := article
+	article.dark:
+		generic-class := article
+		backend-class := article.dark

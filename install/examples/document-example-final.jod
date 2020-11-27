@@ -1,0 +1,69 @@
+format-version: 1.0.0
+
+backend: context
+
+document-class: article
+
+content:
+	block:
+		style: header
+		content:
+			block:
+				(...)
+	children:
+		code:
+			text: "\parskip[1cm]"
+		block:
+			style: section
+			content:
+				block:
+					style: section-title
+					content:
+						text: "My first section"
+				children:
+					block:
+						style: paragraph
+						content:
+							text: "My first paragraph with "
+							block:
+								style: inline-code
+								content:
+									text: "{\bf "
+							text: "this word"
+							block:
+								style: inline-code
+								content:
+									text: "}"
+							text: "in bold"
+					block:
+						style: paragraph
+						content:
+							text: "My second paragraph"
+					block:
+						style: paragraph
+						content:
+							text: "My third paragraph"
+					block:
+						style: floating_image
+						content:
+							text: "An example of an image"
+
+-- To update ....
+		block:
+			style: section
+			contents:
+				block:
+					style: section-title
+					text: "My second section"
+				children:
+					block:
+						style: paragraph
+						text: "My fourth paragraph"
+					block:
+						style: paragraph
+						text: "My fifth paragraph"
+	block:
+		style: footer
+		contents:
+			(...)
+		
