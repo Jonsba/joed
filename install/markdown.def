@@ -1,4 +1,4 @@
-format-version := 0.0.0
+format-version := 0.1.0
 
 doc-file-ext := md
 env-file-ext := css

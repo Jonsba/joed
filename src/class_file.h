@@ -22,7 +22,7 @@ class Class_File final : public Abstract_Loadable_File {
 	Class_File(QString path, Class_Objects class_objects);
 
  protected:
-	const File_Version Version() { return {0, 0, 0}; }
+	const File_Version Version() { return {0, 1, 0}; }
 	void process_intermediate_key(QString key, int level);
 	void assign(QString end_key, QString value, int level, bool is_first_value_line);
 
