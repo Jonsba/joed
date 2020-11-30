@@ -18,7 +18,6 @@ class Text_Block_Widget : public QTextEdit {
 	void resizeEvent(QResizeEvent* event);
 	//
 	Text_Block* text_block;
-	QScopedPointer<Color_Scheme> color_scheme;
 };
 
 #endif // TEXT_BLOCK_WIDGET_H

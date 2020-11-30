@@ -8,11 +8,11 @@
 Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block, int level)
     : QTextEdit(parent) {
 	this->text_block = text_block;
-	this->color_scheme.reset(new Color_Scheme(level));
+	Color_Scheme color_scheme(level);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setFrameStyle(QFrame::Box);
 	this->setLineWidth(0);
-	this->setPalette(this->color_scheme->palette());
+	this->setPalette(color_scheme.palette());
 	QFontMetrics metrics = this->fontMetrics();
 	this->setMinimumHeight(this->fontMetrics().height());
 	if (text_block->style()->variant == Style_Variant::Title_E) {

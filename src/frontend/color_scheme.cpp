@@ -11,12 +11,8 @@ QPalette& Color_Scheme::palette(Widget_State state) {
 	case Widget_State::Active_E:
 		lightness = 230;
 		break;
-	case Widget_State::Selected_E:
+	case Widget_State::Highlighted_E:
 		lightness = 190;
-		break;
-	case Widget_State::Inactive_E:
-		lightness = 245;
-		saturation = 200;
 		break;
 	}
 	QColor color;

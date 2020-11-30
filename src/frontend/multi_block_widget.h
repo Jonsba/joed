@@ -15,9 +15,9 @@ class Multi_Block_Widget : public QWidget {
 	~Multi_Block_Widget();
 
  protected:
+	static inline const int Horizontal_Spacing = 10;
+	//
 	Abstract_Multi_Block* multi_block;
-	QVBoxLayout* block_widgets_container;
-	QScopedPointer<Color_Scheme> color_scheme;
 };
 
 #endif // MULTI_BLOCK_WIDGET_H

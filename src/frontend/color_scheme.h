@@ -3,7 +3,7 @@
 
 #include <QPalette>
 
-enum class Widget_State { Active_E, Selected_E, Inactive_E };
+enum class Widget_State { Active_E, Highlighted_E };
 
 class Color_Scheme {
  public:
