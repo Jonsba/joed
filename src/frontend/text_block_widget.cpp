@@ -20,7 +20,8 @@ Text_Block_Widget::Text_Block_Widget(QWidget* parent, Text_Block* text_block, in
 		font.setPointSize(16);
 		this->setFont(font);
 	}
-	for (auto block : text_block->blocks()) {
+	for (Abstract_Block* block = text_block->first_child(); block != nullptr;
+	     block = block->next()) {
 		switch (block->style()->type) {
 		case Style_Type::Raw_Text_E:
 			this->setPlainText(((Raw_Text_Block*)block)->text());
@@ -39,7 +40,7 @@ void Text_Block_Widget::resize_to_fit_contents() {
 
 void Text_Block_Widget::on_text_changed() {
 	// TODO deal with multiple subblocks in the textblock
-	Raw_Text_Block* raw_text_block = (Raw_Text_Block*)this->text_block->blocks().first();
+	Raw_Text_Block* raw_text_block = (Raw_Text_Block*)this->text_block->first_child();
 	raw_text_block->set_text(this->toPlainText());
 	this->resize_to_fit_contents();
 }

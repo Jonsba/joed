@@ -6,7 +6,7 @@
 #include "text_block.h"
 #include "writer.h"
 
-Root_Block::Root_Block(Style* style, bool auto_built) : Layout_Block(style, auto_built) {
+Root_Block::Root_Block(Style* style, bool auto_built) : Layout_Block(style, nullptr, auto_built) {
 	if (auto_built) {
 		this->initialize_from_style_layout();
 	}

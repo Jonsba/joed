@@ -23,7 +23,8 @@ Multi_Block_Widget::Multi_Block_Widget(QWidget* parent, Abstract_Multi_Block* mu
 	this->block_widgets_container->setMargin(0);
 	this->setLayout(this->block_widgets_container);
 	//
-	for (Abstract_Block* block : multi_block->blocks()) {
+	for (Abstract_Block* block = multi_block->first_child(); block != nullptr;
+	     block = block->next()) {
 		QWidget* block_widget;
 		switch (block->style()->type) {
 		case Style_Type::Children_E:

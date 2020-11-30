@@ -5,7 +5,7 @@
 
 class Children_Block : public Abstract_Multi_Block {
  public:
-	Children_Block(bool auto_built);
+	Children_Block(Abstract_Multi_Block* parent, bool auto_built);
 	Abstract_Block* create_block(Style* style) override;
 };
 
