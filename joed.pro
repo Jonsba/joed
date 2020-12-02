@@ -26,14 +26,14 @@ SOURCES += \
 	src/escaper.cpp \
 	src/exceptions.cpp \
 	src/frontend/abstract_document_viewer.cpp \
-	src/frontend/children_widget_block.cpp \
+	src/frontend/block_widget.cpp \
+	src/frontend/children_block_widget.cpp \
 	src/frontend/color_scheme.cpp \
 	src/frontend/document_form.cpp \
 	src/frontend/editor_form.cpp \
 	src/frontend/html_viewer.cpp \
-	src/frontend/multi_block_widget.cpp \
 	src/frontend/pdf_viewer.cpp \
-	src/frontend/text_block_widget.cpp \
+	src/frontend/text_edit.cpp \
 	src/joed.cpp \
 	src/joed_conf_file.cpp \
 	src/layout_block.cpp \
@@ -64,14 +64,14 @@ HEADERS += \
 	src/exceptions.h \
 	src/field.h \
 	src/frontend/abstract_document_viewer.h \
-	src/frontend/children_widget_block.h \
+	src/frontend/block_widget.h \
+	src/frontend/children_block_widget.h \
 	src/frontend/color_scheme.h \
 	src/frontend/document_form.h \
 	src/frontend/editor_form.h \
 	src/frontend/html_viewer.h \
-	src/frontend/multi_block_widget.h \
 	src/frontend/pdf_viewer.h \
-	src/frontend/text_block_widget.h \
+	src/frontend/text_edit.h \
 	src/joed.h \
 	src/joed_conf_file.h \
 	src/layout_block.h \

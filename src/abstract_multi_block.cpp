@@ -2,9 +2,7 @@
 #include "styles.h"
 #include "writer.h"
 
-Abstract_Multi_Block::Abstract_Multi_Block(Style* style, Abstract_Multi_Block* parent,
-                                           bool auto_built)
-    : Abstract_Block(style, parent) {
+Abstract_Multi_Block::Abstract_Multi_Block(Style* style, bool auto_built) : Abstract_Block(style) {
 	this->auto_built = auto_built;
 	this->Blocks_Identifier = Field::Key::Blocks;
 	if (style->type == Style_Type::Children_E) {
@@ -12,14 +10,25 @@ Abstract_Multi_Block::Abstract_Multi_Block(Style* style, Abstract_Multi_Block* p
 	}
 }
 
-void Abstract_Multi_Block::add_child(Abstract_Block* child) {
+Abstract_Block* Abstract_Multi_Block::append_child(Style* style) {
+	Abstract_Block* new_block = this->make_block(style, this->auto_built);
+	this->append_child(new_block);
+	return new_block;
+}
+
+void Abstract_Multi_Block::append_child(Abstract_Block* block) {
 	if (this->last_child == nullptr) {
-		this->last_child = child;
-		this->the_first_child = child;
+		this->last_child = block;
+		this->the_first_child = block;
 		return;
 	}
-	this->last_child->set_next(child);
-	this->last_child = child;
+	// When Abstract_Block::add_sibling is called, it won't update the parent's last_child pointer,
+	// therefore we need to make sure it points to the right element
+	while (this->last_child->the_next != nullptr) {
+		this->last_child = this->last_child->the_next;
+	}
+	this->last_child->the_next = block;
+	this->last_child = block;
 }
 
 Abstract_Block* Abstract_Multi_Block::first_child() {

@@ -102,13 +102,13 @@ void Document::process_intermediate_key(QString key, int level) {
 			}
 			switch (style->type) {
 			case Style_Type::Children_E:
-				this->current_block = this->parent_blocks[level]->create_block(Styles::Children_Style);
+				this->current_block = this->parent_blocks[level]->append_child(Styles::Children_Style);
 				break;
 			case Style_Type::Layouted_E:
-				this->current_block = this->parent_blocks[level]->create_block(style);
+				this->current_block = this->parent_blocks[level]->append_child(style);
 				return;
 			case Style_Type::Text_E:
-				this->current_block = this->parent_blocks[level]->create_block(style);
+				this->current_block = this->parent_blocks[level]->append_child(style);
 				return;
 			default:
 				throw Exception("Style '" + style->identifier + "' has an unsupported type");
@@ -126,7 +126,7 @@ void Document::assign(QString end_key, QString value, int level, bool is_first_v
 		this->document_class->try_load(value, nullptr);
 	} else if (end_key == Field::Id::Text) {
 		if (is_first_value_line) {
-			this->current_block = this->parent_blocks[level]->create_block(Styles::Raw_Text_Style);
+			this->current_block = this->parent_blocks[level]->append_child(Styles::Raw_Text_Style);
 		}
 		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
 	} else {

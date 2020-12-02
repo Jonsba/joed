@@ -8,8 +8,7 @@ class Raw_Text_Block;
 
 class Text_Block : public Abstract_Multi_Block {
  public:
-	Text_Block(Style* style, Abstract_Multi_Block* parent, bool auto_built);
-	Abstract_Block* create_block(Style* style) override;
+	Text_Block(Style* style, bool auto_built);
 	QString translate(Escaper* escaper) override;
 	void save(Writer* writer, int level) override;
 

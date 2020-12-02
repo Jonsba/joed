@@ -1,6 +1,6 @@
 #include "document_form.h"
+#include "block_widget.h"
 #include "html_viewer.h"
-#include "multi_block_widget.h"
 #include "pdf_viewer.h"
 #include "src/abstract_multi_block.h"
 #include "src/backend.h"
@@ -37,8 +37,8 @@ void Document_Form::reset_ui(QString document_path) {
 		    new HTML_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	}
 
-	this->top_widget_block.reset(new Multi_Block_Widget(
-	    this->ui->document_area, (Abstract_Multi_Block*)this->document->root_block(), 0));
+	this->top_widget_block.reset(new Block_Widget(
+	    this->ui->document_area, (Abstract_Multi_Block*)this->document->root_block(), 0, false));
 	this->ui->document_area->layout()->addWidget(this->top_widget_block.get());
 
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
