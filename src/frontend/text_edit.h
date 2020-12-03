@@ -7,7 +7,7 @@
 class Color_Scheme;
 class Text_Block;
 
-enum class Insertion_Action { Disabled_E, Object_Insertion_E, Parent_Insertion_E };
+enum class Insertion_Action { Disabled, Object_Insertion, Parent_Insertion };
 
 class Text_Edit : public QTextEdit {
  public:

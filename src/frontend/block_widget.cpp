@@ -16,7 +16,7 @@ Block_Widget::Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_M
 	this->level = level;
 	//
 	Color_Scheme color_scheme(level);
-	this->setPalette(color_scheme.palette(Widget_State::Highlighted_E));
+	this->setPalette(color_scheme.palette(Widget_State::Highlighted));
 	this->setAutoFillBackground(true);
 	QHBoxLayout* top_container = new QHBoxLayout(this);
 	top_container->setMargin(0);
@@ -28,10 +28,10 @@ Block_Widget::Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_M
 	blocks_container->setMargin(0);
 	//
 	QWidget* sub_block_widget;
-	Insertion_Action allowed_insert = Insertion_Action::Disabled_E;
-	if (block->style()->type == Style_Type::Text_E) {
+	Insertion_Action allowed_insert = Insertion_Action::Disabled;
+	if (block->style()->type == Style_Type::Text) {
 		if (is_insertion_allowed) {
-			allowed_insert = Insertion_Action::Object_Insertion_E;
+			allowed_insert = Insertion_Action::Object_Insertion;
 		}
 		sub_block_widget = new Text_Edit(this, (Text_Block*)block, level, allowed_insert);
 		blocks_container->addWidget(sub_block_widget);
@@ -40,18 +40,18 @@ Block_Widget::Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_M
 		for (Abstract_Block* sub_block = block->first_child(); sub_block != nullptr;
 		     sub_block = sub_block->next()) {
 			switch (sub_block->style()->type) {
-			case Style_Type::Children_E:
+			case Style_Type::Children:
 				sub_block_widget =
 				    new Children_Block_Widget(this, scroll_area, (Children_Block*)sub_block, level);
 
 				break;
-			case Style_Type::Layouted_E:
+			case Style_Type::Layouted:
 				sub_block_widget = new Block_Widget(this, scroll_area, (Abstract_Multi_Block*)sub_block,
 				                                    level, is_insertion_allowed);
 				break;
-			case Style_Type::Text_E: {
+			case Style_Type::Text: {
 				if (is_insertion_allowed) {
-					allowed_insert = Insertion_Action::Parent_Insertion_E;
+					allowed_insert = Insertion_Action::Parent_Insertion;
 				}
 				sub_block_widget = new Text_Edit(this, (Text_Block*)sub_block, level, allowed_insert);
 				break;

@@ -21,7 +21,7 @@ Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
 	this->setPalette(color_scheme.palette());
 	QFontMetrics metrics = this->fontMetrics();
 	this->setMinimumHeight(this->fontMetrics().height());
-	if (text_block->style()->variant == Style_Variant::Title_E) {
+	if (text_block->style()->variant == Style_Variant::Title) {
 		QFont font = this->font();
 		font.setPointSize(16);
 		this->setFont(font);
@@ -29,7 +29,7 @@ Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
 	for (Abstract_Block* block = text_block->first_child(); block != nullptr;
 	     block = block->next()) {
 		switch (block->style()->type) {
-		case Style_Type::Raw_Text_E:
+		case Style_Type::Raw_Text:
 			this->setPlainText(((Raw_Text_Block*)block)->text());
 			break;
 		default:
@@ -62,7 +62,7 @@ void Text_Edit::keyPressEvent(QKeyEvent* event) {
 	}
 	auto parent = (Block_Widget*)this->parent();
 	switch (this->insertion_action) {
-	case Insertion_Action::Object_Insertion_E: {
+	case Insertion_Action::Object_Insertion: {
 		auto new_block =
 		    (Text_Block*)this->text_block->insert_sibling(this->text_block->style(), false);
 		auto raw_text_block = (Raw_Text_Block*)new_block->append_child(Styles::Raw_Text_Style);
@@ -70,10 +70,10 @@ void Text_Edit::keyPressEvent(QKeyEvent* event) {
 		parent->insert(new_block);
 		break;
 	}
-	case Insertion_Action::Parent_Insertion_E:
+	case Insertion_Action::Parent_Insertion:
 		parent->insert();
 		break;
-	case Insertion_Action::Disabled_E:
+	case Insertion_Action::Disabled:
 		break;
 	}
 }

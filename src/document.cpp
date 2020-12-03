@@ -101,13 +101,13 @@ void Document::process_intermediate_key(QString key, int level) {
 				throw Exception("Cannot find style: " + key);
 			}
 			switch (style->type) {
-			case Style_Type::Children_E:
+			case Style_Type::Children:
 				this->current_block = this->parent_blocks[level]->append_child(Styles::Children_Style);
 				break;
-			case Style_Type::Layouted_E:
+			case Style_Type::Layouted:
 				this->current_block = this->parent_blocks[level]->append_child(style);
 				return;
-			case Style_Type::Text_E:
+			case Style_Type::Text:
 				this->current_block = this->parent_blocks[level]->append_child(style);
 				return;
 			default:

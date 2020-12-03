@@ -12,14 +12,14 @@ Layout_Block::Layout_Block(Style* style, bool auto_built)
 	if (auto_built) {
 		for (Layout_Entry* layout_entry : this->the_style->properties->layout_entries()) {
 			switch (layout_entry->style()->type) {
-			case Style_Type::Children_E: {
+			case Style_Type::Children: {
 				Children_Block* children_block =
 				    (Children_Block*)this->append_child(Styles::Children_Style);
 				children_block->append_child(this->the_style->properties->default_child_style());
 				break;
 			}
-			case Style_Type::Layouted_E:
-			case Style_Type::Text_E:
+			case Style_Type::Layouted:
+			case Style_Type::Text:
 				this->append_child(layout_entry->style());
 				break;
 			default:

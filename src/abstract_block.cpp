@@ -32,23 +32,23 @@ void Abstract_Block::insert_sibling(Abstract_Block* block) {
 Abstract_Block* Abstract_Block::make_block(Style* style, bool auto_built) {
 	Abstract_Block* new_block;
 	switch (style->type) {
-	case Style_Type::Children_E: {
+	case Style_Type::Children: {
 		new_block = new Children_Block(auto_built);
 		break;
 	}
-	case Style_Type::Layouted_E: {
+	case Style_Type::Layouted: {
 		new_block = new Layout_Block(style, auto_built);
 		break;
 	}
-	case Style_Type::Text_E: {
+	case Style_Type::Text: {
 		new_block = new Text_Block(style, auto_built);
 		break;
 	}
-	case Style_Type::Raw_Text_E: {
+	case Style_Type::Raw_Text: {
 		new_block = new Raw_Text_Block();
 		break;
 	}
-	case Style_Type::Undefined_E:
+	case Style_Type::Undefined:
 		throw Exception("Style '" + style->identifier + "' has an undefined type");
 	}
 	return new_block;

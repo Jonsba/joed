@@ -11,7 +11,7 @@ QString Root_Block::translate(Escaper* escaper) {
 	// prevent issue when evalutating the output expression with the Lua VM
 	QHash<QString, QString> global_dict = {};
 	for (Layout_Entry* layout : this->the_style->properties->layout_entries()) {
-		if (layout->style()->type != Style_Type::Children_E) {
+		if (layout->style()->type != Style_Type::Children) {
 			global_dict[layout->style()->identifier] = "";
 		}
 	}

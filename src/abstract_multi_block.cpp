@@ -5,7 +5,7 @@
 Abstract_Multi_Block::Abstract_Multi_Block(Style* style, bool auto_built) : Abstract_Block(style) {
 	this->auto_built = auto_built;
 	this->Blocks_Identifier = Field::Key::Blocks;
-	if (style->type == Style_Type::Children_E) {
+	if (style->type == Style_Type::Children) {
 		this->Blocks_Identifier = Field::Id::Children;
 	}
 }

@@ -8,10 +8,10 @@ QPalette& Color_Scheme::palette(Widget_State state) {
 	int lightness;
 	int saturation = 200;
 	switch (state) {
-	case Widget_State::Active_E:
+	case Widget_State::Active:
 		lightness = 230;
 		break;
-	case Widget_State::Highlighted_E:
+	case Widget_State::Highlighted:
 		lightness = 190;
 		break;
 	}

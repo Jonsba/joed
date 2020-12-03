@@ -4,10 +4,10 @@
 
 Styles::Styles(Lua_VM* lua_vm) {
 	this->lua_vm = lua_vm;
-	this->Children_Style = this->make_primitive_style(Field::Id::Children, Style_Type::Children_E);
-	this->Raw_Text_Style = this->make_primitive_style(Field::Id::Text, Style_Type::Raw_Text_E);
+	this->Children_Style = this->make_primitive_style(Field::Id::Children, Style_Type::Children);
+	this->Raw_Text_Style = this->make_primitive_style(Field::Id::Text, Style_Type::Raw_Text);
 	this->styles_hierarchy[0] = this->make_style_if_nil(Field::Key::Document);
-	this->styles_hierarchy[0]->type = Style_Type::Layouted_E;
+	this->styles_hierarchy[0]->type = Style_Type::Layouted;
 }
 
 void Styles::process_intermediate_key(QString key, int level) {
@@ -31,12 +31,12 @@ void Styles::assign(QString end_key, QString value, int level, bool is_first_val
 		if (end_key == Field::Key::Type) {
 			QStringList type_variant_pair = value.split('>');
 			if (type_variant_pair[0] == Field::Value::Layout_Block) {
-				this->current_style->type = Style_Type::Layouted_E;
+				this->current_style->type = Style_Type::Layouted;
 			} else if (type_variant_pair[0] == Field::Value::Text_Block) {
-				this->current_style->type = Style_Type::Text_E;
+				this->current_style->type = Style_Type::Text;
 				if (type_variant_pair.length() == 2) {
 					if (type_variant_pair[1] == Field::Value::Title) {
-						this->current_style->variant = Style_Variant::Title_E;
+						this->current_style->variant = Style_Variant::Title;
 					}
 				}
 			} else {
@@ -53,7 +53,7 @@ Style* Styles::find(QString name) {
 }
 
 Style* Styles::make_primitive_style(QString id, Style_Type type) {
-	this->styles[id] = new Style({id, type, Style_Variant::Standard_E, nullptr});
+	this->styles[id] = new Style({id, type, Style_Variant::Standard, nullptr});
 	return this->styles[id];
 }
 

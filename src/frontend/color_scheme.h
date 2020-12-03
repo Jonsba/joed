@@ -3,12 +3,12 @@
 
 #include <QPalette>
 
-enum class Widget_State { Active_E, Highlighted_E };
+enum class Widget_State { Active, Highlighted };
 
 class Color_Scheme {
  public:
 	Color_Scheme(int level);
-	QPalette& palette(Widget_State state = Widget_State::Active_E);
+	QPalette& palette(Widget_State state = Widget_State::Active);
 
  private:
 	const int N_Color_Levels = 7;
