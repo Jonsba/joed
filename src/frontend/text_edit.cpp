@@ -63,11 +63,14 @@ void Text_Edit::keyPressEvent(QKeyEvent* event) {
 	auto parent = (Block_Widget*)this->parent();
 	switch (this->insertion_action) {
 	case Insertion_Action::Object_Insertion: {
+		QTextCursor c = this->textCursor();
+		QString content = this->toPlainText();
 		auto new_block =
 		    (Text_Block*)this->text_block->insert_sibling(this->text_block->style(), false);
 		auto raw_text_block = (Raw_Text_Block*)new_block->append_child(Styles::Raw_Text_Style);
-		raw_text_block->add_loaded_text("");
+		raw_text_block->set_text(content.right(content.length() - c.position()));
 		parent->insert(new_block);
+		this->setPlainText(content.left(c.position()));
 		break;
 	}
 	case Insertion_Action::Parent_Insertion:

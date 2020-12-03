@@ -128,7 +128,7 @@ void Document::assign(QString end_key, QString value, int level, bool is_first_v
 		if (is_first_value_line) {
 			this->current_block = this->parent_blocks[level]->append_child(Styles::Raw_Text_Style);
 		}
-		((Raw_Text_Block*)this->current_block)->add_loaded_text(value);
+		((Raw_Text_Block*)this->current_block)->add_quoted_text(value);
 	} else {
 		throw Exceptions::Invalid_Key();
 	}

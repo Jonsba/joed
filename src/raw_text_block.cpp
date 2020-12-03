@@ -11,7 +11,7 @@ void Raw_Text_Block::set_text(QString text) {
 	this->the_text = text;
 }
 
-void Raw_Text_Block::add_loaded_text(QString quoted_text) {
+void Raw_Text_Block::add_quoted_text(QString quoted_text) {
 	// Remove the "" enclosing the loaded text
 	QString text = quoted_text.mid(1, quoted_text.length() - 2);
 	if (this->the_text == "") {

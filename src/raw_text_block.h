@@ -9,7 +9,7 @@ class Raw_Text_Block : public Abstract_Block {
  public:
 	Raw_Text_Block();
 	void set_text(QString text);
-	void add_loaded_text(QString quoted_text);
+	void add_quoted_text(QString quoted_text);
 	QString text();
 	QString translate(Escaper* escaper) override;
 	void save(Writer* writer, int level) override;
