@@ -6,12 +6,9 @@
 #include <QScopedPointer>
 #include <QWidget>
 
-class Backend;
+class Abstract_Document_Viewer;
 class Document;
 class Block_Widget;
-class QWidget;
-class QProcess;
-class Abstract_Document_Viewer;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,7 +34,8 @@ class Document_Form : public QWidget {
 
 	Ui::Document_Form* ui;
 	QScopedPointer<Abstract_Document_Viewer> document_viewer;
-	QScopedPointer<Block_Widget> top_widget_block;
+	QScopedPointer<Block_Widget> top_block_widget;
+
 	QScopedPointer<Document> document;
 };
 

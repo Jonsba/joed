@@ -1,31 +1,42 @@
 #include "children_block_widget.h"
 #include "block_widget.h"
 
-#include "color_scheme.h"
 #include "src/children_block.h"
-#include "src/joed.h"
-#include "text_edit.h"
 
+#include <QApplication>
 #include <QLayout>
+#include <QScrollArea>
 #include <QSpacerItem>
 
-Children_Block_Widget::Children_Block_Widget(QWidget* parent, Children_Block* children_block,
-                                             int level)
+Children_Block_Widget::Children_Block_Widget(QWidget* parent, QScrollArea* scroll_area,
+                                             Children_Block* children_block, int level)
     : QWidget(parent) {
 	this->level = level;
+	this->scroll_area = scroll_area;
 	this->container = new QVBoxLayout(this);
 	this->container->setMargin(0);
-	this->container->setSpacing(2); //
+	this->container->setSpacing(1);
 	for (Abstract_Block* block = children_block->first_child(); block != nullptr;
 	     block = block->next()) {
 		this->container->addWidget(
-		    new Block_Widget(this, (Abstract_Multi_Block*)block, level + 1, true));
+		    new Block_Widget(this, scroll_area, (Abstract_Multi_Block*)block, level + 1, true), 0);
+	}
+	// This prevents unwanted stretching of block widgets in case they can't fill the screen
+	if (level == 0) {
+		this->container->addItem(
+		    new QSpacerItem(0, 1000000, QSizePolicy::Expanding, QSizePolicy::Expanding));
 	}
 }
 
+void Children_Block_Widget::resizeEvent(QResizeEvent* event) {
+	QWidget::resizeEvent(event);
+	this->scroll_area->ensureWidgetVisible(qApp->focusWidget());
+}
+
 void Children_Block_Widget::insert(Abstract_Multi_Block* block, Block_Widget* after) {
-	Block_Widget* block_widget = new Block_Widget(this, block, this->level + 1, true);
-	this->container->insertWidget(this->container->indexOf(after) + 1, block_widget);
+	this->container->insertWidget(
+	    this->container->indexOf(after) + 1,
+	    new Block_Widget(this, this->scroll_area, block, this->level + 1, true));
 }
 
 Children_Block_Widget::~Children_Block_Widget() = default;

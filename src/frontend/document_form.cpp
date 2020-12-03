@@ -36,10 +36,10 @@ void Document_Form::reset_ui(QString document_path) {
 		this->document_viewer.reset(
 		    new HTML_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	}
-
-	this->top_widget_block.reset(new Block_Widget(
-	    this->ui->document_area, (Abstract_Multi_Block*)this->document->root_block(), 0, false));
-	this->ui->document_area->layout()->addWidget(this->top_widget_block.get());
+	this->top_block_widget.reset(
+	    new Block_Widget(this->ui->document_area, this->ui->scroll_area,
+	                     (Abstract_Multi_Block*)this->document->root_block(), 0, false));
+	this->ui->document_area->layout()->addWidget(this->top_block_widget.get());
 
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
 	                 &Document_Form::compilation_completed);

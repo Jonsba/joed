@@ -10,10 +10,10 @@
 #include <QKeyEvent>
 
 Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
-                     Insertion_Type allowed_insert)
+                     Insertion_Action insertion_action)
     : QTextEdit(parent) {
 	this->text_block = text_block;
-	this->allowed_insert = allowed_insert;
+	this->insertion_action = insertion_action;
 	Color_Scheme color_scheme(level);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setFrameStyle(QFrame::Box);
@@ -61,8 +61,8 @@ void Text_Edit::keyPressEvent(QKeyEvent* event) {
 		return;
 	}
 	auto parent = (Block_Widget*)this->parent();
-	switch (this->allowed_insert) {
-	case Insertion_Type::Text_Block_Insertion_E: {
+	switch (this->insertion_action) {
+	case Insertion_Action::Object_Insertion_E: {
 		auto new_block =
 		    (Text_Block*)this->text_block->insert_sibling(this->text_block->style(), false);
 		auto raw_text_block = (Raw_Text_Block*)new_block->append_child(Styles::Raw_Text_Style);
@@ -70,10 +70,10 @@ void Text_Edit::keyPressEvent(QKeyEvent* event) {
 		parent->insert(new_block);
 		break;
 	}
-	case Insertion_Type::Layout_Block_Insertion_E:
+	case Insertion_Action::Parent_Insertion_E:
 		parent->insert();
 		break;
-	case Insertion_Type::Denied_E:
+	case Insertion_Action::Disabled_E:
 		break;
 	}
 }

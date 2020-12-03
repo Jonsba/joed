@@ -16,8 +16,6 @@ class Editor_Form : public QMainWindow {
  public:
 	Editor_Form(QString document_path, QWidget* parent = nullptr);
 	~Editor_Form();
-
- public slots:
 	void create();
 	void open();
 	void save();
