@@ -70,12 +70,13 @@ Abstract_Multi_Block* Block_Widget::block() {
 	return this->the_block;
 }
 
-void Block_Widget::insert() {
-	this->insert(this->block()->insert_sibling(this->block()->style(), true));
+void Block_Widget::insert(bool insertion_is_before) {
+	this->insert(this->block()->insert_sibling(this->block()->style(), true), insertion_is_before);
 }
 
-void Block_Widget::insert(Abstract_Block* block) {
-	((Children_Block_Widget*)this->parent())->insert((Abstract_Multi_Block*)block, this);
+void Block_Widget::insert(Abstract_Block* block, bool insertion_is_before) {
+	((Children_Block_Widget*)this->parent())
+	    ->insert((Abstract_Multi_Block*)block, this, insertion_is_before);
 }
 
 Block_Widget::~Block_Widget() = default;

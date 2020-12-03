@@ -33,9 +33,14 @@ void Children_Block_Widget::resizeEvent(QResizeEvent* event) {
 	this->scroll_area->ensureWidgetVisible(qApp->focusWidget());
 }
 
-void Children_Block_Widget::insert(Abstract_Multi_Block* block, Block_Widget* after) {
+void Children_Block_Widget::insert(Abstract_Multi_Block* block, Block_Widget* sibling,
+                                   bool insertion_is_before) {
+	int offset = 1;
+	if (insertion_is_before) {
+		offset = 0;
+	}
 	this->container->insertWidget(
-	    this->container->indexOf(after) + 1,
+	    this->container->indexOf(sibling) + offset,
 	    new Block_Widget(this, this->scroll_area, block, this->level + 1, true));
 }
 

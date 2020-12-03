@@ -61,20 +61,29 @@ void Text_Edit::keyPressEvent(QKeyEvent* event) {
 		return;
 	}
 	auto parent = (Block_Widget*)this->parent();
+	int cursor = this->textCursor().position();
+	QString content = this->toPlainText();
 	switch (this->insertion_action) {
 	case Insertion_Action::Object_Insertion: {
-		QTextCursor c = this->textCursor();
-		QString content = this->toPlainText();
 		auto new_block =
 		    (Text_Block*)this->text_block->insert_sibling(this->text_block->style(), false);
 		auto raw_text_block = (Raw_Text_Block*)new_block->append_child(Styles::Raw_Text_Style);
-		raw_text_block->set_text(content.right(content.length() - c.position()));
-		parent->insert(new_block);
-		this->setPlainText(content.left(c.position()));
+		if (cursor > 0 || content.length() == 0) {
+			raw_text_block->set_text(content.right(content.length() - cursor));
+			parent->insert(new_block, false);
+			this->setPlainText(content.left(cursor));
+		} else {
+			raw_text_block->set_text("");
+			parent->insert(new_block, true);
+		}
 		break;
 	}
 	case Insertion_Action::Parent_Insertion:
-		parent->insert();
+		if (cursor == 0) {
+			parent->insert(true);
+		} else if (cursor == content.length()) {
+			parent->insert(false);
+		}
 		break;
 	case Insertion_Action::Disabled:
 		break;

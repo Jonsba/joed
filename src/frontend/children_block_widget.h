@@ -16,7 +16,7 @@ class Children_Block_Widget : public QWidget {
 	Children_Block_Widget(QWidget* parent, QScrollArea* scroll_area, Children_Block* children_block,
 	                      int level);
 	~Children_Block_Widget();
-	void insert(Abstract_Multi_Block* block, Block_Widget* after);
+	void insert(Abstract_Multi_Block* block, Block_Widget* sibling, bool insertion_is_before);
 
  private:
 	void resizeEvent(QResizeEvent* event) override;
