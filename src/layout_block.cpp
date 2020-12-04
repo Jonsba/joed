@@ -7,8 +7,8 @@
 #include "text_block.h"
 #include "writer.h"
 
-Layout_Block::Layout_Block(Style* style, bool auto_built)
-    : Abstract_Multi_Block(style, auto_built) {
+Layout_Block::Layout_Block(Style* style, Abstract_Multi_Block* parent, bool auto_built)
+    : Abstract_Multi_Block(style, parent, auto_built) {
 	if (auto_built) {
 		for (Layout_Entry* layout_entry : this->the_style->properties->layout_entries()) {
 			switch (layout_entry->style()->type) {

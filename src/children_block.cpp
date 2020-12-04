@@ -5,5 +5,5 @@
 #include "styles.h"
 #include "text_block.h"
 
-Children_Block::Children_Block(bool auto_built)
-    : Abstract_Multi_Block(Styles::Children_Style, auto_built) {}
+Children_Block::Children_Block(Abstract_Multi_Block* parent, bool auto_built)
+    : Abstract_Multi_Block(Styles::Children_Style, parent, auto_built) {}

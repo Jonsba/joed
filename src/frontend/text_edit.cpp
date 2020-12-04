@@ -14,6 +14,7 @@ Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
     : QTextEdit(parent) {
 	this->text_block = text_block;
 	this->insertion_action = insertion_action;
+	this->setTabChangesFocus(true);
 	Color_Scheme color_scheme(level);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setFrameStyle(QFrame::Box);
@@ -56,33 +57,48 @@ void Text_Edit::resizeEvent(QResizeEvent* event) {
 }
 
 void Text_Edit::keyPressEvent(QKeyEvent* event) {
-	if (event->key() != Qt::Key_Return || event->modifiers().testFlag(Qt::ShiftModifier)) {
-		QTextEdit::keyPressEvent(event);
+	switch (event->key()) {
+	case Qt::Key_Return: {
+		// Insertion of a line break inside a paragraph?
+		if (event->modifiers().testFlag(Qt::ShiftModifier)) {
+			break;
+		}
+		this->insert_sibling();
 		return;
 	}
+	default:
+		break;
+	}
+	QTextEdit::keyPressEvent(event);
+}
+
+void Text_Edit::insert_sibling() {
 	auto parent = (Block_Widget*)this->parent();
 	int cursor = this->textCursor().position();
 	QString content = this->toPlainText();
 	switch (this->insertion_action) {
 	case Insertion_Action::Object_Insertion: {
-		auto new_block =
-		    (Text_Block*)this->text_block->insert_sibling(this->text_block->style(), false);
-		auto raw_text_block = (Raw_Text_Block*)new_block->append_child(Styles::Raw_Text_Style);
+		bool insertion_is_after = false;
 		if (cursor > 0 || content.length() == 0) {
+			insertion_is_after = true;
+		}
+		auto new_sibling = (Text_Block*)this->text_block->insert_sibling(this->text_block->style(),
+		                                                                 insertion_is_after, false);
+		auto raw_text_block = (Raw_Text_Block*)new_sibling->append_child(Styles::Raw_Text_Style);
+		if (insertion_is_after) {
 			raw_text_block->set_text(content.right(content.length() - cursor));
-			parent->insert(new_block, false);
 			this->setPlainText(content.left(cursor));
 		} else {
 			raw_text_block->set_text("");
-			parent->insert(new_block, true);
 		}
+		parent->insert_sibling(new_sibling, insertion_is_after);
 		break;
 	}
 	case Insertion_Action::Parent_Insertion:
 		if (cursor == 0) {
-			parent->insert(true);
+			parent->insert_same_style_sibling(false);
 		} else if (cursor == content.length()) {
-			parent->insert(false);
+			parent->insert_same_style_sibling(true);
 		}
 		break;
 	case Insertion_Action::Disabled:

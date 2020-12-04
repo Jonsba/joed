@@ -2,6 +2,7 @@
 #include "block_widget.h"
 
 #include "src/children_block.h"
+#include "src/joed.h"
 
 #include <QApplication>
 #include <QLayout>
@@ -16,10 +17,16 @@ Children_Block_Widget::Children_Block_Widget(QWidget* parent, QScrollArea* scrol
 	this->container = new QVBoxLayout(this);
 	this->container->setMargin(0);
 	this->container->setSpacing(1);
+	bool focus_proxy_is_unset = true;
 	for (Abstract_Block* block = children_block->first_child(); block != nullptr;
 	     block = block->next()) {
-		this->container->addWidget(
-		    new Block_Widget(this, scroll_area, (Abstract_Multi_Block*)block, level + 1, true), 0);
+		Block_Widget* child_block =
+		    new Block_Widget(this, scroll_area, (Abstract_Multi_Block*)block, level + 1, true);
+		this->container->addWidget(child_block, 0);
+		if (focus_proxy_is_unset) {
+			this->setFocusProxy(child_block);
+			focus_proxy_is_unset = false;
+		}
 	}
 	// This prevents unwanted stretching of block widgets in case they can't fill the screen
 	if (level == 0) {
@@ -34,14 +41,16 @@ void Children_Block_Widget::resizeEvent(QResizeEvent* event) {
 }
 
 void Children_Block_Widget::insert(Abstract_Multi_Block* block, Block_Widget* sibling,
-                                   bool insertion_is_before) {
-	int offset = 1;
-	if (insertion_is_before) {
-		offset = 0;
+                                   bool insertion_is_after) {
+	int offset = 0;
+	if (insertion_is_after) {
+		offset = 1;
 	}
-	this->container->insertWidget(
-	    this->container->indexOf(sibling) + offset,
-	    new Block_Widget(this, this->scroll_area, block, this->level + 1, true));
+	int insertion_pos = this->container->indexOf(sibling) + offset;
+	Block_Widget* inserted_block =
+	    new Block_Widget(this, this->scroll_area, block, this->level + 1, true);
+	this->container->insertWidget(insertion_pos, inserted_block);
+	inserted_block->setFocus();
 }
 
 Children_Block_Widget::~Children_Block_Widget() = default;

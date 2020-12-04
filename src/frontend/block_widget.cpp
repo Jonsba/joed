@@ -35,8 +35,9 @@ Block_Widget::Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_M
 		}
 		sub_block_widget = new Text_Edit(this, (Text_Block*)block, level, allowed_insert);
 		blocks_container->addWidget(sub_block_widget);
-		sub_block_widget->setFocus();
+		this->setFocusProxy(sub_block_widget);
 	} else {
+		bool focus_proxy_is_unset = true;
 		for (Abstract_Block* sub_block = block->first_child(); sub_block != nullptr;
 		     sub_block = sub_block->next()) {
 			switch (sub_block->style()->type) {
@@ -54,6 +55,10 @@ Block_Widget::Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_M
 					allowed_insert = Insertion_Action::Parent_Insertion;
 				}
 				sub_block_widget = new Text_Edit(this, (Text_Block*)sub_block, level, allowed_insert);
+				if (focus_proxy_is_unset) {
+					this->setFocusProxy(sub_block_widget);
+					focus_proxy_is_unset = false;
+				}
 				break;
 			}
 			default:
@@ -70,13 +75,15 @@ Abstract_Multi_Block* Block_Widget::block() {
 	return this->the_block;
 }
 
-void Block_Widget::insert(bool insertion_is_before) {
-	this->insert(this->block()->insert_sibling(this->block()->style(), true), insertion_is_before);
+void Block_Widget::insert_same_style_sibling(bool insertion_is_after) {
+	auto new_sibling = (Abstract_Multi_Block*)this->block()->insert_sibling(
+	    this->block()->style(), insertion_is_after, true);
+	this->insert_sibling(new_sibling, insertion_is_after);
 }
 
-void Block_Widget::insert(Abstract_Block* block, bool insertion_is_before) {
-	((Children_Block_Widget*)this->parent())
-	    ->insert((Abstract_Multi_Block*)block, this, insertion_is_before);
+void Block_Widget::insert_sibling(Abstract_Multi_Block* block, bool insertion_is_after) {
+	auto parent = (Children_Block_Widget*)this->parent();
+	parent->insert(block, this, insertion_is_after);
 }
 
 Block_Widget::~Block_Widget() = default;

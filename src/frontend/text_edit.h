@@ -15,6 +15,7 @@ class Text_Edit : public QTextEdit {
 	~Text_Edit();
 
  private:
+	void insert_sibling();
 	void on_text_changed();
 	void resize_to_fit_contents();
 	void resizeEvent(QResizeEvent* event) override;

@@ -13,8 +13,8 @@ class Block_Widget : public QWidget {
 	Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_Multi_Block* block, int level,
 	             bool is_insertion_allowed);
 	~Block_Widget();
-	void insert(bool insertion_is_before);
-	void insert(Abstract_Block* block, bool insertion_is_before);
+	void insert_same_style_sibling(bool insertion_is_before);
+	void insert_sibling(Abstract_Multi_Block* block, bool insertion_is_after);
 	Abstract_Multi_Block* block();
 
  protected:

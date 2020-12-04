@@ -9,7 +9,7 @@ class Escaper;
 
 class Layout_Block : public Abstract_Multi_Block {
  public:
-	Layout_Block(Style* style, bool auto_built);
+	Layout_Block(Style* style, Abstract_Multi_Block* parent, bool auto_built);
 	QString translate(Escaper* escaper) override;
 	QString translate(Escaper* escaper, QHash<QString, QString> global_dict);
 	void save(Writer* writer, int level) override;
