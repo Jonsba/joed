@@ -8,6 +8,7 @@ struct Field {
 		inline static const QString Backend = "backend";
 		inline static const QString Backend_Class = "backend-class";
 		inline static const QString Blocks = "blocks";
+		inline static const QString Caption = "caption";
 		inline static const QString Default_Child_Style = "default-child-style";
 		inline static const QString Defaults = "defaults";
 		inline static const QString Document = "document";

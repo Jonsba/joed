@@ -22,3 +22,4 @@ document:
 			styles:
 				title:
 					type := text_block>title
+					caption:= section title

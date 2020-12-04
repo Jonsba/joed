@@ -60,7 +60,7 @@ Style* Styles::make_primitive_style(QString id, Style_Type type) {
 Style* Styles::make_style(QString name) {
 	this->styles[name] = new Style();
 	this->styles[name]->identifier = name;
-	this->styles[name]->properties = new Style_Properties(this->lua_vm);
+	this->styles[name]->properties = new Style_Properties(name, this->lua_vm);
 	return this->styles[name];
 }
 

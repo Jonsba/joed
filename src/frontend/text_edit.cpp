@@ -4,6 +4,7 @@
 #include "color_scheme.h"
 #include "src/joed.h"
 #include "src/raw_text_block.h"
+#include "src/style_properties.h"
 #include "src/styles.h"
 #include "src/text_block.h"
 
@@ -12,6 +13,8 @@
 Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
                      Insertion_Action insertion_action)
     : QTextEdit(parent) {
+	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->text_block = text_block;
 	this->insertion_action = insertion_action;
 	this->setTabChangesFocus(true);
@@ -38,6 +41,7 @@ Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
 		}
 	}
 	QObject::connect(this, &Text_Edit::textChanged, this, &Text_Edit::on_text_changed);
+	this->setPlaceholderText("Add a " + text_block->style()->properties->caption());
 }
 
 void Text_Edit::resize_to_fit_contents() {

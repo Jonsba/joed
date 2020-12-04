@@ -18,8 +18,9 @@ class Style_Properties final : Abstract_Loadable_Object {
 	friend class Styles;
 
  public:
-	Style_Properties(Lua_VM* lua_vm);
+	Style_Properties(QString style_name, Lua_VM* lua_vm);
 	~Style_Properties();
+	QString caption();
 	QLinkedList<Layout_Entry*> layout_entries();
 	Style* default_child_style();
 	bool is_multiblock();
@@ -30,6 +31,7 @@ class Style_Properties final : Abstract_Loadable_Object {
 	void assign(QString end_key, Style* style, bool is_first_value_line);
 
  private:
+	QString the_caption;
 	QLinkedList<Layout_Entry*> the_layout_entries;
 	Style* the_default_child_style = nullptr;
 	QScopedPointer<Lua_Client> lua_client;
