@@ -16,8 +16,8 @@ class Abstract_Block {
 	Style* style();
 	virtual QString translate(Escaper* escaper) = 0;
 	virtual void save(Writer* writer, int level) = 0;
-	Abstract_Block* insert_sibling(Style* style, bool insertion_is_after, bool auto_built);
-	void insert_sibling(Abstract_Block* block, bool insertion_is_after);
+	Abstract_Block* insert_sibling(Style* style, bool insert_after, bool auto_built);
+	void insert_sibling(Abstract_Block* block, bool insert_after);
 	Abstract_Multi_Block* parent();
 	Abstract_Block* next();
 

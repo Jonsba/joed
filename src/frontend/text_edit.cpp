@@ -1,7 +1,8 @@
 #include "text_edit.h"
 #include "block_widget.h"
-#include "children_block_widget.h"
 #include "color_scheme.h"
+#include "focus_manager.h"
+
 #include "src/joed.h"
 #include "src/raw_text_block.h"
 #include "src/style_properties.h"
@@ -9,16 +10,20 @@
 #include "src/text_block.h"
 
 #include <QKeyEvent>
+#include <QScrollArea>
 
-Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
+Text_Edit::Text_Edit(Widgets widgets, Text_Block* text_block, int parent_level,
                      Insertion_Action insertion_action)
-    : QTextEdit(parent) {
+    : QTextEdit(widgets.parent) {
+	this->the_level = parent_level + 1;
+	this->scroll_area = widgets.scroll_area;
+	widgets.focus_manager->insert(this, widgets.next_widget_in_focus, TEXT_EDIT);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->text_block = text_block;
 	this->insertion_action = insertion_action;
 	this->setTabChangesFocus(true);
-	Color_Scheme color_scheme(level);
+	Color_Scheme color_scheme(parent_level);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setFrameStyle(QFrame::Box);
 	this->setLineWidth(0);
@@ -44,6 +49,10 @@ Text_Edit::Text_Edit(QWidget* parent, Text_Block* text_block, int level,
 	this->setPlaceholderText("Add a " + text_block->style()->properties->caption());
 }
 
+int Text_Edit::level() {
+	return this->the_level;
+}
+
 void Text_Edit::resize_to_fit_contents() {
 	this->setFixedHeight(this->document()->size().toSize().height() + 3);
 }
@@ -58,6 +67,12 @@ void Text_Edit::on_text_changed() {
 void Text_Edit::resizeEvent(QResizeEvent* event) {
 	QTextEdit::resizeEvent(event);
 	this->resize_to_fit_contents();
+	this->scroll_area->ensureWidgetVisible(this);
+}
+
+void Text_Edit::focusInEvent(QFocusEvent* event) {
+	QTextEdit::focusInEvent(event);
+	this->scroll_area->ensureWidgetVisible(this);
 }
 
 void Text_Edit::keyPressEvent(QKeyEvent* event) {
@@ -82,20 +97,20 @@ void Text_Edit::insert_sibling() {
 	QString content = this->toPlainText();
 	switch (this->insertion_action) {
 	case Insertion_Action::Object_Insertion: {
-		bool insertion_is_after = false;
+		bool insert_after = false;
 		if (cursor > 0 || content.length() == 0) {
-			insertion_is_after = true;
+			insert_after = true;
 		}
 		auto new_sibling = (Text_Block*)this->text_block->insert_sibling(this->text_block->style(),
-		                                                                 insertion_is_after, false);
+		                                                                 insert_after, false);
 		auto raw_text_block = (Raw_Text_Block*)new_sibling->append_child(Styles::Raw_Text_Style);
-		if (insertion_is_after) {
+		if (insert_after) {
 			raw_text_block->set_text(content.right(content.length() - cursor));
 			this->setPlainText(content.left(cursor));
 		} else {
 			raw_text_block->set_text("");
 		}
-		parent->insert_sibling(new_sibling, insertion_is_after);
+		parent->insert_sibling(new_sibling, insert_after);
 		break;
 	}
 	case Insertion_Action::Parent_Insertion:

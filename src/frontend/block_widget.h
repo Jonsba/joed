@@ -5,23 +5,33 @@
 
 class Abstract_Block;
 class Abstract_Multi_Block;
+class Focus_Manager;
 
 class QScrollArea;
+struct Widgets {
+	QWidget* parent;
+	QScrollArea* scroll_area;
+	Focus_Manager* focus_manager;
+	QWidget* next_widget_in_focus = nullptr;
+};
 
 class Block_Widget : public QWidget {
  public:
-	Block_Widget(QWidget* parent, QScrollArea* scroll_area, Abstract_Multi_Block* block, int level,
+	Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int the_level,
 	             bool is_insertion_allowed);
 	~Block_Widget();
-	void insert_same_style_sibling(bool insertion_is_before);
-	void insert_sibling(Abstract_Multi_Block* block, bool insertion_is_after);
+	void insert_same_style_sibling(bool insert_after);
+	void insert_sibling(Abstract_Multi_Block* block, bool insert_after);
 	Abstract_Multi_Block* block();
+	int level();
 
  protected:
+	bool focusNextPrevChild(bool next) override;
 	static inline const int Horizontal_Spacing = 10;
 	//
+	Widgets widgets;
 	Abstract_Multi_Block* the_block;
-	int level;
+	int the_level;
 };
 
 #endif // BLOCK_WIDGET_H

@@ -1,29 +1,24 @@
 #ifndef CHILDREN_BLOCK_WIDGET_H
 #define CHILDREN_BLOCK_WIDGET_H
 
-#include <QList>
-#include <QScopedPointer>
-#include <QWidget>
+#include "block_widget.h"
 
 class Abstract_Multi_Block;
-class Children_Block;
 class Block_Widget;
+class Children_Block;
 
 class QVBoxLayout;
-class QScrollArea;
 
 class Children_Block_Widget : public QWidget {
  public:
-	Children_Block_Widget(QWidget* parent, QScrollArea* scroll_area, Children_Block* children_block,
-	                      int level);
+	Children_Block_Widget(Widgets widgets, Children_Block* children_block, int level);
 	~Children_Block_Widget();
-	void insert(Abstract_Multi_Block* block, Block_Widget* sibling, bool insertion_is_after);
+	void insert(Abstract_Multi_Block* block, Block_Widget* sibling, bool insert_after);
 
  private:
-	void resizeEvent(QResizeEvent* event) override;
 	QVBoxLayout* container;
 	int level;
-	QScrollArea* scroll_area;
+	Widgets widgets;
 };
 
 #endif // CHILDREN_BLOCK_WIDGET_H

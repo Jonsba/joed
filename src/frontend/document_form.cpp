@@ -1,11 +1,13 @@
 #include "document_form.h"
 #include "block_widget.h"
+#include "focus_manager.h"
 #include "html_viewer.h"
 #include "pdf_viewer.h"
+#include "ui_document_form.h"
+
 #include "src/abstract_multi_block.h"
 #include "src/backend.h"
 #include "src/document.h"
-#include "ui_document_form.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -36,10 +38,12 @@ void Document_Form::reset_ui(QString document_path) {
 		this->document_viewer.reset(
 		    new HTML_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	}
+	this->focus_manager.reset(new Focus_Manager());
 	this->top_block_widget.reset(
-	    new Block_Widget(this->ui->document_area, this->ui->scroll_area,
+	    new Block_Widget({this->ui->document_area, this->ui->scroll_area, this->focus_manager.get()},
 	                     (Abstract_Multi_Block*)this->document->root_block(), 0, false));
 	this->ui->document_area->layout()->addWidget(this->top_block_widget.get());
+	this->focus_manager->focus_neighboor(this->top_block_widget.get());
 
 	QObject::connect(this->document->compile_process(), qOverload<int>(&QProcess::finished), this,
 	                 &Document_Form::compilation_completed);

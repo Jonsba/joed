@@ -31,6 +31,7 @@ SOURCES += \
 	src/frontend/color_scheme.cpp \
 	src/frontend/document_form.cpp \
 	src/frontend/editor_form.cpp \
+	src/frontend/focus_manager.cpp \
 	src/frontend/html_viewer.cpp \
 	src/frontend/pdf_viewer.cpp \
 	src/frontend/text_edit.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
 	src/frontend/color_scheme.h \
 	src/frontend/document_form.h \
 	src/frontend/editor_form.h \
+	src/frontend/focus_manager.h \
 	src/frontend/html_viewer.h \
 	src/frontend/pdf_viewer.h \
 	src/frontend/text_edit.h \

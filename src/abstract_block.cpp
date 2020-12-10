@@ -23,15 +23,14 @@ Abstract_Block* Abstract_Block::next() {
 	return this->the_next;
 }
 
-Abstract_Block* Abstract_Block::insert_sibling(Style* style, bool insertion_is_after,
-                                               bool auto_built) {
+Abstract_Block* Abstract_Block::insert_sibling(Style* style, bool insert_after, bool auto_built) {
 	Abstract_Block* new_block = make_block(style, this->the_parent, auto_built);
-	this->insert_sibling(new_block, insertion_is_after);
+	this->insert_sibling(new_block, insert_after);
 	return new_block;
 }
 
-void Abstract_Block::insert_sibling(Abstract_Block* block, bool insertion_is_after) {
-	if (insertion_is_after) {
+void Abstract_Block::insert_sibling(Abstract_Block* block, bool insert_after) {
+	if (insert_after) {
 		this->set_sibling_relationship(this, block);
 	} else {
 		if (this->previous != nullptr) {

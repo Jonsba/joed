@@ -1,14 +1,14 @@
 #ifndef DOCUMENT_FORM_H
 #define DOCUMENT_FORM_H
 
-#include "src/joed.h"
 #include <QFileDialog>
 #include <QScopedPointer>
 #include <QWidget>
 
 class Abstract_Document_Viewer;
-class Document;
 class Block_Widget;
+class Document;
+class Focus_Manager;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -35,7 +35,7 @@ class Document_Form : public QWidget {
 	Ui::Document_Form* ui;
 	QScopedPointer<Abstract_Document_Viewer> document_viewer;
 	QScopedPointer<Block_Widget> top_block_widget;
-
+	QScopedPointer<Focus_Manager> focus_manager;
 	QScopedPointer<Document> document;
 };
 
