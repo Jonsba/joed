@@ -1,16 +1,14 @@
 #ifndef ABSTRACT_BLOCK_H
 #define ABSTRACT_BLOCK_H
 
-#include "style.h"
-
 #include <QString>
 
 class Abstract_Multi_Block;
 class Escaper;
+struct Style;
 class Writer;
 
 class Abstract_Block {
-	friend class Abstract_Multi_Block;
 
  public:
 	Abstract_Block(Style* block_type, Abstract_Multi_Block* parent);

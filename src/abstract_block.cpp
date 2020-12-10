@@ -3,6 +3,7 @@
 #include "exceptions.h"
 #include "layout_block.h"
 #include "raw_text_block.h"
+#include "style.h"
 #include "text_block.h"
 
 Abstract_Block::Abstract_Block(Style* style, Abstract_Multi_Block* parent) {

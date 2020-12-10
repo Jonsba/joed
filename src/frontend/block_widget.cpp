@@ -5,7 +5,7 @@
 
 #include "src/abstract_multi_block.h"
 #include "src/exceptions.h"
-#include "src/joed.h"
+#include "src/style.h"
 
 #include <QLayout>
 

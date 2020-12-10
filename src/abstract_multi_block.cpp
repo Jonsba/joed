@@ -34,7 +34,7 @@ void Abstract_Multi_Block::reset_first_child(Abstract_Block* new_first_child) {
 
 QString Abstract_Multi_Block::translate(Escaper* escaper) {
 	QStringList child_contents;
-	for (Abstract_Block* block = this->the_first_child; block != nullptr; block = block->the_next) {
+	for (Abstract_Block* block = this->the_first_child; block != nullptr; block = block->next()) {
 		child_contents.append(block->translate(escaper));
 	}
 	return child_contents.join("\n");
@@ -42,17 +42,21 @@ QString Abstract_Multi_Block::translate(Escaper* escaper) {
 
 void Abstract_Multi_Block::save(Writer* writer, int level) {
 	QString blocks_identifier = Field::Key::Blocks;
-	if (this->the_style->type == Style_Type::Children) {
+	if (this->style()->type == Style_Type::Children) {
 		blocks_identifier = Field::Id::Children;
 	}
 	writer->write_key(blocks_identifier, level);
-	for (Abstract_Block* block = this->the_first_child; block != nullptr; block = block->the_next) {
+	for (Abstract_Block* block = this->first_child(); block != nullptr; block = block->next()) {
 		block->save(writer, level + 1);
 	}
 }
 
 Abstract_Multi_Block::~Abstract_Multi_Block() {
-	for (Abstract_Block* block = this->the_first_child; block != nullptr; block = block->the_next) {
+	// No possible access to the next field once the block is deleted, so we need to loop differently
+	Abstract_Block* block = this->first_child();
+	while (block != nullptr) {
+		Abstract_Block* next_block = block->next();
 		delete block;
+		block = next_block;
 	}
 }
