@@ -55,6 +55,11 @@ void Focus_Manager::insert(QWidget* widget, QWidget* next_widget, int type) {
 	this->table.insert(this->table.indexOf(next_widget), widget);
 }
 
+void Focus_Manager::remove(QWidget* widget) {
+	this->table.removeOne(widget);
+	this->type_of.remove(widget);
+}
+
 void Focus_Manager::focus_neighboor(QWidget* current_focus_widget, bool search_next) {
 	this->get_neighboor(current_focus_widget, search_next, TEXT_EDIT)->setFocus();
 }

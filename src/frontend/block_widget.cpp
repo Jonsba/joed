@@ -94,4 +94,6 @@ bool Block_Widget::focusNextPrevChild(bool next) {
 	return true;
 }
 
-Block_Widget::~Block_Widget() = default;
+Block_Widget::~Block_Widget() {
+	this->widgets.focus_manager->remove(this);
+}

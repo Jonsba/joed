@@ -15,6 +15,7 @@ class Focus_Manager {
 	Focus_Manager();
 	QWidget* next_widget_after(QWidget* block_widget);
 	void insert(QWidget* widget, QWidget* next_widget, int type);
+	void remove(QWidget* widget);
 	void focus_neighboor(QWidget* current_focus_widget, bool search_next = true);
 
  private:

@@ -74,6 +74,7 @@ HEADERS += \
 	src/frontend/html_viewer.h \
 	src/frontend/pdf_viewer.h \
 	src/frontend/text_edit.h \
+	src/frontend/widgets.h \
 	src/joed.h \
 	src/joed_conf_file.h \
 	src/layout_block.h \

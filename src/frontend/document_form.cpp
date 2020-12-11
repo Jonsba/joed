@@ -14,6 +14,7 @@
 #include <QProcess>
 
 Document_Form::Document_Form(QWidget* parent) : QWidget(parent) {
+	this->focus_manager.reset(new Focus_Manager());
 	this->ui = new Ui::Document_Form();
 	this->ui->setupUi(this);
 	parent->layout()->addWidget(this);
@@ -38,7 +39,6 @@ void Document_Form::reset_ui(QString document_path) {
 		this->document_viewer.reset(
 		    new HTML_Viewer(this->ui->view_mode_tab, this->document->backend()));
 	}
-	this->focus_manager.reset(new Focus_Manager());
 	this->top_block_widget.reset(
 	    new Block_Widget({this->ui->document_area, this->ui->scroll_area, this->focus_manager.get()},
 	                     (Abstract_Multi_Block*)this->document->root_block(), 0, false));
@@ -127,5 +127,8 @@ void Document_Form::error_box(QString title, QString msg) {
 }
 
 Document_Form::~Document_Form() {
+	// Top block widget has to be deleted before the focus manager, because on its deletion it needs
+	// to call the latter
+	this->top_block_widget.reset();
 	delete this->ui;
 }

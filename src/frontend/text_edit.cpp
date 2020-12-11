@@ -16,7 +16,7 @@ Text_Edit::Text_Edit(Widgets widgets, Text_Block* text_block, int parent_level,
                      Insertion_Action insertion_action)
     : QTextEdit(widgets.parent) {
 	this->the_level = parent_level + 1;
-	this->scroll_area = widgets.scroll_area;
+	this->widgets = widgets;
 	widgets.focus_manager->insert(this, widgets.next_widget_in_focus, TEXT_EDIT);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -67,12 +67,12 @@ void Text_Edit::on_text_changed() {
 void Text_Edit::resizeEvent(QResizeEvent* event) {
 	QTextEdit::resizeEvent(event);
 	this->resize_to_fit_contents();
-	this->scroll_area->ensureWidgetVisible(this);
+	this->widgets.scroll_area->ensureWidgetVisible(this);
 }
 
 void Text_Edit::focusInEvent(QFocusEvent* event) {
 	QTextEdit::focusInEvent(event);
-	this->scroll_area->ensureWidgetVisible(this);
+	this->widgets.scroll_area->ensureWidgetVisible(this);
 }
 
 void Text_Edit::keyPressEvent(QKeyEvent* event) {
@@ -125,4 +125,6 @@ void Text_Edit::insert_sibling() {
 	}
 }
 
-Text_Edit::~Text_Edit() = default;
+Text_Edit::~Text_Edit() {
+	this->widgets.focus_manager->remove(this);
+}

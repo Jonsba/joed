@@ -1,19 +1,13 @@
 #ifndef BLOCK_WIDGET_H
 #define BLOCK_WIDGET_H
 
+#include "widgets.h"
+
 #include <QWidget>
 
 class Abstract_Block;
 class Abstract_Multi_Block;
 class Focus_Manager;
-
-class QScrollArea;
-struct Widgets {
-	QWidget* parent;
-	QScrollArea* scroll_area;
-	Focus_Manager* focus_manager;
-	QWidget* next_widget_in_focus = nullptr;
-};
 
 class Block_Widget : public QWidget {
  public:

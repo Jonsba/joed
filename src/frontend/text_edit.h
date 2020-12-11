@@ -1,12 +1,13 @@
 #ifndef TEXT_EDIT_H
 #define TEXT_EDIT_H
 
+#include "widgets.h"
+
 #include <QScopedPointer>
 #include <QTextEdit>
 
 class Color_Scheme;
 class Text_Block;
-struct Widgets;
 
 class QScrollArea;
 
@@ -27,7 +28,7 @@ class Text_Edit : public QTextEdit {
 	void focusInEvent(QFocusEvent* event) override;
 	void keyPressEvent(QKeyEvent* event) override;
 	//
-	QScrollArea* scroll_area;
+	Widgets widgets;
 	int the_level;
 	Text_Block* text_block;
 	Insertion_Action insertion_action;
