@@ -25,6 +25,7 @@ SOURCES += \
 	src/environment.cpp \
 	src/escaper.cpp \
 	src/exceptions.cpp \
+	src/frontend/abstract_block_widget.cpp \
 	src/frontend/abstract_document_viewer.cpp \
 	src/frontend/block_widget.cpp \
 	src/frontend/children_block_widget.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
 	src/escaper.h \
 	src/exceptions.h \
 	src/field.h \
+	src/frontend/abstract_block_widget.h \
 	src/frontend/abstract_document_viewer.h \
 	src/frontend/block_widget.h \
 	src/frontend/children_block_widget.h \
@@ -74,7 +76,6 @@ HEADERS += \
 	src/frontend/html_viewer.h \
 	src/frontend/pdf_viewer.h \
 	src/frontend/text_edit.h \
-	src/frontend/widgets.h \
 	src/joed.h \
 	src/joed_conf_file.h \
 	src/layout_block.h \

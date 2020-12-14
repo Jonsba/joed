@@ -41,7 +41,7 @@ void Document_Form::reset_ui(QString document_path) {
 	}
 	this->top_block_widget.reset(
 	    new Block_Widget({this->ui->document_area, this->ui->scroll_area, this->focus_manager.get()},
-	                     (Abstract_Multi_Block*)this->document->root_block(), 0, false));
+	                     (Abstract_Multi_Block*)this->document->root_block(), 0));
 	this->ui->document_area->layout()->addWidget(this->top_block_widget.get());
 	this->focus_manager->focus_neighboor(this->top_block_widget.get());
 
@@ -127,8 +127,8 @@ void Document_Form::error_box(QString title, QString msg) {
 }
 
 Document_Form::~Document_Form() {
-	// Top block widget has to be deleted before the focus manager, because on its deletion it needs
-	// to call the latter
+	// Top block widget has to be deleted before the focus manager, because it needs to call the
+	// latter on its deletion
 	this->top_block_widget.reset();
 	delete this->ui;
 }

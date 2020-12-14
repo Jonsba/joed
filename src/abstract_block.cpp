@@ -6,9 +6,8 @@
 #include "style.h"
 #include "text_block.h"
 
-Abstract_Block::Abstract_Block(Style* style, Abstract_Multi_Block* parent) {
+Abstract_Block::Abstract_Block(Style* style) {
 	this->the_style = style;
-	this->the_parent = parent;
 }
 
 Style* Abstract_Block::style() {
@@ -19,17 +18,22 @@ Abstract_Multi_Block* Abstract_Block::parent() {
 	return this->the_parent;
 }
 
+void Abstract_Block::set_parent(Abstract_Multi_Block* parent) {
+	this->the_parent = parent;
+}
+
 Abstract_Block* Abstract_Block::next() {
 	return this->the_next;
 }
 
 Abstract_Block* Abstract_Block::insert_sibling(Style* style, bool insert_after, bool auto_built) {
-	Abstract_Block* new_block = make_block(style, this->the_parent, auto_built);
+	Abstract_Block* new_block = make_block(style, auto_built);
 	this->insert_sibling(new_block, insert_after);
 	return new_block;
 }
 
 void Abstract_Block::insert_sibling(Abstract_Block* block, bool insert_after) {
+	block->set_parent(this->parent());
 	if (insert_after) {
 		this->set_sibling_relationship(this, block);
 	} else {
@@ -53,24 +57,23 @@ void Abstract_Block::set_sibling_relationship(Abstract_Block* first, Abstract_Bl
 	}
 }
 
-Abstract_Block* Abstract_Block::make_block(Style* style, Abstract_Multi_Block* parent,
-                                           bool auto_built) {
+Abstract_Block* Abstract_Block::make_block(Style* style, bool auto_built) {
 	Abstract_Block* new_block;
 	switch (style->type) {
 	case Style_Type::Children: {
-		new_block = new Children_Block(parent, auto_built);
+		new_block = new Children_Block(auto_built);
 		break;
 	}
 	case Style_Type::Layouted: {
-		new_block = new Layout_Block(style, parent, auto_built);
+		new_block = new Layout_Block(style, auto_built);
 		break;
 	}
 	case Style_Type::Text: {
-		new_block = new Text_Block(style, parent, auto_built);
+		new_block = new Text_Block(style, auto_built);
 		break;
 	}
 	case Style_Type::Raw_Text: {
-		new_block = new Raw_Text_Block(parent);
+		new_block = new Raw_Text_Block();
 		break;
 	}
 	case Style_Type::Undefined:

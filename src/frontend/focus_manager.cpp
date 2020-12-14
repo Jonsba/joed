@@ -7,7 +7,8 @@ Focus_Manager::Focus_Manager() {}
 int Focus_Manager::level_of(QWidget* widget) {
 	switch (type_of[widget]) {
 	case BLOCK_WIDGET:
-		return ((Block_Widget*)widget)->level();
+	case CHILDREN_WIDGET:
+		return ((Abstract_Block_Widget*)widget)->level();
 	case TEXT_EDIT:
 		return ((Text_Edit*)widget)->level();
 	default: // Should not happen
@@ -36,11 +37,14 @@ QWidget* Focus_Manager::get_neighboor(QWidget* widget, bool search_next, int typ
 	}
 }
 
-QWidget* Focus_Manager::next_widget_after(QWidget* widget) {
+QWidget* Focus_Manager::next_widget_after(QWidget* widget, int type) {
 	QWidget* next_widget = widget;
 	while (true) {
 		next_widget = this->get_neighboor(next_widget, true);
 		if (level_of(next_widget) <= level_of(widget)) {
+			if (type != UNDEFINED) {
+				assert(type_of[next_widget] == type);
+			}
 			return next_widget;
 		}
 	}

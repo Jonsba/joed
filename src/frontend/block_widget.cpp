@@ -10,13 +10,10 @@
 
 #include <QLayout>
 
-Block_Widget::Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int level,
-                           bool is_insertion_allowed)
-    : QWidget(widgets.parent) {
+Block_Widget::Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int level)
+    : Abstract_Block_Widget(widgets, BLOCK_WIDGET, level) {
 	this->widgets = widgets;
 	this->the_block = block;
-	this->the_level = level;
-	widgets.focus_manager->insert(this, widgets.next_widget_in_focus, BLOCK_WIDGET);
 	//
 	Color_Scheme color_scheme(level);
 	this->setPalette(color_scheme.palette(Widget_State::Highlighted));
@@ -32,32 +29,24 @@ Block_Widget::Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int lev
 	//
 	widgets.parent = this;
 	QWidget* sub_block_widget;
-	Insertion_Action allowed_insert = Insertion_Action::Disabled;
 	if (block->style()->type == Style_Type::Text) {
-		if (is_insertion_allowed) {
-			allowed_insert = Insertion_Action::Object_Insertion;
-		}
-		sub_block_widget = new Text_Edit(widgets, (Text_Block*)block, level, allowed_insert);
+		sub_block_widget = new Text_Edit(widgets, (Text_Block*)block, level);
 		blocks_container->addWidget(sub_block_widget);
 	} else {
 		for (Abstract_Block* sub_block = block->first_child(); sub_block != nullptr;
 		     sub_block = sub_block->next()) {
 			switch (sub_block->style()->type) {
 			case Style_Type::Children:
-				sub_block_widget =
+				this->children_widget_block =
 				    new Children_Block_Widget(widgets, (Children_Block*)sub_block, level + 1);
-
+				sub_block_widget = this->children_widget_block;
 				break;
 			case Style_Type::Layouted:
-				sub_block_widget = new Block_Widget(widgets, (Abstract_Multi_Block*)sub_block,
-				                                    level + 1, is_insertion_allowed);
+				sub_block_widget =
+				    new Block_Widget(widgets, (Abstract_Multi_Block*)sub_block, level + 1);
 				break;
 			case Style_Type::Text: {
-				if (is_insertion_allowed) {
-					allowed_insert = Insertion_Action::Parent_Insertion;
-				}
-				sub_block_widget =
-				    new Text_Edit(widgets, (Text_Block*)sub_block, level, allowed_insert);
+				sub_block_widget = new Text_Edit(widgets, (Text_Block*)sub_block, level);
 				break;
 			}
 			default:
@@ -70,23 +59,28 @@ Block_Widget::Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int lev
 	this->setLayout(top_container);
 }
 
-int Block_Widget::level() {
-	return this->the_level;
-}
-
 Abstract_Multi_Block* Block_Widget::block() {
 	return this->the_block;
 }
 
-void Block_Widget::insert_same_style_sibling(bool insert_after) {
-	auto new_sibling = (Abstract_Multi_Block*)this->block()->insert_sibling(this->block()->style(),
-	                                                                        insert_after, true);
-	this->insert_sibling(new_sibling, insert_after);
+void Block_Widget::insert(Abstract_Block* first_sub_block, bool insert_after) {
+	this->insert(first_sub_block, this, insert_after);
 }
 
-void Block_Widget::insert_sibling(Abstract_Multi_Block* block, bool insert_after) {
-	auto parent = (Children_Block_Widget*)this->parent();
-	parent->insert(block, this, insert_after);
+void Block_Widget::insert(Abstract_Block* first_sub_block, Block_Widget* sibling,
+                          bool insert_after) {
+	if (insert_after && this->children_widget_block != nullptr) {
+		if (sibling == this) {
+			sibling = (Block_Widget*)this->widgets.focus_manager->next_widget_after(
+			    this->children_widget_block, BLOCK_WIDGET);
+			insert_after = false;
+		}
+		this->children_widget_block->insert(first_sub_block, sibling, insert_after);
+		return;
+	}
+	if (this->level() > 0) {
+		((Abstract_Block_Widget*)this->parent())->insert(first_sub_block, this, insert_after);
+	}
 }
 
 bool Block_Widget::focusNextPrevChild(bool next) {

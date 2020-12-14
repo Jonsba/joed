@@ -3,7 +3,7 @@
 #include "style_properties.h"
 #include "writer.h"
 
-Root_Block::Root_Block(Style* style, bool auto_built) : Layout_Block(style, nullptr, auto_built) {}
+Root_Block::Root_Block(Style* style, bool auto_built) : Layout_Block(style, auto_built) {}
 
 QString Root_Block::translate(Escaper* escaper) {
 	// All layout entries of top level are optional (e.g. header, footer), except the children layout

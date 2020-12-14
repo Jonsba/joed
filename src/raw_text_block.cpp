@@ -3,8 +3,7 @@
 #include "styles.h"
 #include "writer.h"
 
-Raw_Text_Block::Raw_Text_Block(Abstract_Multi_Block* parent)
-    : Abstract_Block(Styles::Raw_Text_Style, parent) {
+Raw_Text_Block::Raw_Text_Block() : Abstract_Block(Styles::Raw_Text_Style) {
 	this->the_text = "";
 }
 

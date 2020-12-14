@@ -7,15 +7,15 @@
 #include "text_block.h"
 #include "writer.h"
 
-Layout_Block::Layout_Block(Style* style, Abstract_Multi_Block* parent, bool auto_built)
-    : Abstract_Multi_Block(style, parent, auto_built) {
+Layout_Block::Layout_Block(Style* style, bool auto_built)
+    : Abstract_Multi_Block(style, auto_built) {
 	if (auto_built) {
 		for (Layout_Entry* layout_entry : this->the_style->properties->layout_entries()) {
 			switch (layout_entry->style()->type) {
 			case Style_Type::Children: {
 				Children_Block* children_block =
 				    (Children_Block*)this->append_child(Styles::Children_Style);
-				children_block->append_child(this->the_style->properties->default_child_style());
+				children_block->append_default_child();
 				break;
 			}
 			case Style_Type::Layouted:

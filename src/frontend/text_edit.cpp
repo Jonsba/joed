@@ -12,8 +12,7 @@
 #include <QKeyEvent>
 #include <QScrollArea>
 
-Text_Edit::Text_Edit(Widgets widgets, Text_Block* text_block, int parent_level,
-                     Insertion_Action insertion_action)
+Text_Edit::Text_Edit(Widgets widgets, Text_Block* text_block, int parent_level)
     : QTextEdit(widgets.parent) {
 	this->the_level = parent_level + 1;
 	this->widgets = widgets;
@@ -21,7 +20,6 @@ Text_Edit::Text_Edit(Widgets widgets, Text_Block* text_block, int parent_level,
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->text_block = text_block;
-	this->insertion_action = insertion_action;
 	this->setTabChangesFocus(true);
 	Color_Scheme color_scheme(parent_level);
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -77,52 +75,39 @@ void Text_Edit::focusInEvent(QFocusEvent* event) {
 
 void Text_Edit::keyPressEvent(QKeyEvent* event) {
 	switch (event->key()) {
-	case Qt::Key_Return: {
+	case Qt::Key_Return:
 		// Insertion of a line break inside a paragraph?
 		if (event->modifiers().testFlag(Qt::ShiftModifier)) {
 			break;
 		}
-		this->insert_sibling();
+		this->insert();
 		return;
-	}
+	case Qt::Key_Backspace:
+		if (this->textCursor().position() > 0) {
+			break;
+		}
+		// Deletion here
+		return;
 	default:
 		break;
 	}
 	QTextEdit::keyPressEvent(event);
 }
 
-void Text_Edit::insert_sibling() {
+void Text_Edit::insert() {
 	auto parent = (Block_Widget*)this->parent();
 	int cursor = this->textCursor().position();
 	QString content = this->toPlainText();
-	switch (this->insertion_action) {
-	case Insertion_Action::Object_Insertion: {
-		bool insert_after = false;
-		if (cursor > 0 || content.length() == 0) {
-			insert_after = true;
-		}
-		auto new_sibling = (Text_Block*)this->text_block->insert_sibling(this->text_block->style(),
-		                                                                 insert_after, false);
-		auto raw_text_block = (Raw_Text_Block*)new_sibling->append_child(Styles::Raw_Text_Style);
-		if (insert_after) {
-			raw_text_block->set_text(content.right(content.length() - cursor));
-			this->setPlainText(content.left(cursor));
-		} else {
-			raw_text_block->set_text("");
-		}
-		parent->insert_sibling(new_sibling, insert_after);
-		break;
+	bool insert_after = false;
+	if (cursor > 0 || content.length() == 0) {
+		insert_after = true;
 	}
-	case Insertion_Action::Parent_Insertion:
-		if (cursor == 0) {
-			parent->insert_same_style_sibling(false);
-		} else if (cursor == content.length()) {
-			parent->insert_same_style_sibling(true);
-		}
-		break;
-	case Insertion_Action::Disabled:
-		break;
+	auto raw_text_block = new Raw_Text_Block();
+	if (insert_after) {
+		raw_text_block->set_text(content.right(content.length() - cursor));
+		this->setPlainText(content.left(cursor));
 	}
+	parent->insert(raw_text_block, insert_after);
 }
 
 Text_Edit::~Text_Edit() {

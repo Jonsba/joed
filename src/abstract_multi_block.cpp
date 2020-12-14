@@ -2,19 +2,18 @@
 #include "styles.h"
 #include "writer.h"
 
-Abstract_Multi_Block::Abstract_Multi_Block(Style* style, Abstract_Multi_Block* parent,
-                                           bool auto_built)
-    : Abstract_Block(style, parent) {
+Abstract_Multi_Block::Abstract_Multi_Block(Style* style, bool auto_built) : Abstract_Block(style) {
 	this->auto_built = auto_built;
 }
 
 Abstract_Block* Abstract_Multi_Block::append_child(Style* style) {
-	Abstract_Block* new_block = this->make_block(style, this, this->auto_built);
+	Abstract_Block* new_block = this->make_block(style, this->auto_built);
 	this->append_child(new_block);
 	return new_block;
 }
 
 void Abstract_Multi_Block::append_child(Abstract_Block* block) {
+	block->set_parent(this);
 	if (this->last_child_tmp == nullptr) {
 		this->last_child_tmp = block;
 		this->the_first_child = block;

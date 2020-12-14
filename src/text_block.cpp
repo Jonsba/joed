@@ -4,8 +4,7 @@
 #include "styles.h"
 #include "writer.h"
 
-Text_Block::Text_Block(Style* style, Abstract_Multi_Block* parent, bool auto_built)
-    : Abstract_Multi_Block(style, parent, auto_built) {
+Text_Block::Text_Block(Style* style, bool auto_built) : Abstract_Multi_Block(style, auto_built) {
 	if (auto_built) {
 		this->current_sub_block = (Raw_Text_Block*)this->append_child(Styles::Raw_Text_Style);
 	}

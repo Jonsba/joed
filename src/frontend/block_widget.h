@@ -1,31 +1,29 @@
 #ifndef BLOCK_WIDGET_H
 #define BLOCK_WIDGET_H
 
-#include "widgets.h"
-
-#include <QWidget>
+#include "abstract_block_widget.h"
 
 class Abstract_Block;
 class Abstract_Multi_Block;
+
+class Children_Block_Widget;
 class Focus_Manager;
 
-class Block_Widget : public QWidget {
+class Block_Widget : public Abstract_Block_Widget {
  public:
-	Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int the_level,
-	             bool is_insertion_allowed);
+	Block_Widget(Widgets widgets, Abstract_Multi_Block* block, int level);
 	~Block_Widget();
-	void insert_same_style_sibling(bool insert_after);
-	void insert_sibling(Abstract_Multi_Block* block, bool insert_after);
+	void insert(Abstract_Block* first_sub_block, bool insert_after);
+	void insert(Abstract_Block* first_sub_block, Block_Widget* sibling, bool insert_after) override;
 	Abstract_Multi_Block* block();
-	int level();
 
  protected:
 	bool focusNextPrevChild(bool next) override;
 	static inline const int Horizontal_Spacing = 10;
 	//
 	Widgets widgets;
+	Children_Block_Widget* children_widget_block = nullptr;
 	Abstract_Multi_Block* the_block;
-	int the_level;
 };
 
 #endif // BLOCK_WIDGET_H
